@@ -1,0 +1,274 @@
+{
+  "extensionName": {
+    "message": "GitHub Notes",
+    "description": "Extension name"
+  },
+  "extensionDescription": {
+    "message": "Add private notes to GitHub repositories to enhance your code management experience",
+    "description": "Extension description"
+  },
+  "popupTitle": {
+    "message": "GitHub Notes Manager",
+    "description": "Popup window title"
+  },
+  "popupSubtitle": {
+    "message": "Manage your GitHub repository notes",
+    "description": "Popup window subtitle"
+  },
+  "totalNotes": {
+    "message": "Total Notes",
+    "description": "Total notes label"
+  },
+  "todayNotes": {
+    "message": "Today's New",
+    "description": "Today's notes label"
+  },
+  "tabNotesList": {
+    "message": "Notes List",
+    "description": "Notes list tab"
+  },
+  "tabDataBackup": {
+    "message": "Data Backup",
+    "description": "Data backup tab"
+  },
+  "tabSettings": {
+    "message": "Settings",
+    "description": "Settings tab"
+  },
+  "searchPlaceholder": {
+    "message": "Search notes...",
+    "description": "Search input placeholder"
+  },
+  "loading": {
+    "message": "Loading...",
+    "description": "Loading text"
+  },
+  "exportData": {
+    "message": "Export Data",
+    "description": "Export data button"
+  },
+  "importData": {
+    "message": "Import Data",
+    "description": "Import data button"
+  },
+  "notificationSettings": {
+    "message": "Notification Settings",
+    "description": "Notification settings label"
+  },
+  "enableNotifications": {
+    "message": "Enable Notifications",
+    "description": "Enable notifications checkbox"
+  },
+  "saveSettings": {
+    "message": "Save Settings",
+    "description": "Save settings button"
+  },
+  "resetSettings": {
+    "message": "Reset Settings",
+    "description": "Reset settings button"
+  },
+  "options": {
+    "message": "Options",
+    "description": "Options link"
+  },
+  "help": {
+    "message": "Help",
+    "description": "Help link"
+  },
+  "optionsTitle": {
+    "message": "GitHub Notes - Options",
+    "description": "Options page title"
+  },
+  "optionsHeader": {
+    "message": "📝 GitHub Notes",
+    "description": "Options page header"
+  },
+  "optionsDescription": {
+    "message": "Manage your GitHub repository notes, customize plugin settings and data management",
+    "description": "Options page description"
+  },
+  "generalSettings": {
+    "message": "General Settings",
+    "description": "General settings section"
+  },
+  "dataBackup": {
+    "message": "Data Backup",
+    "description": "Data backup section"
+  },
+  "aboutPlugin": {
+    "message": "About Plugin",
+    "description": "About plugin section"
+  },
+  "notificationDescription": {
+    "message": "Show notifications when saving or deleting notes",
+    "description": "Notification setting description"
+  },
+  "exportDataTitle": {
+    "message": "Export Data",
+    "description": "Export data card title"
+  },
+  "exportDataDescription": {
+    "message": "Export all notes and settings data as JSON file",
+    "description": "Export data card description"
+  },
+  "importDataTitle": {
+    "message": "Import Data",
+    "description": "Import data card title"
+  },
+  "importDataDescription": {
+    "message": "Import notes and settings data from JSON file",
+    "description": "Import data card description"
+  },
+  "selectFileImport": {
+    "message": "Select File to Import",
+    "description": "Select file to import button"
+  },
+  "homepage": {
+    "message": "Homepage",
+    "description": "Homepage link"
+  },
+  "issues": {
+    "message": "Report Issues",
+    "description": "Issues link"
+  },
+  "changelog": {
+    "message": "Changelog",
+    "description": "Changelog link"
+  },
+  "donate": {
+    "message": "Support Development",
+    "description": "Donate link"
+  },
+  "saveAllSettings": {
+    "message": "Save All Settings",
+    "description": "Save all settings button"
+  },
+  "addNote": {
+    "message": "Add Note",
+    "description": "Add note button"
+  },
+  "editNote": {
+    "message": "Edit Note",
+    "description": "Edit note button"
+  },
+  "deleteNote": {
+    "message": "Delete",
+    "description": "Delete note button"
+  },
+  "delete": {
+    "message": "Delete",
+    "description": "Delete button"
+  },
+  "save": {
+    "message": "Save",
+    "description": "Save button"
+  },
+  "cancel": {
+    "message": "Cancel",
+    "description": "Cancel button"
+  },
+  "notePlaceholder": {
+    "message": "Enter your note here...",
+    "description": "Note textarea placeholder"
+  },
+  "noNotesFound": {
+    "message": "No Notes Found",
+    "description": "No notes found message"
+  },
+  "noNotesDescription": {
+    "message": "You haven't added any notes yet",
+    "description": "No notes description"
+  },
+  "noteSaved": {
+    "message": "Note saved",
+    "description": "Note saved notification"
+  },
+  "noteDeleted": {
+    "message": "Note deleted",
+    "description": "Note deleted notification"
+  },
+  "settingsSaved": {
+    "message": "Settings saved",
+    "description": "Settings saved notification"
+  },
+  "dataExported": {
+    "message": "Data exported successfully",
+    "description": "Data exported notification"
+  },
+  "dataImported": {
+    "message": "Data imported successfully",
+    "description": "Data imported notification"
+  },
+  "error": {
+    "message": "Operation failed",
+    "description": "Error notification"
+  },
+  "updated": {
+    "message": "Updated: $1",
+    "description": "Updated time label"
+  },
+  "exportSuccess": {
+    "message": "Export successful",
+    "description": "Export success notification"
+  },
+  "exportFailed": {
+    "message": "Export failed",
+    "description": "Export failed notification"
+  },
+  "importFailed": {
+    "message": "Import failed",
+    "description": "Import failed notification"
+  },
+  "confirmReset": {
+    "message": "Are you sure you want to reset all settings?",
+    "description": "Confirm reset settings"
+  },
+  "settingsReset": {
+    "message": "Settings have been reset",
+    "description": "Settings reset notification"
+  },
+  "resetFailed": {
+    "message": "Failed to reset settings",
+    "description": "Reset failed notification"
+  },
+  "saveFailed": {
+    "message": "Failed to save settings",
+    "description": "Save failed notification"
+  },
+  "myNotes": {
+    "message": "My Notes",
+    "description": "My notes title"
+  },
+  "clickToAddNote": {
+    "message": "Click edit button to add note...",
+    "description": "Click to add note placeholder"
+  },
+  "editNoteTitle": {
+    "message": "Edit Note - $1",
+    "description": "Edit note modal title"
+  },
+  "confirmDeleteNote": {
+    "message": "Are you sure you want to delete this note?",
+    "description": "Confirm delete note dialog"
+  },
+  "deleteFailed": {
+    "message": "Delete failed, please try again",
+    "description": "Delete failed notification"
+  },
+  "unknownAction": {
+    "message": "Unknown action",
+    "description": "Unknown action error"
+  },
+  "invalidImportData": {
+    "message": "Invalid import data",
+    "description": "Invalid import data error"
+  },
+  "importSuccess": {
+    "message": "Successfully imported $1 notes",
+    "description": "Import success message"
+  },
+  "version": {
+    "message": "Version $1",
+    "description": "Version label"
+  }
+}

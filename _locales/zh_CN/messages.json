@@ -1,0 +1,274 @@
+{
+  "extensionName": {
+    "message": "GitHub备注插件",
+    "description": "Extension name"
+  },
+  "extensionDescription": {
+    "message": "为GitHub仓库添加私有备注，提升您的代码管理体验",
+    "description": "Extension description"
+  },
+  "popupTitle": {
+    "message": "GitHub备注管理",
+    "description": "Popup window title"
+  },
+  "popupSubtitle": {
+    "message": "管理您的GitHub仓库备注",
+    "description": "Popup window subtitle"
+  },
+  "totalNotes": {
+    "message": "总备注",
+    "description": "Total notes label"
+  },
+  "todayNotes": {
+    "message": "今日新增",
+    "description": "Today's notes label"
+  },
+  "tabNotesList": {
+    "message": "备注列表",
+    "description": "Notes list tab"
+  },
+  "tabDataBackup": {
+    "message": "数据备份",
+    "description": "Data backup tab"
+  },
+  "tabSettings": {
+    "message": "设置",
+    "description": "Settings tab"
+  },
+  "searchPlaceholder": {
+    "message": "搜索备注...",
+    "description": "Search input placeholder"
+  },
+  "loading": {
+    "message": "加载中...",
+    "description": "Loading text"
+  },
+  "exportData": {
+    "message": "导出数据",
+    "description": "Export data button"
+  },
+  "importData": {
+    "message": "导入数据",
+    "description": "Import data button"
+  },
+  "notificationSettings": {
+    "message": "通知设置",
+    "description": "Notification settings label"
+  },
+  "enableNotifications": {
+    "message": "启用通知",
+    "description": "Enable notifications checkbox"
+  },
+  "saveSettings": {
+    "message": "保存设置",
+    "description": "Save settings button"
+  },
+  "resetSettings": {
+    "message": "重置设置",
+    "description": "Reset settings button"
+  },
+  "options": {
+    "message": "选项",
+    "description": "Options link"
+  },
+  "help": {
+    "message": "帮助",
+    "description": "Help link"
+  },
+  "optionsTitle": {
+    "message": "GitHub备注插件 - 选项设置",
+    "description": "Options page title"
+  },
+  "optionsHeader": {
+    "message": "📝 GitHub备注插件",
+    "description": "Options page header"
+  },
+  "optionsDescription": {
+    "message": "管理您的GitHub仓库备注，自定义插件设置和数据管理",
+    "description": "Options page description"
+  },
+  "generalSettings": {
+    "message": "常规设置",
+    "description": "General settings section"
+  },
+  "dataBackup": {
+    "message": "数据备份",
+    "description": "Data backup section"
+  },
+  "aboutPlugin": {
+    "message": "关于插件",
+    "description": "About plugin section"
+  },
+  "notificationDescription": {
+    "message": "在保存、删除备注时显示通知",
+    "description": "Notification setting description"
+  },
+  "exportDataTitle": {
+    "message": "导出数据",
+    "description": "Export data card title"
+  },
+  "exportDataDescription": {
+    "message": "将所有备注和设置数据导出为JSON文件",
+    "description": "Export data card description"
+  },
+  "importDataTitle": {
+    "message": "导入数据",
+    "description": "Import data card title"
+  },
+  "importDataDescription": {
+    "message": "从JSON文件导入备注和设置数据",
+    "description": "Import data card description"
+  },
+  "selectFileImport": {
+    "message": "选择文件导入",
+    "description": "Select file to import button"
+  },
+  "homepage": {
+    "message": "项目主页",
+    "description": "Homepage link"
+  },
+  "issues": {
+    "message": "问题反馈",
+    "description": "Issues link"
+  },
+  "changelog": {
+    "message": "更新日志",
+    "description": "Changelog link"
+  },
+  "donate": {
+    "message": "支持开发",
+    "description": "Donate link"
+  },
+  "saveAllSettings": {
+    "message": "保存所有设置",
+    "description": "Save all settings button"
+  },
+  "addNote": {
+    "message": "添加备注",
+    "description": "Add note button"
+  },
+  "editNote": {
+    "message": "编辑备注",
+    "description": "Edit note button"
+  },
+  "deleteNote": {
+    "message": "删除",
+    "description": "Delete note button"
+  },
+  "delete": {
+    "message": "删除",
+    "description": "Delete button"
+  },
+  "save": {
+    "message": "保存",
+    "description": "Save button"
+  },
+  "cancel": {
+    "message": "取消",
+    "description": "Cancel button"
+  },
+  "notePlaceholder": {
+    "message": "在此输入您的备注...",
+    "description": "Note textarea placeholder"
+  },
+  "noNotesFound": {
+    "message": "暂无备注",
+    "description": "No notes found message"
+  },
+  "noNotesDescription": {
+    "message": "您还没有添加任何备注",
+    "description": "No notes description"
+  },
+  "noteSaved": {
+    "message": "备注已保存",
+    "description": "Note saved notification"
+  },
+  "noteDeleted": {
+    "message": "备注已删除",
+    "description": "Note deleted notification"
+  },
+  "settingsSaved": {
+    "message": "设置已保存",
+    "description": "Settings saved notification"
+  },
+  "dataExported": {
+    "message": "数据导出成功",
+    "description": "Data exported notification"
+  },
+  "dataImported": {
+    "message": "数据导入成功",
+    "description": "Data imported notification"
+  },
+  "error": {
+    "message": "操作失败",
+    "description": "Error notification"
+  },
+  "updated": {
+    "message": "更新: $1",
+    "description": "Updated time label"
+  },
+  "exportSuccess": {
+    "message": "导出成功",
+    "description": "Export success notification"
+  },
+  "exportFailed": {
+    "message": "导出失败",
+    "description": "Export failed notification"
+  },
+  "importFailed": {
+    "message": "导入失败",
+    "description": "Import failed notification"
+  },
+  "confirmReset": {
+    "message": "确定要重置所有设置吗？",
+    "description": "Confirm reset settings"
+  },
+  "settingsReset": {
+    "message": "设置已重置",
+    "description": "Settings reset notification"
+  },
+  "resetFailed": {
+    "message": "重置设置失败",
+    "description": "Reset failed notification"
+  },
+  "saveFailed": {
+    "message": "保存设置失败",
+    "description": "Save failed notification"
+  },
+  "myNotes": {
+    "message": "我的备注",
+    "description": "My notes title"
+  },
+  "clickToAddNote": {
+    "message": "点击编辑按钮添加备注...",
+    "description": "Click to add note placeholder"
+  },
+  "editNoteTitle": {
+    "message": "编辑备注 - $1",
+    "description": "Edit note modal title"
+  },
+  "confirmDeleteNote": {
+    "message": "确定要删除这个备注吗？",
+    "description": "Confirm delete note dialog"
+  },
+  "deleteFailed": {
+    "message": "删除失败，请重试",
+    "description": "Delete failed notification"
+  },
+  "unknownAction": {
+    "message": "未知的操作",
+    "description": "Unknown action error"
+  },
+  "invalidImportData": {
+    "message": "无效的导入数据",
+    "description": "Invalid import data error"
+  },
+  "importSuccess": {
+    "message": "成功导入 $1 条备注",
+    "description": "Import success message"
+  },
+  "version": {
+    "message": "版本 $1",
+    "description": "Version label"
+  }
+}

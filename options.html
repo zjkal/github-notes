@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="optionsTitle">GitHub备注插件 - 选项设置</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+      background-color: #f6f8fa;
+      color: #24292f;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      background: white;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(16, 22, 26, 0.1);
+    }
+
+    .header h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #24292f;
+    }
+
+    .header p {
+      color: #656d76;
+      font-size: 14px;
+    }
+
+    .main-content {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 24px;
+    }
+
+    .sidebar {
+      background: white;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      padding: 16px;
+      height: fit-content;
+      box-shadow: 0 1px 3px rgba(16, 22, 26, 0.1);
+    }
+
+    .nav-item {
+      display: block;
+      padding: 8px 12px;
+      color: #24292f;
+      text-decoration: none;
+      border-radius: 4px;
+      margin-bottom: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .nav-item:hover {
+      background-color: #f3f4f6;
+    }
+
+    .nav-item.active {
+      background-color: #dbeafe;
+      color: #1e40af;
+      font-weight: 500;
+    }
+
+    .content {
+      background: white;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(16, 22, 26, 0.1);
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #24292f;
+      border-bottom: 1px solid #d0d7de;
+      padding-bottom: 8px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: #24292f;
+    }
+
+    .form-description {
+      font-size: 12px;
+      color: #656d76;
+      margin-bottom: 8px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      font-size: 14px;
+      background-color: #ffffff;
+      transition: border-color 0.2s;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: #0969da;
+      box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.1);
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .checkbox {
+      width: 16px;
+      height: 16px;
+      accent-color: #0969da;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      background-color: #f6f8fa;
+      color: #24292f;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      background-color: #f3f4f6;
+      border-color: #d0d7de;
+    }
+
+    .btn-primary {
+      background-color: #2da44e;
+      color: white;
+      border-color: #2da44e;
+    }
+
+    .btn-primary:hover {
+      background-color: #2c974b;
+      border-color: #2c974b;
+    }
+
+    .btn-danger {
+      background-color: #da3633;
+      color: white;
+      border-color: #da3633;
+    }
+
+    .btn-danger:hover {
+      background-color: #c93c37;
+      border-color: #c93c37;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: #f6f8fa;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 24px;
+      font-weight: 600;
+      color: #0969da;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: #656d76;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .data-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+    }
+
+    .action-card {
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      padding: 16px;
+    }
+
+    .action-title {
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #24292f;
+    }
+
+    .action-description {
+      font-size: 12px;
+      color: #656d76;
+      margin-bottom: 12px;
+    }
+
+    .file-input {
+      display: none;
+    }
+
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 16px;
+      border-radius: 6px;
+      color: white;
+      font-weight: 500;
+      z-index: 1000;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .notification.show {
+      transform: translateX(0);
+    }
+
+    .notification.success {
+      background-color: #2da44e;
+    }
+
+    .notification.error {
+      background-color: #da3633;
+    }
+
+    .notification.info {
+      background-color: #0969da;
+    }
+
+    .about-section {
+      text-align: center;
+      padding: 24px;
+    }
+
+    .logo {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .version {
+      font-size: 14px;
+      color: #656d76;
+      margin-bottom: 16px;
+    }
+
+    .links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .link {
+      color: #0969da;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .sidebar {
+        order: 2;
+      }
+      
+      .content {
+        order: 1;
+      }
+    }
+
+    /* 暗色主题 */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #0d1117;
+        color: #f0f6fc;
+      }
+
+      .header, .sidebar, .content {
+        background-color: #161b22;
+        border-color: #30363d;
+      }
+
+      .header h1, .section-title, .form-label, .action-title {
+        color: #f0f6fc;
+      }
+
+      .header p, .form-description, .stat-label, .action-description {
+        color: #8b949e;
+      }
+
+      .nav-item {
+        color: #f0f6fc;
+      }
+
+      .nav-item:hover {
+        background-color: #21262d;
+      }
+
+      .nav-item.active {
+        background-color: #1f2937;
+        color: #58a6ff;
+      }
+
+      .form-control {
+        background-color: #0d1117;
+        border-color: #30363d;
+        color: #f0f6fc;
+      }
+
+      .form-control:focus {
+        border-color: #58a6ff;
+        box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+      }
+
+      .btn {
+        background-color: #21262d;
+        border-color: #30363d;
+        color: #f0f6fc;
+      }
+
+      .btn:hover {
+        background-color: #30363d;
+      }
+
+      .stat-card, .action-card {
+        background-color: #161b22;
+        border-color: #30363d;
+      }
+
+      .stat-number {
+        color: #58a6ff;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1 data-i18n="optionsHeader">📝 GitHub备注插件</h1>
+      <p data-i18n="optionsDescription">管理您的GitHub仓库备注，自定义插件设置和数据管理</p>
+    </div>
+
+    <div class="main-content">
+      <nav class="sidebar">
+        <a class="nav-item active" data-section="general" data-i18n="generalSettings">常规设置</a>
+        <a class="nav-item" data-section="data" data-i18n="dataBackup">数据备份</a>
+        <a class="nav-item" data-section="about" data-i18n="aboutPlugin">关于插件</a>
+      </nav>
+
+      <div class="content">
+        <!-- 常规设置 -->
+        <div class="section active" id="general">
+          <h2 class="section-title" data-i18n="generalSettings">常规设置</h2>
+          
+          <div class="form-group">
+            <label class="form-label" data-i18n="notificationSettings">通知设置</label>
+            <div class="checkbox-group">
+              <input type="checkbox" id="enableNotifications" class="checkbox">
+              <label for="enableNotifications" data-i18n="enableNotifications">启用通知</label>
+            </div>
+            <div class="form-description" data-i18n="notificationDescription">在保存、删除备注时显示通知</div>
+          </div>
+        </div>
+
+
+
+        <!-- 数据备份 -->
+        <div class="section" id="data">
+          <h2 class="section-title" data-i18n="dataBackup">数据备份</h2>
+          
+
+
+          <div class="data-actions">
+            <div class="action-card">
+              <div class="action-title" data-i18n="exportDataTitle">导出数据</div>
+              <div class="action-description" data-i18n="exportDataDescription">将所有备注和设置数据导出为JSON文件</div>
+              <button class="btn btn-primary" id="exportAllBtn" data-i18n="exportData">导出数据</button>
+            </div>
+            
+            <div class="action-card">
+              <div class="action-title" data-i18n="importDataTitle">导入数据</div>
+              <div class="action-description" data-i18n="importDataDescription">从JSON文件导入备注和设置数据</div>
+              <button class="btn" id="importBtn" data-i18n="selectFileImport">选择文件导入</button>
+              <input type="file" id="importFile" class="file-input" accept=".json">
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- 关于插件 -->
+        <div class="section" id="about">
+          <div class="about-section">
+            <div class="logo">📝</div>
+            <h2 data-i18n="extensionName">GitHub备注插件</h2>
+            <p data-i18n="extensionDescription">为GitHub仓库添加私有备注，提升您的代码管理体验</p>
+            <div class="links">
+              <a href="#" class="link" id="homepageLink" data-i18n="homepage">项目主页</a>
+              <a href="#" class="link" id="issuesLink" data-i18n="issues">问题反馈</a>
+              <a href="#" class="link" id="changelogLink" data-i18n="changelog">更新日志</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 保存按钮 -->
+  <div style="position: fixed; bottom: 20px; right: 20px; z-index: 100;">
+    <button class="btn btn-primary" id="saveAllBtn" data-i18n="saveAllSettings">保存所有设置</button>
+  </div>
+
+  <script src="i18n.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

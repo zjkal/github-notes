@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="popupTitle">GitHub备注管理</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 400px;
+      min-height: 500px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+      background: #ffffff;
+      color: #24292f;
+    }
+
+    .header {
+      background: #f6f8fa;
+      border-bottom: 1px solid #d0d7de;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #24292f;
+      margin-bottom: 4px;
+    }
+
+    .header .subtitle {
+      font-size: 12px;
+      color: #656d76;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 16px;
+      background: #f6f8fa;
+      border-bottom: 1px solid #d0d7de;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 20px;
+      font-weight: 600;
+      color: #0969da;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: #656d76;
+      margin-top: 2px;
+    }
+
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid #d0d7de;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 12px 8px;
+      text-align: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      color: #656d76;
+      transition: all 0.2s ease;
+    }
+
+    .tab.active {
+      color: #0969da;
+      border-bottom: 2px solid #0969da;
+      background: #f6f8fa;
+    }
+
+    .tab:hover {
+      background: #f3f4f6;
+    }
+
+    .tab-content {
+      display: none;
+      padding: 16px;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .search-box {
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .search-input:focus {
+      border-color: #0969da;
+      box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.12);
+    }
+
+    .notes-list {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .note-item {
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      padding: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .note-item:hover {
+      border-color: #0969da;
+      box-shadow: 0 1px 3px rgba(9, 105, 218, 0.12);
+    }
+
+    .note-repo {
+      font-weight: 600;
+      color: #0969da;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .note-content {
+      font-size: 13px;
+      color: #24292f;
+      line-height: 1.4;
+      margin-bottom: 6px;
+      max-height: 60px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .note-meta {
+      font-size: 11px;
+      color: #656d76;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .repo-link {
+      color: #0969da;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .repo-link:hover {
+      text-decoration: underline;
+    }
+
+    .btn {
+      padding: 4px 8px;
+      border: 1px solid #d0d7de;
+      border-radius: 4px;
+      background: #f6f8fa;
+      color: #24292f;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      background: #f3f4f6;
+    }
+
+    .btn-primary {
+      background: #0969da;
+      color: #ffffff;
+      border-color: #0969da;
+    }
+
+    .btn-primary:hover {
+      background: #0860ca;
+    }
+
+    .btn-danger {
+      background: #da3633;
+      color: #ffffff;
+      border-color: #da3633;
+    }
+
+    .btn-danger:hover {
+      background: #b62324;
+    }
+
+    .btn-success {
+      background: #1f883d;
+      color: #ffffff;
+      border-color: #1f883d;
+    }
+
+    .btn-success:hover {
+      background: #1a7f37;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .action-buttons .btn {
+      flex: 1;
+      padding: 8px 12px;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .file-input {
+      display: none;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #656d76;
+    }
+
+    .empty-state .icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+      opacity: 0.5;
+    }
+
+    .empty-state .message {
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .empty-state .submessage {
+      font-size: 12px;
+      opacity: 0.8;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: #656d76;
+    }
+
+    .notification {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      z-index: 1000;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .notification.show {
+      transform: translateX(0);
+    }
+
+    .notification.success {
+      background: #dafbe1;
+      color: #1a7f37;
+      border: 1px solid #1f883d;
+    }
+
+    .notification.error {
+      background: #ffebe9;
+      color: #b62324;
+      border: 1px solid #da3633;
+    }
+
+    .settings-group {
+      margin-bottom: 20px;
+    }
+
+    .settings-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: #24292f;
+      margin-bottom: 6px;
+    }
+
+    .settings-input {
+      width: 100%;
+      padding: 6px 8px;
+      border: 1px solid #d0d7de;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .settings-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .settings-checkbox input {
+      margin: 0;
+    }
+
+    .settings-checkbox label {
+      font-size: 13px;
+      color: #24292f;
+      cursor: pointer;
+    }
+
+    .footer {
+      border-top: 1px solid #d0d7de;
+      padding: 12px 16px;
+      text-align: center;
+      background: #f6f8fa;
+    }
+
+    .footer .version {
+      font-size: 11px;
+      color: #656d76;
+    }
+
+    .footer .links {
+      margin-top: 4px;
+    }
+
+    .footer .links a {
+      color: #0969da;
+      text-decoration: none;
+      font-size: 11px;
+      margin: 0 4px;
+    }
+
+    .footer .links a:hover {
+      text-decoration: underline;
+    }
+
+    /* 滚动条样式 */
+    .notes-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .notes-list::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 3px;
+    }
+
+    .notes-list::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 3px;
+    }
+
+    .notes-list::-webkit-scrollbar-thumb:hover {
+      background: #a8a8a8;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1 data-i18n="popupTitle">📝 GitHub备注管理</h1>
+    <div class="subtitle" data-i18n="popupSubtitle">管理您的GitHub仓库备注</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-number" id="totalNotes">0</div>
+      <div class="stat-label" data-i18n="totalNotes">总备注</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" id="todayNotes">0</div>
+      <div class="stat-label" data-i18n="todayNotes">今日新增</div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="notes" data-i18n="tabNotesList">备注列表</button>
+    <button class="tab" data-tab="manage" data-i18n="tabDataBackup">数据备份</button>
+    <button class="tab" data-tab="settings" data-i18n="tabSettings">设置</button>
+  </div>
+
+  <!-- 备注列表标签页 -->
+  <div class="tab-content active" id="notes-tab">
+    <div class="search-box">
+      <input type="text" class="search-input" id="searchInput" data-i18n="searchPlaceholder" placeholder="搜索备注...">
+    </div>
+    <div class="notes-list" id="notesList">
+      <div class="loading" data-i18n="loading">加载中...</div>
+    </div>
+  </div>
+
+  <!-- 数据管理标签页 -->
+  <div class="tab-content" id="manage-tab">
+    <div class="action-buttons">
+      <button class="btn btn-success" id="exportBtn" data-i18n="exportData">导出数据</button>
+      <button class="btn btn-primary" id="importBtn" data-i18n="importData">导入数据</button>
+    </div>
+    <input type="file" class="file-input" id="importFile" accept=".json">
+  </div>
+
+  <!-- 设置标签页 -->
+  <div class="tab-content" id="settings-tab">
+    <div class="settings-group">
+      <label class="settings-label" data-i18n="notificationSettings">通知设置</label>
+      <div class="settings-checkbox">
+        <input type="checkbox" id="enableNotifications">
+        <label for="enableNotifications" data-i18n="enableNotifications">启用通知</label>
+      </div>
+    </div>
+    
+    <div class="action-buttons">
+      <button class="btn btn-primary" id="saveSettingsBtn" data-i18n="saveSettings">保存设置</button>
+      <button class="btn" id="resetSettingsBtn" data-i18n="resetSettings">重置设置</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="links">
+      <a href="#" id="optionsLink" data-i18n="options">选项</a>
+      <a href="#" id="helpLink" data-i18n="help">帮助</a>
+    </div>
+  </div>
+
+  <script src="i18n.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
