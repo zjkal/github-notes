@@ -39,20 +39,45 @@ class GitHubNotesOptions {
     });
 
     // 数据管理按钮
-    document.getElementById('exportAllBtn').addEventListener('click', () => this.exportAllNotes());
-    document.getElementById('importBtn').addEventListener('click', () => this.importNotes());
+    const exportAllBtn = document.getElementById('exportAllBtn');
+    if (exportAllBtn) {
+      exportAllBtn.addEventListener('click', () => this.exportAllNotes());
+    }
+    
+    const importBtn = document.getElementById('importBtn');
+    if (importBtn) {
+      importBtn.addEventListener('click', () => this.importNotes());
+    }
 
     // 文件输入
-    document.getElementById('importFile').addEventListener('change', (e) => this.handleFileImport(e));
+    const importFile = document.getElementById('importFile');
+    if (importFile) {
+      importFile.addEventListener('change', (e) => this.handleFileImport(e));
+    }
 
     // 保存设置按钮
-    document.getElementById('saveAllBtn').addEventListener('click', () => this.saveAllSettings());
+    const saveAllBtn = document.getElementById('saveAllBtn');
+    if (saveAllBtn) {
+      saveAllBtn.addEventListener('click', () => this.saveAllSettings());
+    }
 
     // 关于页面链接
-    document.getElementById('homepageLink').addEventListener('click', () => this.openLink('https://github.com/zjkal/github-notes'));
-    document.getElementById('issuesLink').addEventListener('click', () => this.openLink('https://github.com/zjkal/github-notes/issues'));
-    document.getElementById('changelogLink').addEventListener('click', () => this.openLink('https://github.com/zjkal/github-notes/releases'));
-    document.getElementById('donateLink').addEventListener('click', () => this.openLink('https://github.com/sponsors/zjkal'));
+    const homepageLink = document.getElementById('homepageLink');
+    if (homepageLink) {
+      homepageLink.addEventListener('click', () => this.openLink('https://github.com/zjkal/github-notes'));
+    }
+    
+    const issuesLink = document.getElementById('issuesLink');
+    if (issuesLink) {
+      issuesLink.addEventListener('click', () => this.openLink('https://github.com/zjkal/github-notes/issues'));
+    }
+    
+    const changelogLink = document.getElementById('changelogLink');
+    if (changelogLink) {
+      changelogLink.addEventListener('click', () => this.openLink('https://github.com/zjkal/github-notes/releases'));
+    }
+    
+
   }
 
   // 切换页面部分
@@ -99,14 +124,18 @@ class GitHubNotesOptions {
   // 更新设置界面
   updateSettingsUI() {
     // 常规设置
-    document.getElementById('enableNotifications').checked = this.settings.enableNotifications !== false;
+    const enableNotifications = document.getElementById('enableNotifications');
+    if (enableNotifications) {
+      enableNotifications.checked = this.settings.enableNotifications !== false;
+    }
   }
 
   // 保存所有设置
   async saveAllSettings() {
     try {
+      const enableNotifications = document.getElementById('enableNotifications');
       const newSettings = {
-        enableNotifications: document.getElementById('enableNotifications').checked
+        enableNotifications: enableNotifications ? enableNotifications.checked : true
       };
       
       const response = await chrome.runtime.sendMessage({
@@ -158,7 +187,10 @@ class GitHubNotesOptions {
 
   // 导入备注
   importNotes() {
-    document.getElementById('importFile').click();
+    const importFile = document.getElementById('importFile');
+    if (importFile) {
+      importFile.click();
+    }
   }
 
   // 处理文件导入
@@ -192,7 +224,10 @@ class GitHubNotesOptions {
   // 显示版本信息
   displayVersion() {
     const manifest = chrome.runtime.getManifest();
-    document.getElementById('pluginVersion').textContent = t('version', manifest.version);
+    const pluginVersion = document.getElementById('pluginVersion');
+    if (pluginVersion) {
+      pluginVersion.textContent = t('version', manifest.version);
+    }
   }
 
   // 打开链接

@@ -31,6 +31,9 @@ class GitHubNotesPopup {
       // 加载设置
       await this.loadSettings();
       
+      // 显示版本信息
+      this.displayVersion();
+      
     } catch (error) {
       console.error('GitHub Notes Popup: 初始化失败', error);
       this.showNotification(t('error'), 'error');
@@ -261,7 +264,9 @@ class GitHubNotesPopup {
       });
       
       if (response.success) {
-        await this.refreshData();
+        await this.loadData();
+        await this.updateStats();
+        this.displayNotes();
         this.showNotification(response.message, 'success');
       } else {
         throw new Error(response.error);
@@ -359,6 +364,15 @@ class GitHubNotesPopup {
     chrome.tabs.create({
       url: 'https://github.com/zjkal/github-notes#readme'
     });
+  }
+
+  // 显示版本信息
+  displayVersion() {
+    const manifest = chrome.runtime.getManifest();
+    const popupVersion = document.getElementById('popupVersion');
+    if (popupVersion) {
+      popupVersion.textContent = t('version', manifest.version);
+    }
   }
 
   // 显示通知
