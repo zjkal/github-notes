@@ -11,7 +11,7 @@
 [![Microsoft Edge](https://img.shields.io/badge/Edge-Add--ons-blue)](https://microsoftedge.microsoft.com/addons/detail/github-notes/kjecncpipakdbomdpagliljcaomojjbk)
 [![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](https://github.com/zjkal/github-notes/releases)
 
-[English](README.md) | [中文](README_zh.md)
+English | [中文](README_zh.md)
 
 </div>
 
