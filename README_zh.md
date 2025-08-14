@@ -4,7 +4,7 @@
 
 ![GitHub Notes Logo](icon.svg)
 
-**为 GitHub 仓库添加私人备注的强大浏览器扩展**
+**为 GitHub 仓库添加私人备注的浏览器扩展**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Chrome Web Store](https://img.shields.io/badge/Chrome-Web%20Store-blue)](https://chrome.google.com/webstore)

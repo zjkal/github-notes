@@ -4,7 +4,7 @@
 
 ![GitHub Notes Logo](icon.svg)
 
-**A powerful browser extension for adding private notes to GitHub repositories**
+**A browser extension for adding private notes to GitHub repositories**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Chrome Web Store](https://img.shields.io/badge/Chrome-Web%20Store-blue)](https://chrome.google.com/webstore)
