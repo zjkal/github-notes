@@ -8,7 +8,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Chrome Web Store](https://img.shields.io/badge/Chrome-Web%20Store-blue)](https://chrome.google.com/webstore)
-[![Microsoft Edge](https://img.shields.io/badge/Edge-Add--ons-blue)](https://microsoftedge.microsoft.com/addons)
+[![Microsoft Edge](https://img.shields.io/badge/Edge-Add--ons-blue)](https://microsoftedge.microsoft.com/addons/detail/github-notes/kjecncpipakdbomdpagliljcaomojjbk)
 [![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](https://github.com/zjkal/github-notes/releases)
 
 [English](README.md) | [中文](README_zh.md)
@@ -49,7 +49,7 @@ GitHub Notes 是一个轻量级的浏览器扩展，允许您为任何 GitHub �
 
 ### 方法一：浏览器扩展商店（推荐）
 - **Chrome**：[从 Chrome 网上应用店安装](https://chrome.google.com/webstore)（即将推出）
-- **Edge**：[从 Microsoft Edge 加载项安装](https://microsoftedge.microsoft.com/addons)（即将推出）
+- **Edge**：[从 Microsoft Edge 加载项安装](https://microsoftedge.microsoft.com/addons/detail/github-notes/kjecncpipakdbomdpagliljcaomojjbk)
 
 ### 方法二：开发者模式（当前）
 
