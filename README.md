@@ -31,7 +31,6 @@ GitHub Notes is a lightweight browser extension that allows you to add private, 
 ### 🌍 Multi-language Support
 - **English & Chinese**: Full interface localization
 - **Auto Detection**: Automatically detects browser language
-- **Manual Override**: Switch languages in settings
 
 ### 📊 Data Management
 - **Import/Export**: JSON format data backup and restore
