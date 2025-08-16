@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![GitHub Notes Logo](icon.svg)
+![GitHub Notes Logo](assets/icon.svg)
 
 **A browser extension for adding private notes to GitHub repositories**
 
@@ -121,48 +121,9 @@ GitHub Notes is a lightweight browser extension that allows you to add private, 
 - Microsoft Edge 88+
 - Any Chromium-based browser with Manifest V3 support
 
-## 📁 Project Structure
-
-```
-github-notes/
-├── manifest.json          # Extension configuration
-├── _locales/              # Internationalization files
-│   ├── en/messages.json   # English translations
-│   └── zh_CN/messages.json # Chinese translations
-├── background.js          # Service worker
-├── content.js             # Content script for GitHub pages
-├── content.css            # Styles for GitHub integration
-├── popup.html             # Extension popup interface
-├── popup.js               # Popup functionality
-├── options.html           # Settings page
-├── options.js             # Settings functionality
-├── i18n.js                # Internationalization utilities
-├── icon.svg               # Extension icon
-└── README.md              # This file
-```
-
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
-
-### Development Setup
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/zjkal/github-notes.git
-   cd github-notes
-   ```
-
-2. **Load in browser**
-   - Follow the developer mode installation steps above
-   - Make changes to the code
-   - Reload the extension to test changes
-
-3. **Submit changes**
-   - Fork the repository
-   - Create a feature branch
-   - Make your changes
-   - Submit a pull request
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for development setup, coding standards, and submission process.
 
 ## 📄 License
 

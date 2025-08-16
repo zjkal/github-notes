@@ -52,18 +52,26 @@ Pull requests are the best way to propose changes to the codebase. We actively w
 ```
 github-notes/
 ├── manifest.json          # Extension configuration
+├── src/                   # Source code directory
+│   ├── background.js      # Service worker
+│   ├── content.js         # Content script for GitHub pages
+│   ├── i18n.js            # Internationalization utilities
+│   ├── options.js         # Settings functionality
+│   └── popup.js           # Popup functionality
+├── pages/                 # HTML pages directory
+│   ├── options.html       # Settings page
+│   └── popup.html         # Extension popup interface
+├── styles/                # CSS styles directory
+│   └── content.css        # Styles for GitHub integration
+├── assets/                # Assets directory
+│   ├── icon-16.png        # Extension icon (16x16)
+│   ├── icon-48.png        # Extension icon (48x48)
+│   ├── icon-128.png       # Extension icon (128x128)
+│   └── icon.svg           # Extension icon (SVG)
 ├── _locales/              # Internationalization files
 │   ├── en/messages.json   # English translations
 │   └── zh_CN/messages.json # Chinese translations
-├── background.js          # Service worker
-├── content.js             # Content script for GitHub pages
-├── content.css            # Styles for GitHub integration
-├── popup.html             # Extension popup interface
-├── popup.js               # Popup functionality
-├── options.html           # Settings page
-├── options.js             # Settings functionality
-├── i18n.js                # Internationalization utilities
-└── icon.svg               # Extension icon
+└── README.md              # Documentation
 ```
 
 ## Coding Standards

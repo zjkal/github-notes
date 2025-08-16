@@ -14,21 +14,21 @@
   "content_scripts": [
     {
       "matches": ["https://github.com/*/*"],
-      "js": ["content.js"],
-      "css": ["content.css"]
+      "js": ["src/content.js"],
+      "css": ["styles/content.css"]
     }
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "src/background.js"
   },
   "action": {
-    "default_popup": "popup.html",
+    "default_popup": "pages/popup.html",
     "default_title": "__MSG_popupTitle__"
   },
-  "options_page": "options.html",
+  "options_page": "pages/options.html",
   "icons": {
-    "16": "icon-16.png",
-    "48": "icon-48.png",
-    "128": "icon-128.png"
+    "16": "assets/icon-16.png",
+    "48": "assets/icon-48.png",
+    "128": "assets/icon-128.png"
   }
 }

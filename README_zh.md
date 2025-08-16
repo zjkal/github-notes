@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![GitHub Notes Logo](icon.svg)
+![GitHub Notes Logo](assets/icon.svg)
 
 **为 GitHub 仓库添加私人备注的浏览器扩展**
 
@@ -121,48 +121,9 @@ GitHub Notes 是一个轻量级的浏览器扩展，允许您为任何 GitHub �
 - Microsoft Edge 88+
 - 任何支持 Manifest V3 的 Chromium 内核浏览器
 
-## 📁 项目结构
-
-```
-github-notes/
-├── manifest.json          # 扩展配置文件
-├── _locales/              # 国际化文件
-│   ├── en/messages.json   # 英文翻译
-│   └── zh_CN/messages.json # 中文翻译
-├── background.js          # 后台服务
-├── content.js             # GitHub 页面内容脚本
-├── content.css            # GitHub 集成样式
-├── popup.html             # 扩展弹窗界面
-├── popup.js               # 弹窗功能
-├── options.html           # 设置页面
-├── options.js             # 设置功能
-├── i18n.js                # 国际化工具
-├── icon.svg               # 扩展图标
-└── README.md              # 说明文档
-```
-
 ## 🤝 贡献代码
 
-我们欢迎贡献！请查看我们的[贡献指南](CONTRIBUTING.md)了解详情。
-
-### 开发环境搭建
-
-1. **克隆仓库**
-   ```bash
-   git clone https://github.com/zjkal/github-notes.git
-   cd github-notes
-   ```
-
-2. **在浏览器中加载**
-   - 按照上述开发者模式安装步骤
-   - 修改代码
-   - 重新加载扩展以测试更改
-
-3. **提交更改**
-   - Fork 仓库
-   - 创建功能分支
-   - 进行更改
-   - 提交 Pull Request
+我们欢迎贡献！请查看我们的[贡献指南](CONTRIBUTING.md)了解开发环境搭建、编码规范和提交流程。
 
 ## 📄 许可证
 
