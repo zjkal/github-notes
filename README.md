@@ -7,7 +7,7 @@
 **A browser extension for adding private notes to GitHub repositories**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Chrome Web Store](https://img.shields.io/badge/Chrome-Web%20Store-blue)](https://chrome.google.com/webstore)
+[![Chrome Web Store](https://img.shields.io/badge/Chrome-Web%20Store-blue)](https://chromewebstore.google.com/detail/github-notes/mejhlipglijbkcfcnljjdcdngafbbheo)
 [![Microsoft Edge](https://img.shields.io/badge/Edge-Add--ons-blue)](https://microsoftedge.microsoft.com/addons/detail/github-notes/kjecncpipakdbomdpagliljcaomojjbk)
 [![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](https://github.com/zjkal/github-notes/releases)
 
@@ -47,7 +47,7 @@ GitHub Notes is a lightweight browser extension that allows you to add private, 
 ## 🚀 Installation
 
 ### Method 1: Browser Extension Store (Recommended)
-- **Chrome**: [Install from Chrome Web Store](https://chrome.google.com/webstore) (Coming Soon)
+- **Chrome**: [Install from Chrome Web Store](https://chromewebstore.google.com/detail/github-notes/mejhlipglijbkcfcnljjdcdngafbbheo)
 - **Edge**: [Install from Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/github-notes/kjecncpipakdbomdpagliljcaomojjbk)
 
 ### Method 2: Developer Mode (Current)

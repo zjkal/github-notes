@@ -7,7 +7,7 @@
 **为 GitHub 仓库添加私人备注的浏览器扩展**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Chrome Web Store](https://img.shields.io/badge/Chrome-Web%20Store-blue)](https://chrome.google.com/webstore)
+[![Chrome Web Store](https://img.shields.io/badge/Chrome-Web%20Store-blue)](https://chromewebstore.google.com/detail/github-notes/mejhlipglijbkcfcnljjdcdngafbbheo)
 [![Microsoft Edge](https://img.shields.io/badge/Edge-Add--ons-blue)](https://microsoftedge.microsoft.com/addons/detail/github-notes/kjecncpipakdbomdpagliljcaomojjbk)
 [![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](https://github.com/zjkal/github-notes/releases)
 
@@ -47,7 +47,7 @@ GitHub Notes 是一个轻量级的浏览器扩展，允许您为任何 GitHub �
 ## 🚀 安装方法
 
 ### 方法一：浏览器扩展商店（推荐）
-- **Chrome**：[从 Chrome 网上应用店安装](https://chrome.google.com/webstore)（即将推出）
+- **Chrome**：[从 Chrome 网上应用店安装](https://chromewebstore.google.com/detail/github-notes/mejhlipglijbkcfcnljjdcdngafbbheo)
 - **Edge**：[从 Microsoft Edge 加载项安装](https://microsoftedge.microsoft.com/addons/detail/github-notes/kjecncpipakdbomdpagliljcaomojjbk)
 
 ### 方法二：开发者模式（当前）
