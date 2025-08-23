@@ -4,134 +4,134 @@
 
 ![GitHub Notes Logo](assets/icon.svg)
 
-**A browser extension for adding private notes to GitHub repositories**
+**为 GitHub 仓库添加私人备注的浏览器扩展**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Chrome Web Store](https://img.shields.io/badge/Chrome-Web%20Store-blue)](https://chromewebstore.google.com/detail/github-notes/mejhlipglijbkcfcnljjdcdngafbbheo)
 [![Microsoft Edge](https://img.shields.io/badge/Edge-Add--ons-blue)](https://microsoftedge.microsoft.com/addons/detail/github-notes/kjecncpipakdbomdpagliljcaomojjbk)
 [![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](https://github.com/zjkal/github-notes/releases)
 
-English | [中文](README_zh.md)
+[English](README.md) | 中文
 
 </div>
 
-## 📝 Overview
+## 📝 项目简介
 
-GitHub Notes is a lightweight browser extension that allows you to add private, personal notes to any GitHub repository. Enhance your code management experience with persistent, local notes that help you remember important details about repositories you work with.
+GitHub Notes 是一个轻量级的浏览器扩展，允许您为任何 GitHub 仓库添加私人备注。通过持久化的本地备注功能，帮助您记住重要的仓库信息，提升代码管理体验。
 
-## ✨ Features
+## ✨ 功能特性
 
-### 🎯 Core Functionality
-- **Private Notes**: Add personal notes to any GitHub repository
-- **Real-time Editing**: Click to edit with instant save functionality
-- **Local Storage**: All data stored locally for privacy protection
-- **Cross-tab Sync**: Notes sync across browser tabs in real-time
-- **GitHub Integration**: Seamlessly integrates with GitHub's interface
+### 🎯 核心功能
+- **私有备注**：为任何 GitHub 仓库添加个人备注
+- **实时编辑**：点击即可编辑，支持即时保存
+- **本地存储**：所有数据保存在本地，保护隐私
+- **跨标签页同步**：备注在浏览器标签页间实时同步
+- **GitHub 集成**：完美融入 GitHub 界面设计
 
-### 🌍 Multi-language Support
-- **English & Chinese**: Full interface localization
-- **Auto Detection**: Automatically detects browser language
+### 🌍 多语言支持
+- **中英双语**：完整的界面本地化
+- **自动检测**：自动检测浏览器语言
 
-### 📊 Data Management
-- **Import/Export**: JSON format data backup and restore
-- **Search Function**: Quickly find notes by content
-- **Statistics**: View note counts and usage statistics
-- **Data Privacy**: No cloud sync, all data stays local
+### 📊 数据管理
+- **导入导出**：支持 JSON 格式的数据备份和恢复
+- **搜索功能**：快速搜索备注内容
+- **统计信息**：查看备注数量和使用统计
+- **数据隐私**：无云同步，所有数据保存在本地
 
-### 🎨 User Experience
-- **GitHub-style UI**: Perfectly matches GitHub's design language
-- **Responsive Design**: Works on all screen sizes
-- **Dark Mode**: Automatic theme adaptation
-- **Keyboard Shortcuts**: Efficient note management
+### 🎨 用户体验
+- **GitHub 风格界面**：完美匹配 GitHub 设计语言
+- **响应式设计**：支持所有屏幕尺寸
+- **深色模式**：自动适配主题
+- **快捷键支持**：高效的备注管理
 
-## 🚀 Installation
+## 🚀 安装方法
 
-### Method 1: Browser Extension Store (Recommended)
-- **Chrome**: [Install from Chrome Web Store](https://chromewebstore.google.com/detail/github-notes/mejhlipglijbkcfcnljjdcdngafbbheo)
-- **Edge**: [Install from Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/github-notes/kjecncpipakdbomdpagliljcaomojjbk)
+### 方法一：浏览器扩展商店（推荐）
+- **Chrome**：[从 Chrome 网上应用店安装](https://chromewebstore.google.com/detail/github-notes/mejhlipglijbkcfcnljjdcdngafbbheo)
+- **Edge**：[从 Microsoft Edge 加载项安装](https://microsoftedge.microsoft.com/addons/detail/github-notes/kjecncpipakdbomdpagliljcaomojjbk)
 
-### Method 2: Developer Mode (Current)
+### 方法二：开发者模式（当前）
 
-1. **Download the extension**
+1. **下载扩展**
    ```bash
    git clone https://github.com/zjkal/github-notes.git
    cd github-notes
    ```
 
-2. **Open browser extensions page**
-   - Chrome: Navigate to `chrome://extensions/`
-   - Edge: Navigate to `edge://extensions/`
+2. **打开浏览器扩展页面**
+   - Chrome：访问 `chrome://extensions/`
+   - Edge：访问 `edge://extensions/`
 
-3. **Enable Developer Mode**
-   - Toggle "Developer mode" in the top right corner
+3. **启用开发者模式**
+   - 在右上角打开"开发者模式"开关
 
-4. **Load the extension**
-   - Click "Load unpacked"
-   - Select the extension folder
-   - The extension will be installed and activated
+4. **加载扩展**
+   - 点击"加载已解压的扩展程序"
+   - 选择扩展文件夹
+   - 扩展将自动安装并启用
 
-## 📖 Usage Guide
+## 📖 使用指南
 
-### Basic Usage
+### 基本使用
 
-1. **Adding Notes**
-   - Visit any GitHub repository page
-   - Look for the notes section in the repository sidebar
-   - Click "Add Note" to start writing
+1. **添加备注**
+   - 访问任何 GitHub 仓库页面
+   - 在仓库侧边栏查找备注区域
+   - 点击"添加备注"开始编写
 
-2. **Editing Notes**
-   - Click on existing note content or the edit button
-   - Modify content in the popup editor
-   - Click "Save" or press `Ctrl+S` to save
+2. **编辑备注**
+   - 点击现有备注内容或编辑按钮
+   - 在弹出编辑器中修改内容
+   - 点击"保存"或按 `Ctrl+S` 保存
 
-3. **Deleting Notes**
-   - Click the delete link in the note editor
-   - Confirm the deletion
+3. **删除备注**
+   - 在备注编辑器中点击删除链接
+   - 确认删除操作
 
-### Advanced Features
+### 高级功能
 
-- **Notes Management**: Click the extension icon in the browser toolbar
-- **Search Notes**: Use the search function in the popup
-- **Data Backup**: Export/import notes via the settings page
-- **Customize Settings**: Right-click extension icon → Options
+- **备注管理**：点击浏览器工具栏中的扩展图标
+- **搜索备注**：在弹窗中使用搜索功能
+- **数据备份**：通过设置页面导出/导入备注
+- **自定义设置**：右键扩展图标 → 选项
 
-## ⌨️ Keyboard Shortcuts
+## ⌨️ 快捷键
 
-- `Ctrl + E`: Quick edit current page note
-- `Ctrl + S`: Save note (in edit mode)
-- `Escape`: Cancel editing
+- `Ctrl + E`：快速编辑当前页面备注
+- `Ctrl + S`：保存备注（编辑模式下）
+- `Escape`：取消编辑
 
-## 🔒 Privacy & Security
+## 🔒 隐私与安全
 
-- **Local Storage Only**: All data stored in your browser locally
-- **No Network Requests**: Extension doesn't send data to any servers
-- **Minimal Permissions**: Only requires access to GitHub pages
-- **Open Source**: Full source code available for audit
+- **仅本地存储**：所有数据仅存储在您的浏览器本地
+- **无网络请求**：扩展不会向任何服务器发送数据
+- **最小权限**：仅需要访问 GitHub 页面的权限
+- **开源透明**：完整源代码可供审查
 
-## 🛠️ Technical Details
+## 🛠️ 技术细节
 
-### Built With
-- **Manifest V3**: Latest browser extension standard
-- **Vanilla JavaScript**: No external dependencies
-- **Chrome Storage API**: Secure local data storage
-- **Internationalization**: Chrome i18n API for multi-language support
+### 技术栈
+- **Manifest V3**：最新的浏览器扩展标准
+- **原生 JavaScript**：无外部依赖
+- **Chrome Storage API**：安全的本地数据存储
+- **国际化**：Chrome i18n API 多语言支持
 
-### Browser Compatibility
+### 浏览器兼容性
 - Chrome 88+
 - Microsoft Edge 88+
-- Any Chromium-based browser with Manifest V3 support
+- 任何支持 Manifest V3 的 Chromium 内核浏览器
 
-## 🤝 Contributing
+## 🤝 贡献代码
 
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for development setup, coding standards, and submission process.
+我们欢迎贡献！请查看我们的[贡献指南](CONTRIBUTING.md)了解开发环境搭建、编码规范和提交流程。
 
-## 📄 License
+## 📄 许可证
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
 
-## 🙏 Support
+## 🙏 支持项目
 
-If you find this extension helpful, please consider:
-- ⭐ Starring the repository
-- 🐛 Reporting bugs and suggestions
-- 💡 Contributing code and ideas
+如果这个扩展对您有帮助，请考虑：
+- ⭐ 为仓库点星
+- 🐛 报告问题和建议
+- 💡 贡献代码和想法
