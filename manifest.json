@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extensionName__",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "__MSG_extensionDescription__",
   "default_locale": "en",
   "permissions": [
@@ -13,7 +13,7 @@
   ],
   "content_scripts": [
     {
-      "matches": ["https://github.com/*/*"],
+      "matches": ["https://github.com/*"],
       "js": ["src/content.js"],
       "css": ["styles/content.css"]
     }

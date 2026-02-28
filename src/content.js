@@ -8,6 +8,9 @@ class GitHubNotesManager {
     this.isEditing = false;
     this.isInitialized = false;
     this.lastUrl = window.location.href;
+    this.retryCount = 0;
+    this.maxRetryCount = 12;
+    this.retryTimer = null;
     this.init();
   }
 
@@ -182,12 +185,9 @@ class GitHubNotesManager {
       return false;
     }
     
-    // 检查是否有侧边栏（仓库页面的特征）
-    const hasSidebar = document.querySelector('.Layout-sidebar');
-    
     // 基本仓库页面格式检查
     const repoPattern = /^\/[^/]+\/[^/]+(?:\/.*)?$/;
-    return repoPattern.test(path) && hasSidebar;
+    return repoPattern.test(path);
   }
 
   // 获取当前仓库信息
@@ -236,17 +236,24 @@ class GitHubNotesManager {
         existingContainer.remove();
       }
 
-      // 查找GitHub侧边栏
-      const sidebar = document.querySelector('.Layout-sidebar');
+      // 查找GitHub侧边栏（兼容 Edge rails-partial 布局）
+      const sidebar =
+        document.querySelector('.Layout-sidebar') ||
+        document.querySelector('rails-partial[data-partial-name="codeViewRepoRoute.Sidebar"]') ||
+        document.querySelector('aside[aria-label="Repository sidebar"]');
       if (!sidebar) {
-        console.log('GitHub Notes: 未找到侧边栏，跳过创建');
+        console.log('GitHub Notes: 未找到侧边栏容器，稍后重试');
+        this.scheduleCreateRetry();
         return;
       }
 
       // 查找About板块
-      const aboutSection = sidebar.querySelector('.BorderGrid.about-margin');
+      let aboutSection =
+        sidebar.querySelector('.BorderGrid.about-margin') ||
+        sidebar.querySelector('.BorderGrid');
       if (!aboutSection) {
-        console.log('GitHub Notes: 未找到About板块，跳过创建');
+        console.log('GitHub Notes: 未找到About板块，稍后重试');
+        this.scheduleCreateRetry();
         return;
       }
 
@@ -281,6 +288,8 @@ class GitHubNotesManager {
         aboutSection.appendChild(this.noteContainer);
       }
 
+      this.retryCount = 0;
+
       // 绑定编辑按钮事件
       const editBtn = this.noteContainer.querySelector('.github-notes-edit-btn');
       if (editBtn) {
@@ -293,6 +302,18 @@ class GitHubNotesManager {
     } catch (error) {
       console.error('GitHub Notes: 创建备注容器失败', error);
     }
+  }
+
+  scheduleCreateRetry() {
+    if (this.retryTimer || this.retryCount >= this.maxRetryCount) {
+      return;
+    }
+    this.retryCount += 1;
+    this.retryTimer = setTimeout(() => {
+      this.retryTimer = null;
+      this.createNoteContainer();
+      this.loadAndDisplayNote();
+    }, 1000);
   }
 
   // 加载并显示备注
