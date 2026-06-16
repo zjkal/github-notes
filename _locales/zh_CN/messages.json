@@ -464,7 +464,7 @@
     "description": "My notes title"
   },
   "clickToAddNote": {
-    "message": "点击编辑按钮添加备注...",
+    "message": "暂无备注",
     "description": "Click to add note placeholder"
   },
   "clickToEditHint": {

@@ -1,6 +1,13 @@
 // GitHub Repository Notes - Options Script
 // 选项页面的交互逻辑和设置管理功能
 
+// 生产环境禁用调试信息输出
+if ('update_url' in chrome.runtime.getManifest()) {
+  console.log = () => {};
+  console.info = () => {};
+  console.debug = () => {};
+}
+
 class GitHubNotesOptions {
   constructor() {
     this.settings = {};

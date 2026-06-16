@@ -69,7 +69,8 @@
 }
 
 .github-notes-placeholder {
-  font-style: italic;
+  font-size: 14px;
+  line-height: 1.5;
   color: var(--fgColor-muted, #656d76);
 }
 

@@ -464,7 +464,7 @@
     "description": "My notes title"
   },
   "clickToAddNote": {
-    "message": "Click edit button to add note...",
+    "message": "No note yet",
     "description": "Click to add note placeholder"
   },
   "clickToEditHint": {

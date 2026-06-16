@@ -1,6 +1,13 @@
 // GitHub Repository Notes - Background Script
 // 处理插件生命周期和数据同步
 
+// 生产环境禁用调试信息输出
+if ('update_url' in chrome.runtime.getManifest()) {
+  console.log = () => {};
+  console.info = () => {};
+  console.debug = () => {};
+}
+
 class GitHubNotesBackground {
   constructor() {
     this.currentVersion = chrome.runtime.getManifest().version;

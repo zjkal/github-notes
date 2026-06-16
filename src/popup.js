@@ -1,6 +1,13 @@
 // GitHub Repository Notes - Popup Script
 // 弹窗页面的交互逻辑和数据管理功能
 
+// 生产环境禁用调试信息输出
+if ('update_url' in chrome.runtime.getManifest()) {
+  console.log = () => {};
+  console.info = () => {};
+  console.debug = () => {};
+}
+
 class GitHubNotesPopup {
   constructor() {
     this.currentTab = 'notes';
