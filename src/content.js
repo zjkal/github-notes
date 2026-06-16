@@ -11,6 +11,7 @@ class GitHubNotesManager {
     this.retryCount = 0;
     this.maxRetryCount = 12;
     this.retryTimer = null;
+    this.modalEscapeHandler = null;
     this.init();
   }
 
@@ -275,7 +276,7 @@ class GitHubNotesManager {
                 </svg>
               </button>
             </div>
-            <p class="f4 my-3 github-notes-content">${chrome.i18n.getMessage('clickToAddNote')}</p>
+            <div class="f4 my-3 github-notes-content"></div>
           </div>
         </div>
       `;
@@ -297,6 +298,17 @@ class GitHubNotesManager {
           e.preventDefault();
           e.stopPropagation();
           this.openEditor();
+        });
+      }
+
+      const contentArea = this.noteContainer.querySelector('.github-notes-content');
+      if (contentArea) {
+        contentArea.addEventListener('click', () => this.openEditor());
+        contentArea.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            this.openEditor();
+          }
         });
       }
     } catch (error) {
@@ -327,13 +339,26 @@ class GitHubNotesManager {
       const noteData = result[this.currentRepo];
       
       const contentDiv = this.noteContainer.querySelector('.github-notes-content');
+      contentDiv.tabIndex = 0;
+      contentDiv.setAttribute('role', 'button');
+      contentDiv.setAttribute('aria-label', chrome.i18n.getMessage('editNote'));
       
       if (noteData && noteData.content) {
         contentDiv.innerHTML = `
           <div class="github-notes-text">${this.escapeHtml(noteData.content)}</div>
+          <div class="github-notes-meta">
+            <span>${chrome.i18n.getMessage('lastUpdated', this.formatDate(noteData.updatedAt))}</span>
+            <span>${chrome.i18n.getMessage('clickToEditHint')}</span>
+          </div>
         `;
       } else {
-        contentDiv.innerHTML = `<div class="github-notes-placeholder">${chrome.i18n.getMessage('clickToAddNote')}</div>`;
+        contentDiv.innerHTML = `
+          <div class="github-notes-placeholder">${chrome.i18n.getMessage('clickToAddNote')}</div>
+          <div class="github-notes-meta">
+            <span>${chrome.i18n.getMessage('emptyNoteHelper')}</span>
+            <span>${chrome.i18n.getMessage('clickToEditHint')}</span>
+          </div>
+        `;
       }
     } catch (error) {
       console.error('GitHub Notes: 加载备注失败', error);
@@ -381,10 +406,14 @@ class GitHubNotesManager {
         </div>
         <div class="github-notes-modal-body">
           <textarea class="github-notes-textarea" placeholder="${chrome.i18n.getMessage('notePlaceholder')}">${this.escapeHtml(currentContent)}</textarea>
+          <div class="github-notes-editor-meta">
+            <span class="github-notes-shortcut-hint">${chrome.i18n.getMessage('editorShortcutHint')}</span>
+            <span class="github-notes-character-count" id="github-notes-character-count"></span>
+          </div>
         </div>
         <div class="github-notes-modal-footer">
           <div class="github-notes-footer-left">
-            <button class="github-notes-delete-btn">${chrome.i18n.getMessage('delete')}</button>
+            ${currentContent.trim() ? `<button class="github-notes-delete-btn">${chrome.i18n.getMessage('delete')}</button>` : ''}
           </div>
           <div class="github-notes-footer-right">
             <button class="github-notes-save-btn">${chrome.i18n.getMessage('save')}</button>
@@ -402,44 +431,43 @@ class GitHubNotesManager {
     const cancelBtn = modal.querySelector('.github-notes-cancel-btn');
     const deleteBtn = modal.querySelector('.github-notes-delete-btn');
     const closeBtn = modal.querySelector('.github-notes-close-btn');
+    const characterCount = modal.querySelector('#github-notes-character-count');
+    const updateCharacterCount = () => {
+      if (characterCount) {
+        characterCount.textContent = chrome.i18n.getMessage('characterCount', textarea.value.length.toString());
+      }
+    };
 
-    // 聚焦到文本框并确保可编辑
     setTimeout(() => {
       textarea.focus();
       textarea.setSelectionRange(textarea.value.length, textarea.value.length);
     }, 100);
+    updateCharacterCount();
+    textarea.addEventListener('input', updateCharacterCount);
 
-    // 保存按钮
     saveBtn.addEventListener('click', () => this.saveNote(textarea.value, modal));
-
-    // 取消按钮
     cancelBtn.addEventListener('click', () => this.closeEditor(modal));
-
-    // 关闭按钮
     closeBtn.addEventListener('click', () => this.closeEditor(modal));
+    if (deleteBtn) {
+      deleteBtn.addEventListener('click', () => this.deleteNote(modal));
+    }
 
-    // 删除按钮
-    deleteBtn.addEventListener('click', () => this.deleteNote(modal));
-
-    // 点击背景关闭
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
         this.closeEditor(modal);
       }
     });
 
-    // ESC键关闭
-    const escapeHandler = (e) => {
+    this.modalEscapeHandler = (e) => {
       if (e.key === 'Escape') {
         this.closeEditor(modal);
-        document.removeEventListener('keydown', escapeHandler);
       }
     };
-    document.addEventListener('keydown', escapeHandler);
+    document.addEventListener('keydown', this.modalEscapeHandler);
 
-    // Ctrl+S保存
     textarea.addEventListener('keydown', (e) => {
-      if (e.ctrlKey && e.key === 's') {
+      const isSaveShortcut = (e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'Enter');
+      if (isSaveShortcut) {
         e.preventDefault();
         this.saveNote(textarea.value, modal);
       }
@@ -452,8 +480,14 @@ class GitHubNotesManager {
       return;
     }
 
+    const trimmedContent = content.trim();
+    if (!trimmedContent) {
+      this.showNotification(chrome.i18n.getMessage('emptyNoteWarning'), 'info');
+      return;
+    }
+
     const noteData = {
-      content: content.trim(),
+      content: trimmedContent,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       version: 1
@@ -469,13 +503,8 @@ class GitHubNotesManager {
 
       await chrome.storage.local.set({ [this.currentRepo]: noteData });
       
-      // 更新显示
       this.loadAndDisplayNote();
-      
-      // 关闭编辑器
       this.closeEditor(modal);
-      
-      // 显示成功提示
       this.showNotification(chrome.i18n.getMessage('noteSaved'), 'success');
     } catch (error) {
       console.error('GitHub Notes: 保存备注失败', error);
@@ -495,14 +524,8 @@ class GitHubNotesManager {
 
     try {
       await chrome.storage.local.remove([this.currentRepo]);
-      
-      // 更新显示
       this.loadAndDisplayNote();
-      
-      // 关闭编辑器
       this.closeEditor(modal);
-      
-      // 显示成功提示
       this.showNotification(chrome.i18n.getMessage('noteDeleted'), 'success');
     } catch (error) {
       console.error('GitHub Notes: 删除备注失败', error);
@@ -514,6 +537,10 @@ class GitHubNotesManager {
   closeEditor(modal) {
     if (modal && modal.parentNode) {
       modal.parentNode.removeChild(modal);
+    }
+    if (this.modalEscapeHandler) {
+      document.removeEventListener('keydown', this.modalEscapeHandler);
+      this.modalEscapeHandler = null;
     }
     this.isEditing = false;
   }
@@ -547,6 +574,18 @@ class GitHubNotesManager {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+  }
+
+  formatDate(dateString) {
+    if (!dateString) {
+      return '';
+    }
+
+    try {
+      return new Date(dateString).toLocaleString();
+    } catch (error) {
+      return dateString;
+    }
   }
 }
 

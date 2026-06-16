@@ -15,7 +15,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 0;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
 .github-notes-header h2 {
@@ -35,14 +36,6 @@
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
-  opacity: 0;
-  visibility: hidden;
-}
-
-/* 当鼠标悬停在备注容器上时显示编辑按钮 */
-.github-notes-container:hover .github-notes-edit-btn {
-  opacity: 1;
-  visibility: visible;
 }
 
 .github-notes-edit-btn:hover {
@@ -52,6 +45,19 @@
 
 .github-notes-content {
   min-height: 20px;
+  padding: 10px 12px;
+  border: 1px solid var(--borderColor-default, #d0d7de);
+  border-radius: 8px;
+  background: var(--bgColor-muted, #f6f8fa);
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.github-notes-content:hover,
+.github-notes-content:focus-visible {
+  border-color: var(--fgColor-accent, #0969da);
+  box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.12);
+  outline: none;
 }
 
 .github-notes-text {
@@ -60,11 +66,21 @@
   color: var(--fgColor-default, #24292f);
   white-space: pre-wrap;
   word-break: break-word;
-  margin-bottom: 8px;
 }
 
 .github-notes-placeholder {
   font-style: italic;
+  color: var(--fgColor-muted, #656d76);
+}
+
+.github-notes-meta {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--fgColor-muted, #656d76);
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 /* 编辑器模态框样式 */
@@ -153,6 +169,16 @@
 .github-notes-textarea:focus {
   border-color: #0969da;
   box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.12);
+}
+
+.github-notes-editor-meta {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: #656d76;
 }
 
 .github-notes-modal-footer {
@@ -297,6 +323,7 @@
   
   .github-notes-modal-footer {
     flex-direction: column;
+    align-items: stretch;
   }
   
   .github-notes-save-btn,
@@ -306,6 +333,12 @@
   
   .github-notes-footer-left {
     margin-bottom: 8px;
+  }
+
+  .github-notes-meta,
+  .github-notes-editor-meta {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
@@ -365,5 +398,21 @@
   
   .github-notes-delete-btn:hover {
     color: #f85149;
+  }
+
+  .github-notes-content {
+    background: rgba(110, 118, 129, 0.12);
+    border-color: #30363d;
+  }
+
+  .github-notes-content:hover,
+  .github-notes-content:focus-visible {
+    border-color: #58a6ff;
+    box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.12);
+  }
+
+  .github-notes-meta,
+  .github-notes-editor-meta {
+    color: #8b949e;
   }
 }

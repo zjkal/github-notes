@@ -6,7 +6,8 @@
   "default_locale": "en",
   "permissions": [
     "storage",
-    "activeTab"
+    "activeTab",
+    "sidePanel"
   ],
   "host_permissions": [
     "https://github.com/*"
@@ -24,6 +25,9 @@
   "action": {
     "default_popup": "pages/popup.html",
     "default_title": "__MSG_popupTitle__"
+  },
+  "side_panel": {
+    "default_path": "pages/popup.html"
   },
   "options_page": "pages/options.html",
   "icons": {

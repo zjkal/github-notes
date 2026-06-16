@@ -7,33 +7,26 @@ class GitHubNotesPopup {
     this.allNotes = {};
     this.filteredNotes = {};
     this.settings = {};
+    this.searchQuery = '';
+    this.surfaceMode = 'popup';
+    this.sidePanelSupported = false;
+    this.handleWindowResize = () => this.applySurfaceMode();
     this.init();
   }
 
   // 初始化弹窗
   async init() {
     try {
-      // 初始化国际化
+      this.sidePanelSupported = this.supportsSidePanel();
+      this.applySurfaceMode();
       I18n.initPageText();
-      
-      // 绑定事件监听器
+      document.getElementById('clearSearchBtn').setAttribute('aria-label', t('clearSearch'));
       this.bindEventListeners();
-      
-      // 加载数据
       await this.loadData();
-      
-      // 更新统计信息
       await this.updateStats();
-      
-      // 显示备注列表
       this.displayNotes();
-      
-      // 加载设置
       await this.loadSettings();
-      
-      // 显示版本信息
       this.displayVersion();
-      
     } catch (error) {
       console.error('GitHub Notes Popup: 初始化失败', error);
       this.showNotification(t('error'), 'error');
@@ -42,44 +35,112 @@ class GitHubNotesPopup {
 
   // 绑定事件监听器
   bindEventListeners() {
-    // 标签页切换
+    window.addEventListener('resize', this.handleWindowResize);
+
     document.querySelectorAll('.tab').forEach(tab => {
       tab.addEventListener('click', (e) => {
         this.switchTab(e.target.dataset.tab);
       });
     });
 
-    // 搜索功能
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('input', (e) => {
       this.searchNotes(e.target.value);
     });
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && e.target.value) {
+        this.clearSearch();
+      }
+    });
 
-    // 数据管理按钮
+    document.getElementById('clearSearchBtn').addEventListener('click', () => this.clearSearch());
+
+    const notesList = document.getElementById('notesList');
+    notesList.addEventListener('click', (e) => {
+      const noteItem = e.target.closest('.note-item');
+      if (!noteItem) {
+        return;
+      }
+      this.openRepo(noteItem.dataset.repo);
+    });
+    notesList.addEventListener('keydown', (e) => {
+      const noteItem = e.target.closest('.note-item');
+      if (!noteItem) {
+        return;
+      }
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        this.openRepo(noteItem.dataset.repo);
+      }
+    });
+
     document.getElementById('exportBtn').addEventListener('click', () => this.exportNotes());
     document.getElementById('importBtn').addEventListener('click', () => this.importNotes());
-
-    // 文件导入
     document.getElementById('importFile').addEventListener('change', (e) => this.handleFileImport(e));
 
-    // 设置按钮
     document.getElementById('saveSettingsBtn').addEventListener('click', () => this.saveSettings());
     document.getElementById('resetSettingsBtn').addEventListener('click', () => this.resetSettings());
 
-    // 底部链接
-    document.getElementById('optionsLink').addEventListener('click', () => this.openOptions());
-    document.getElementById('helpLink').addEventListener('click', () => this.openHelp());
+    const openSidePanelBtn = document.getElementById('openSidePanelBtn');
+    if (openSidePanelBtn) {
+      openSidePanelBtn.addEventListener('click', () => this.openSidePanel());
+    }
+
+    document.getElementById('optionsLink').addEventListener('click', (e) => {
+      e.preventDefault();
+      this.openOptions();
+    });
+    document.getElementById('helpLink').addEventListener('click', (e) => {
+      e.preventDefault();
+      this.openHelp();
+    });
+  }
+
+  applySurfaceMode() {
+    const nextMode = this.detectSurfaceMode();
+    const hasSameSurface = this.surfaceMode === nextMode && document.body.dataset.surface === nextMode;
+    if (hasSameSurface) {
+      this.updateSidePanelEntryVisibility();
+      return;
+    }
+
+    this.surfaceMode = nextMode;
+    document.documentElement.dataset.surface = nextMode;
+    document.body.dataset.surface = nextMode;
+    this.updateSidePanelEntryVisibility();
+  }
+
+  detectSurfaceMode() {
+    const requestedSurface = new URLSearchParams(window.location.search).get('surface');
+    if (requestedSurface === 'sidebar' || requestedSurface === 'popup') {
+      return requestedSurface;
+    }
+
+    return window.innerHeight >= 700 || window.innerWidth >= 480
+      ? 'sidebar'
+      : 'popup';
+  }
+
+  supportsSidePanel() {
+    return Boolean(chrome.sidePanel?.open);
+  }
+
+  updateSidePanelEntryVisibility() {
+    const openSidePanelBtn = document.getElementById('openSidePanelBtn');
+    if (!openSidePanelBtn) {
+      return;
+    }
+
+    openSidePanelBtn.hidden = !this.sidePanelSupported || this.surfaceMode === 'sidebar';
   }
 
   // 切换标签页
   switchTab(tabName) {
-    // 更新标签按钮状态
     document.querySelectorAll('.tab').forEach(tab => {
       tab.classList.remove('active');
     });
     document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
 
-    // 更新内容区域
     document.querySelectorAll('.tab-content').forEach(content => {
       content.classList.remove('active');
     });
@@ -87,7 +148,6 @@ class GitHubNotesPopup {
 
     this.currentTab = tabName;
 
-    // 根据标签页执行特定操作
     if (tabName === 'notes') {
       this.displayNotes();
     } else if (tabName === 'settings') {
@@ -100,14 +160,13 @@ class GitHubNotesPopup {
     try {
       const result = await chrome.storage.local.get(null);
       this.allNotes = {};
-      
-      // 提取备注数据
+
       for (const key in result) {
         if (!key.startsWith('plugin_') && result[key].content !== undefined) {
           this.allNotes[key] = result[key];
         }
       }
-      
+
       this.filteredNotes = { ...this.allNotes };
     } catch (error) {
       console.error('GitHub Notes Popup: 加载数据失败', error);
@@ -121,10 +180,9 @@ class GitHubNotesPopup {
       const totalNotes = Object.keys(this.allNotes).length;
       document.getElementById('totalNotes').textContent = totalNotes;
 
-      // 计算今日新增备注
       const today = new Date().toDateString();
       let todayCount = 0;
-      
+
       for (const key in this.allNotes) {
         const note = this.allNotes[key];
         if (note.createdAt) {
@@ -144,38 +202,46 @@ class GitHubNotesPopup {
   // 显示备注列表
   displayNotes() {
     const notesList = document.getElementById('notesList');
-    
+    const resultsCount = document.getElementById('resultsCount');
+    const notesSummaryText = document.getElementById('notesSummaryText');
+    const filteredEntries = Object.entries(this.filteredNotes);
+
+    resultsCount.textContent = filteredEntries.length
+      ? t('searchResultsCount', filteredEntries.length.toString())
+      : '';
+    notesSummaryText.textContent = this.searchQuery
+      ? t('searchResults')
+      : t('recentlyUpdated');
+
     if (Object.keys(this.filteredNotes).length === 0) {
       notesList.innerHTML = `
         <div class="empty-state">
-          <div class="icon">📝</div>
-          <div class="message">${t('noNotesFound')}</div>
-          <div class="submessage">${t('noNotesDescription')}</div>
+          <div class="empty-title">${this.searchQuery ? t('searchNoResultsTitle') : t('noNotesFound')}</div>
+          <div class="empty-description">${this.searchQuery ? t('searchNoResultsDescription') : t('noNotesDescription')}</div>
         </div>
       `;
       return;
     }
 
-    // 按更新时间排序
-    const sortedNotes = Object.entries(this.filteredNotes)
-      .sort(([,a], [,b]) => new Date(b.updatedAt) - new Date(a.updatedAt));
+    const sortedNotes = filteredEntries.sort(([, a], [, b]) => new Date(b.updatedAt) - new Date(a.updatedAt));
 
     const notesHtml = sortedNotes.map(([repoKey, note]) => {
-      const updatedDate = new Date(note.updatedAt).toLocaleString();
-      const shortContent = note.content.length > 100 
-        ? note.content.substring(0, 100) + '...' 
-        : note.content;
+      const ownerInitial = repoKey.charAt(0).toUpperCase();
 
       return `
-        <div class="note-item" data-repo="${repoKey}">
-          <div class="note-repo">
-            <a href="https://github.com/${repoKey}" target="_blank" class="repo-link">${repoKey}</a>
+        <button class="note-item" type="button" data-repo="${repoKey}" title="${t('openRepository')}">
+          <div class="note-avatar">${this.escapeHtml(ownerInitial)}</div>
+          <div>
+            <div class="note-header">
+              <div class="note-repo">${this.escapeHtml(repoKey)}</div>
+            </div>
+            <div class="note-content">${this.escapeHtml(note.content)}</div>
+            <div class="note-meta">
+              <span>${t('lastUpdated', this.formatDate(note.updatedAt))}</span>
+              <span>${t('clickToOpen')}</span>
+            </div>
           </div>
-          <div class="note-content">${this.escapeHtml(shortContent)}</div>
-          <div class="note-meta">
-            <span>${t('updated', updatedDate)}</span>
-          </div>
-        </div>
+        </button>
       `;
     }).join('');
 
@@ -184,6 +250,9 @@ class GitHubNotesPopup {
 
   // 搜索备注
   async searchNotes(query) {
+    this.searchQuery = query.trim();
+    this.updateSearchUi();
+
     if (!query || query.trim() === '') {
       this.filteredNotes = { ...this.allNotes };
     } else {
@@ -212,9 +281,44 @@ class GitHubNotesPopup {
     this.displayNotes();
   }
 
+  updateSearchUi() {
+    const clearSearchBtn = document.getElementById('clearSearchBtn');
+    clearSearchBtn.classList.toggle('visible', Boolean(this.searchQuery));
+  }
 
+  clearSearch() {
+    const searchInput = document.getElementById('searchInput');
+    searchInput.value = '';
+    this.searchNotes('');
+    searchInput.focus();
+  }
 
-  // 导出备注
+  openRepo(repoKey) {
+    if (!repoKey) {
+      return;
+    }
+
+    chrome.tabs.create({
+      url: `https://github.com/${repoKey}`
+    });
+  }
+
+  async openSidePanel() {
+    if (!chrome.sidePanel?.open) {
+      this.showNotification(t('openSidePanelUnsupported'), 'error');
+      return;
+    }
+
+    try {
+      const currentWindow = await chrome.windows.getCurrent();
+      await chrome.sidePanel.open({ windowId: currentWindow.id });
+      window.close();
+    } catch (error) {
+      console.error('GitHub Notes Popup: 打开侧边栏失败', error);
+      this.showNotification(t('openSidePanelFailed'), 'error');
+    }
+  }
+
   async exportNotes() {
     try {
       const response = await chrome.runtime.sendMessage({
@@ -224,7 +328,7 @@ class GitHubNotesPopup {
       if (response.success) {
         const dataStr = JSON.stringify(response.data, null, 2);
         const dataBlob = new Blob([dataStr], { type: 'application/json' });
-        
+
         const url = URL.createObjectURL(dataBlob);
         const a = document.createElement('a');
         a.href = url;
@@ -257,12 +361,12 @@ class GitHubNotesPopup {
     try {
       const text = await file.text();
       const importData = JSON.parse(text);
-      
+
       const response = await chrome.runtime.sendMessage({
         action: 'importNotes',
         data: importData
       });
-      
+
       if (response.success) {
         await this.loadData();
         await this.updateStats();
@@ -276,11 +380,8 @@ class GitHubNotesPopup {
       this.showNotification(t('importFailed') + '：' + error.message, 'error');
     }
     
-    // 清空文件输入
     event.target.value = '';
   }
-
-
 
   // 加载设置
   async loadSettings() {
@@ -288,12 +389,10 @@ class GitHubNotesPopup {
       const response = await chrome.runtime.sendMessage({
         action: 'getSettings'
       });
-      
+
       if (response.success) {
         this.settings = response.settings;
-        
-        // 更新设置UI
-    document.getElementById('enableNotifications').checked = this.settings.enableNotifications !== false;
+        document.getElementById('enableNotifications').checked = this.settings.enableNotifications !== false;
       }
     } catch (error) {
       console.error('GitHub Notes Popup: 加载设置失败', error);
@@ -306,12 +405,12 @@ class GitHubNotesPopup {
       const settings = {
         enableNotifications: document.getElementById('enableNotifications').checked
       };
-      
+
       const response = await chrome.runtime.sendMessage({
         action: 'updateSettings',
         settings: settings
       });
-      
+
       if (response.success) {
         this.settings = response.settings;
         this.showNotification(t('settingsSaved'), 'success');
@@ -334,12 +433,12 @@ class GitHubNotesPopup {
       const defaultSettings = {
         enableNotifications: true
       };
-      
+
       const response = await chrome.runtime.sendMessage({
         action: 'updateSettings',
         settings: defaultSettings
       });
-      
+
       if (response.success) {
         await this.loadSettings();
         this.showNotification(t('settingsReset'), 'success');
@@ -354,9 +453,7 @@ class GitHubNotesPopup {
 
   // 打开选项页面
   openOptions() {
-    chrome.tabs.create({
-      url: chrome.runtime.getURL('options.html')
-    });
+    chrome.runtime.openOptionsPage();
   }
 
   // 打开帮助
@@ -377,7 +474,6 @@ class GitHubNotesPopup {
 
   // 显示通知
   showNotification(message, type = 'info') {
-    // 移除现有通知
     const existingNotification = document.querySelector('.notification');
     if (existingNotification) {
       existingNotification.remove();
@@ -386,15 +482,13 @@ class GitHubNotesPopup {
     const notification = document.createElement('div');
     notification.className = `notification ${type}`;
     notification.textContent = message;
-    
+
     document.body.appendChild(notification);
-    
-    // 显示动画
+
     setTimeout(() => {
       notification.classList.add('show');
     }, 100);
-    
-    // 自动隐藏
+
     setTimeout(() => {
       notification.classList.remove('show');
       setTimeout(() => {
@@ -410,6 +504,18 @@ class GitHubNotesPopup {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+  }
+
+  formatDate(dateString) {
+    if (!dateString) {
+      return '';
+    }
+
+    try {
+      return new Date(dateString).toLocaleString();
+    } catch (error) {
+      return dateString;
+    }
   }
 }
 

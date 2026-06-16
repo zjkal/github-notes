@@ -42,6 +42,10 @@ class I18n {
    * @param {Document} document - 文档对象
    */
   static initPageText(document = window.document) {
+    if (document.documentElement) {
+      document.documentElement.lang = this.getUILanguage();
+    }
+
     // 处理带有 data-i18n 属性的元素
     const elements = document.querySelectorAll('[data-i18n]');
     elements.forEach(element => {
@@ -62,6 +66,13 @@ class I18n {
     titleElements.forEach(element => {
       const key = element.getAttribute('data-i18n-title');
       element.title = this.getMessage(key);
+    });
+
+    // 处理带有 data-i18n-aria-label 属性的元素
+    const ariaLabelElements = document.querySelectorAll('[data-i18n-aria-label]');
+    ariaLabelElements.forEach(element => {
+      const key = element.getAttribute('data-i18n-aria-label');
+      element.setAttribute('aria-label', this.getMessage(key));
     });
 
     // 更新页面标题

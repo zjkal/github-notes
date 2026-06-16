@@ -4,24 +4,22 @@
 class GitHubNotesOptions {
   constructor() {
     this.settings = {};
+    this.overview = {
+      totalNotes: 0,
+      latestUpdate: null,
+      metadata: {}
+    };
     this.init();
   }
 
   // 初始化选项页面
   async init() {
     try {
-      // 初始化国际化
       I18n.initPageText();
-      
-      // 绑定事件监听器
       this.bindEventListeners();
-      
-      // 加载设置
       await this.loadSettings();
-      
-      // 显示版本信息
+      await this.loadOverview();
       this.displayVersion();
-      
     } catch (error) {
       console.error('GitHub Notes Options: 初始化失败', error);
       this.showNotification(t('error'), 'error');
@@ -30,69 +28,30 @@ class GitHubNotesOptions {
 
   // 绑定事件监听器
   bindEventListeners() {
-    // 导航菜单
-    document.querySelectorAll('.nav-item').forEach(item => {
-      item.addEventListener('click', (e) => {
-        e.preventDefault();
-        this.switchSection(e.target.dataset.section);
-      });
-    });
-
-    // 数据管理按钮
     const exportAllBtn = document.getElementById('exportAllBtn');
     if (exportAllBtn) {
       exportAllBtn.addEventListener('click', () => this.exportAllNotes());
     }
-    
+
     const importBtn = document.getElementById('importBtn');
     if (importBtn) {
       importBtn.addEventListener('click', () => this.importNotes());
     }
 
-    // 文件输入
     const importFile = document.getElementById('importFile');
     if (importFile) {
       importFile.addEventListener('change', (e) => this.handleFileImport(e));
     }
 
-    // 保存设置按钮
-    const saveAllBtn = document.getElementById('saveAllBtn');
-    if (saveAllBtn) {
-      saveAllBtn.addEventListener('click', () => this.saveAllSettings());
+    const saveSettingsBtn = document.getElementById('saveSettingsBtn');
+    if (saveSettingsBtn) {
+      saveSettingsBtn.addEventListener('click', () => this.saveAllSettings());
     }
 
-    // 关于页面链接
-    const homepageLink = document.getElementById('homepageLink');
-    if (homepageLink) {
-      homepageLink.addEventListener('click', () => this.openLink('https://github.com/zjkal/github-notes'));
+    const resetSettingsBtn = document.getElementById('resetSettingsBtn');
+    if (resetSettingsBtn) {
+      resetSettingsBtn.addEventListener('click', () => this.resetSettings());
     }
-    
-    const issuesLink = document.getElementById('issuesLink');
-    if (issuesLink) {
-      issuesLink.addEventListener('click', () => this.openLink('https://github.com/zjkal/github-notes/issues'));
-    }
-    
-    const changelogLink = document.getElementById('changelogLink');
-    if (changelogLink) {
-      changelogLink.addEventListener('click', () => this.openLink('https://github.com/zjkal/github-notes/releases'));
-    }
-    
-
-  }
-
-  // 切换页面部分
-  switchSection(sectionName) {
-    // 更新导航状态
-    document.querySelectorAll('.nav-item').forEach(item => {
-      item.classList.remove('active');
-    });
-    document.querySelector(`[data-section="${sectionName}"]`).classList.add('active');
-
-    // 更新内容区域
-    document.querySelectorAll('.section').forEach(section => {
-      section.classList.remove('active');
-    });
-    document.getElementById(sectionName).classList.add('active');
   }
 
   // 加载设置
@@ -101,14 +60,13 @@ class GitHubNotesOptions {
       const response = await chrome.runtime.sendMessage({
         action: 'getSettings'
       });
-      
+
       if (response.success) {
         this.settings = response.settings;
         this.updateSettingsUI();
       }
     } catch (error) {
       console.error('GitHub Notes Options: 加载设置失败', error);
-      // 使用默认设置
       this.settings = this.getDefaultSettings();
       this.updateSettingsUI();
     }
@@ -121,30 +79,29 @@ class GitHubNotesOptions {
     };
   }
 
-  // 更新设置界面
   updateSettingsUI() {
-    // 常规设置
     const enableNotifications = document.getElementById('enableNotifications');
     if (enableNotifications) {
       enableNotifications.checked = this.settings.enableNotifications !== false;
+      enableNotifications.setAttribute('aria-label', t('enableNotifications'));
     }
   }
 
-  // 保存所有设置
   async saveAllSettings() {
     try {
       const enableNotifications = document.getElementById('enableNotifications');
       const newSettings = {
         enableNotifications: enableNotifications ? enableNotifications.checked : true
       };
-      
+
       const response = await chrome.runtime.sendMessage({
         action: 'updateSettings',
         settings: newSettings
       });
-      
+
       if (response.success) {
         this.settings = response.settings;
+        this.updateNotificationState();
         this.showNotification(t('settingsSaved'), 'success');
       } else {
         throw new Error(response.error);
@@ -155,17 +112,80 @@ class GitHubNotesOptions {
     }
   }
 
-  // 导出所有备注
+  async resetSettings() {
+    if (!confirm(t('confirmReset'))) {
+      return;
+    }
+
+    this.settings = this.getDefaultSettings();
+    this.updateSettingsUI();
+    await this.saveAllSettings();
+  }
+
+  async loadOverview() {
+    try {
+      const result = await chrome.storage.local.get(null);
+      const notesEntries = Object.entries(result).filter(([key, value]) => !key.startsWith('plugin_') && value && value.content !== undefined);
+      const metadata = result.plugin_metadata || {};
+      let latestUpdate = null;
+
+      notesEntries.forEach(([, note]) => {
+        if (note.updatedAt && (!latestUpdate || new Date(note.updatedAt) > new Date(latestUpdate))) {
+          latestUpdate = note.updatedAt;
+        }
+      });
+
+      this.overview = {
+        totalNotes: notesEntries.length,
+        latestUpdate,
+        metadata
+      };
+
+      this.renderOverview();
+    } catch (error) {
+      console.error('GitHub Notes Options: 加载概览失败', error);
+    }
+  }
+
+  renderOverview() {
+    this.setText('overviewNoteCount', this.overview.totalNotes.toString());
+
+    const latestUpdateText = this.overview.latestUpdate
+      ? this.formatDate(this.overview.latestUpdate)
+      : t('neverUpdated');
+
+    const lastBackupText = this.overview.metadata.lastBackup
+      ? this.formatDate(this.overview.metadata.lastBackup)
+      : t('notBackedUpYet');
+
+    const lastImportText = this.overview.metadata.lastImport
+      ? this.formatDate(this.overview.metadata.lastImport)
+      : t('neverImported');
+    this.setText('overviewLatestUpdate', latestUpdateText);
+    this.setText('backupLastTime', lastBackupText);
+    this.setText('importLastTime', lastImportText);
+
+    this.updateNotificationState();
+  }
+
+  updateNotificationState() {
+    const notificationState = this.settings.enableNotifications !== false
+      ? t('notificationsEnabled')
+      : t('notificationsDisabled');
+
+    this.setText('settingsStatus', notificationState);
+  }
+
   async exportAllNotes() {
     try {
       const response = await chrome.runtime.sendMessage({
         action: 'exportAllNotes'
       });
-      
+
       if (response.success) {
         const dataStr = JSON.stringify(response.data, null, 2);
         const dataBlob = new Blob([dataStr], { type: 'application/json' });
-        
+
         const url = URL.createObjectURL(dataBlob);
         const a = document.createElement('a');
         a.href = url;
@@ -174,7 +194,8 @@ class GitHubNotesOptions {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        
+
+        await this.loadOverview();
         this.showNotification(t('exportSuccess'), 'success');
       } else {
         throw new Error(t('exportFailed'));
@@ -193,7 +214,6 @@ class GitHubNotesOptions {
     }
   }
 
-  // 处理文件导入
   async handleFileImport(event) {
     const file = event.target.files[0];
     if (!file) return;
@@ -201,13 +221,14 @@ class GitHubNotesOptions {
     try {
       const text = await file.text();
       const importData = JSON.parse(text);
-      
+
       const response = await chrome.runtime.sendMessage({
         action: 'importNotes',
         data: importData
       });
-      
+
       if (response.success) {
+        await this.loadOverview();
         this.showNotification(response.message, 'success');
       } else {
         throw new Error(response.error);
@@ -216,12 +237,10 @@ class GitHubNotesOptions {
       console.error('GitHub Notes Options: 导入失败', error);
       this.showNotification(t('importFailed') + '：' + error.message, 'error');
     }
-    
-    // 清空文件输入
+
     event.target.value = '';
   }
 
-  // 显示版本信息
   displayVersion() {
     const manifest = chrome.runtime.getManifest();
     const pluginVersion = document.getElementById('pluginVersion');
@@ -230,14 +249,7 @@ class GitHubNotesOptions {
     }
   }
 
-  // 打开链接
-  openLink(url) {
-    chrome.tabs.create({ url });
-  }
-
-  // 显示通知
   showNotification(message, type = 'info') {
-    // 移除现有通知
     const existingNotification = document.querySelector('.notification');
     if (existingNotification) {
       existingNotification.remove();
@@ -246,15 +258,13 @@ class GitHubNotesOptions {
     const notification = document.createElement('div');
     notification.className = `notification ${type}`;
     notification.textContent = message;
-    
+
     document.body.appendChild(notification);
-    
-    // 显示动画
+
     setTimeout(() => {
       notification.classList.add('show');
     }, 100);
-    
-    // 自动隐藏
+
     setTimeout(() => {
       notification.classList.remove('show');
       setTimeout(() => {
@@ -263,6 +273,25 @@ class GitHubNotesOptions {
         }
       }, 300);
     }, 3000);
+  }
+
+  setText(elementId, value) {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.textContent = value;
+    }
+  }
+
+  formatDate(dateString) {
+    if (!dateString) {
+      return '-';
+    }
+
+    try {
+      return new Date(dateString).toLocaleString();
+    } catch (error) {
+      return dateString;
+    }
   }
 }
 

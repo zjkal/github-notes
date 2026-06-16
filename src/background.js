@@ -3,6 +3,7 @@
 
 class GitHubNotesBackground {
   constructor() {
+    this.currentVersion = chrome.runtime.getManifest().version;
     this.init();
   }
 
@@ -35,15 +36,9 @@ class GitHubNotesBackground {
     console.log('GitHub Notes: 插件已安装', details);
 
     if (details.reason === 'install') {
-      // 首次安装
       await this.initializePlugin();
-      
-      // 打开欢迎页面
-      chrome.tabs.create({
-        url: chrome.runtime.getURL('options.html')
-      });
+      chrome.runtime.openOptionsPage();
     } else if (details.reason === 'update') {
-      // 插件更新
       await this.handlePluginUpdate(details.previousVersion);
     }
   }
@@ -58,7 +53,7 @@ class GitHubNotesBackground {
 
       // 设置插件元数据
       const metadata = {
-        version: '1.0.0',
+        version: this.currentVersion,
         installDate: new Date().toISOString(),
         totalNotes: 0,
         lastBackup: null
@@ -78,18 +73,16 @@ class GitHubNotesBackground {
   // 处理插件更新
   async handlePluginUpdate(previousVersion) {
     try {
-      console.log(`GitHub Notes: 插件从 ${previousVersion} 更新到 1.0.0`);
+      console.log(`GitHub Notes: 插件从 ${previousVersion} 更新到 ${this.currentVersion}`);
       
-      // 更新元数据
       const result = await chrome.storage.local.get(['plugin_metadata']);
       const metadata = result.plugin_metadata || {};
       
-      metadata.version = '1.0.0';
+      metadata.version = this.currentVersion;
       metadata.lastUpdate = new Date().toISOString();
       
       await chrome.storage.local.set({ 'plugin_metadata': metadata });
       
-      // 这里可以添加数据迁移逻辑
       await this.migrateData(previousVersion);
       
     } catch (error) {
@@ -195,7 +188,7 @@ class GitHubNotesBackground {
       });
       
       const exportData = {
-        version: '1.0.0',
+        version: this.currentVersion,
         exportedAt: new Date().toISOString(),
         notes,
         settings: validSettings,

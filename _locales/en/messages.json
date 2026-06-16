@@ -15,6 +15,38 @@
     "message": "Manage your GitHub repository notes",
     "description": "Popup window subtitle"
   },
+  "currentRepoTitle": {
+    "message": "Current Repository",
+    "description": "Current repository panel title"
+  },
+  "activeRepoBadge": {
+    "message": "Current Tab",
+    "description": "Active repository badge"
+  },
+  "openCurrentRepo": {
+    "message": "Open Repo",
+    "description": "Open current repository button"
+  },
+  "filterCurrentRepo": {
+    "message": "Filter Current",
+    "description": "Filter current repository button"
+  },
+  "noActiveRepo": {
+    "message": "Not on a GitHub repository page",
+    "description": "No active repository title"
+  },
+  "noActiveRepoDescription": {
+    "message": "Open any GitHub repository page and this panel will show a quick note summary for it.",
+    "description": "No active repository description"
+  },
+  "currentRepoEmptyDescription": {
+    "message": "No note yet for this repository. Open the page card to add one quickly.",
+    "description": "Current repository empty description"
+  },
+  "currentRepoReadyDescription": {
+    "message": "Current repository detected. You can open it or filter to it instantly.",
+    "description": "Current repository ready description"
+  },
   "totalNotes": {
     "message": "Total Notes",
     "description": "Total notes label"
@@ -38,6 +70,30 @@
   "searchPlaceholder": {
     "message": "Search notes...",
     "description": "Search input placeholder"
+  },
+  "clearSearch": {
+    "message": "Clear search",
+    "description": "Clear search button label"
+  },
+  "recentlyUpdated": {
+    "message": "Recently Updated",
+    "description": "Recently updated summary"
+  },
+  "searchResults": {
+    "message": "Search Results",
+    "description": "Search results summary"
+  },
+  "searchResultsCount": {
+    "message": "$1 results",
+    "description": "Search results count"
+  },
+  "searchNoResultsTitle": {
+    "message": "No matching notes found",
+    "description": "No search results title"
+  },
+  "searchNoResultsDescription": {
+    "message": "Try searching by repository name or note keywords, or clear the search to see everything.",
+    "description": "No search results description"
   },
   "loading": {
     "message": "Loading...",
@@ -71,6 +127,18 @@
     "message": "Options",
     "description": "Options link"
   },
+  "openSidePanel": {
+    "message": "Open Side Panel",
+    "description": "Open side panel button"
+  },
+  "openSidePanelFailed": {
+    "message": "Failed to open side panel",
+    "description": "Failed to open side panel"
+  },
+  "openSidePanelUnsupported": {
+    "message": "This browser does not support side panel mode",
+    "description": "Side panel unsupported message"
+  },
   "help": {
     "message": "Help",
     "description": "Help link"
@@ -87,6 +155,10 @@
     "message": "Manage your GitHub repository notes, customize plugin settings and data management",
     "description": "Options page description"
   },
+  "overviewSection": {
+    "message": "Overview",
+    "description": "Overview section"
+  },
   "generalSettings": {
     "message": "General Settings",
     "description": "General settings section"
@@ -102,6 +174,34 @@
   "notificationDescription": {
     "message": "Show notifications when saving or deleting notes",
     "description": "Notification setting description"
+  },
+  "settingsDescription": {
+    "message": "Only the core settings that affect daily usage are kept here.",
+    "description": "Settings description"
+  },
+  "storageOverviewTitle": {
+    "message": "Storage Overview",
+    "description": "Storage overview title"
+  },
+  "storageOverviewDescription": {
+    "message": "All notes are stored locally in the browser and are not uploaded to external servers automatically.",
+    "description": "Storage overview description"
+  },
+  "notesCountLabel": {
+    "message": "Notes Count",
+    "description": "Notes count label"
+  },
+  "latestUpdateLabel": {
+    "message": "Latest Update",
+    "description": "Latest update label"
+  },
+  "storageLocationLabel": {
+    "message": "Storage Location",
+    "description": "Storage location label"
+  },
+  "localOnlyStorage": {
+    "message": "Local Only",
+    "description": "Local only storage"
   },
   "exportDataTitle": {
     "message": "Export Data",
@@ -123,6 +223,38 @@
     "message": "Select File to Import",
     "description": "Select file to import button"
   },
+  "backupTipsTitle": {
+    "message": "Backup & Restore",
+    "description": "Backup tips title"
+  },
+  "backupTipsDescription": {
+    "message": "Export a backup before reinstalling the browser or clearing local data.",
+    "description": "Backup tips description"
+  },
+  "backupStatusTitle": {
+    "message": "Backup Status",
+    "description": "Backup status title"
+  },
+  "backupStatusDescription": {
+    "message": "This area shows the latest export and import times.",
+    "description": "Backup status description"
+  },
+  "dataSafetyTitle": {
+    "message": "Data Notice",
+    "description": "Data safety title"
+  },
+  "dataSafetyDescription": {
+    "message": "If browser cache is cleared, local notes may be removed as well, so back up regularly.",
+    "description": "Data safety description"
+  },
+  "recommendedActionLabel": {
+    "message": "Recommended",
+    "description": "Recommended action label"
+  },
+  "recommendedActionValue": {
+    "message": "Export backups regularly",
+    "description": "Recommended action value"
+  },
   "homepage": {
     "message": "Homepage",
     "description": "Homepage link"
@@ -142,6 +274,46 @@
   "saveAllSettings": {
     "message": "Save All Settings",
     "description": "Save all settings button"
+  },
+  "pluginVersionLabel": {
+    "message": "Current Version",
+    "description": "Plugin version label"
+  },
+  "installDateLabel": {
+    "message": "Install Date",
+    "description": "Install date label"
+  },
+  "coreFeaturesTitle": {
+    "message": "Core Features",
+    "description": "Core features title"
+  },
+  "coreFeaturesDescription": {
+    "message": "The extension stays focused on the most common private note workflows and keeps the experience lightweight.",
+    "description": "Core features description"
+  },
+  "featurePrivateNotes": {
+    "message": "Private Notes",
+    "description": "Feature private notes"
+  },
+  "featureSearch": {
+    "message": "Search",
+    "description": "Feature search"
+  },
+  "featureBackup": {
+    "message": "Import / Export",
+    "description": "Feature backup"
+  },
+  "featureAvailable": {
+    "message": "Available",
+    "description": "Feature available"
+  },
+  "privacyTitle": {
+    "message": "Privacy",
+    "description": "Privacy title"
+  },
+  "privacyDescription": {
+    "message": "The extension does not rely on cloud accounts and keeps your content inside the browser by default.",
+    "description": "Privacy description"
   },
   "addNote": {
     "message": "Add Note",
@@ -207,6 +379,58 @@
     "message": "Updated: $1",
     "description": "Updated time label"
   },
+  "lastUpdated": {
+    "message": "Last updated: $1",
+    "description": "Last updated label"
+  },
+  "lastBackupLabel": {
+    "message": "Last Backup",
+    "description": "Last backup label"
+  },
+  "lastImportLabel": {
+    "message": "Last Import",
+    "description": "Last import label"
+  },
+  "notificationsEnabled": {
+    "message": "Notifications on",
+    "description": "Notifications enabled"
+  },
+  "notificationsDisabled": {
+    "message": "Notifications off",
+    "description": "Notifications disabled"
+  },
+  "notBackedUpYet": {
+    "message": "Not backed up yet",
+    "description": "Not backed up yet"
+  },
+  "neverImported": {
+    "message": "Never imported",
+    "description": "Never imported"
+  },
+  "neverUpdated": {
+    "message": "No updates yet",
+    "description": "Never updated"
+  },
+  "unknown": {
+    "message": "Unknown",
+    "description": "Unknown"
+  },
+  "backupStatusReady": {
+    "message": "Backup record available",
+    "description": "Backup status ready"
+  },
+  "backupStatusPending": {
+    "message": "Create your first backup soon",
+    "description": "Backup status pending"
+  },
+  "openRepository": {
+    "message": "Open repository",
+    "description": "Open repository title"
+  },
+  "clickToOpen": {
+    "message": "Click to open",
+    "description": "Click to open hint"
+  },
   "exportSuccess": {
     "message": "Export successful",
     "description": "Export success notification"
@@ -243,9 +467,29 @@
     "message": "Click edit button to add note...",
     "description": "Click to add note placeholder"
   },
+  "clickToEditHint": {
+    "message": "Click to edit",
+    "description": "Click to edit hint"
+  },
+  "emptyNoteHelper": {
+    "message": "Use this space for purpose, risks, or follow-up notes for the repository.",
+    "description": "Empty note helper text"
+  },
   "editNoteTitle": {
     "message": "Edit Note - $1",
     "description": "Edit note modal title"
+  },
+  "editorShortcutHint": {
+    "message": "Ctrl/Cmd+S or Ctrl/Cmd+Enter to save quickly",
+    "description": "Editor shortcut hint"
+  },
+  "characterCount": {
+    "message": "$1 characters",
+    "description": "Character count"
+  },
+  "emptyNoteWarning": {
+    "message": "Note content cannot be empty",
+    "description": "Empty note warning"
   },
   "confirmDeleteNote": {
     "message": "Are you sure you want to delete this note?",

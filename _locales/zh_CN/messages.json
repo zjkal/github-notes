@@ -15,6 +15,38 @@
     "message": "管理您的GitHub仓库备注",
     "description": "Popup window subtitle"
   },
+  "currentRepoTitle": {
+    "message": "当前仓库",
+    "description": "Current repository panel title"
+  },
+  "activeRepoBadge": {
+    "message": "当前页面",
+    "description": "Active repository badge"
+  },
+  "openCurrentRepo": {
+    "message": "打开仓库",
+    "description": "Open current repository button"
+  },
+  "filterCurrentRepo": {
+    "message": "仅看当前仓库",
+    "description": "Filter current repository button"
+  },
+  "noActiveRepo": {
+    "message": "当前不在 GitHub 仓库页",
+    "description": "No active repository title"
+  },
+  "noActiveRepoDescription": {
+    "message": "切换到任意 GitHub 仓库页面后，这里会显示当前仓库的备注摘要。",
+    "description": "No active repository description"
+  },
+  "currentRepoEmptyDescription": {
+    "message": "这个仓库还没有备注，点击进入页面里的备注卡片即可快速添加。",
+    "description": "Current repository empty description"
+  },
+  "currentRepoReadyDescription": {
+    "message": "已识别当前仓库，可直接打开或快速筛选。",
+    "description": "Current repository ready description"
+  },
   "totalNotes": {
     "message": "总备注",
     "description": "Total notes label"
@@ -38,6 +70,30 @@
   "searchPlaceholder": {
     "message": "搜索备注...",
     "description": "Search input placeholder"
+  },
+  "clearSearch": {
+    "message": "清空搜索",
+    "description": "Clear search button label"
+  },
+  "recentlyUpdated": {
+    "message": "最近更新",
+    "description": "Recently updated summary"
+  },
+  "searchResults": {
+    "message": "搜索结果",
+    "description": "Search results summary"
+  },
+  "searchResultsCount": {
+    "message": "$1 条结果",
+    "description": "Search results count"
+  },
+  "searchNoResultsTitle": {
+    "message": "没有找到匹配的备注",
+    "description": "No search results title"
+  },
+  "searchNoResultsDescription": {
+    "message": "试试搜索仓库名、备注关键词，或清空搜索查看全部备注。",
+    "description": "No search results description"
   },
   "loading": {
     "message": "加载中...",
@@ -71,6 +127,18 @@
     "message": "选项",
     "description": "Options link"
   },
+  "openSidePanel": {
+    "message": "切换到侧边栏",
+    "description": "Open side panel button"
+  },
+  "openSidePanelFailed": {
+    "message": "打开侧边栏失败",
+    "description": "Failed to open side panel"
+  },
+  "openSidePanelUnsupported": {
+    "message": "当前浏览器不支持侧边栏模式",
+    "description": "Side panel unsupported message"
+  },
   "help": {
     "message": "帮助",
     "description": "Help link"
@@ -87,6 +155,10 @@
     "message": "管理您的GitHub仓库备注，自定义插件设置和数据管理",
     "description": "Options page description"
   },
+  "overviewSection": {
+    "message": "概览",
+    "description": "Overview section"
+  },
   "generalSettings": {
     "message": "常规设置",
     "description": "General settings section"
@@ -102,6 +174,34 @@
   "notificationDescription": {
     "message": "在保存、删除备注时显示通知",
     "description": "Notification setting description"
+  },
+  "settingsDescription": {
+    "message": "仅保留会影响日常使用体验的核心设置。",
+    "description": "Settings description"
+  },
+  "storageOverviewTitle": {
+    "message": "存储概览",
+    "description": "Storage overview title"
+  },
+  "storageOverviewDescription": {
+    "message": "所有备注都保存在浏览器本地，不会自动上传到外部服务器。",
+    "description": "Storage overview description"
+  },
+  "notesCountLabel": {
+    "message": "备注数量",
+    "description": "Notes count label"
+  },
+  "latestUpdateLabel": {
+    "message": "最近更新",
+    "description": "Latest update label"
+  },
+  "storageLocationLabel": {
+    "message": "存储位置",
+    "description": "Storage location label"
+  },
+  "localOnlyStorage": {
+    "message": "仅本地存储",
+    "description": "Local only storage"
   },
   "exportDataTitle": {
     "message": "导出数据",
@@ -123,6 +223,38 @@
     "message": "选择文件导入",
     "description": "Select file to import button"
   },
+  "backupTipsTitle": {
+    "message": "备份与恢复",
+    "description": "Backup tips title"
+  },
+  "backupTipsDescription": {
+    "message": "建议在重装浏览器或清理本地数据前先导出备份文件。",
+    "description": "Backup tips description"
+  },
+  "backupStatusTitle": {
+    "message": "备份状态",
+    "description": "Backup status title"
+  },
+  "backupStatusDescription": {
+    "message": "这里会显示最近一次导出和导入的时间。",
+    "description": "Backup status description"
+  },
+  "dataSafetyTitle": {
+    "message": "数据提示",
+    "description": "Data safety title"
+  },
+  "dataSafetyDescription": {
+    "message": "如果浏览器缓存被清理，本地备注也会一起移除，请定期备份。",
+    "description": "Data safety description"
+  },
+  "recommendedActionLabel": {
+    "message": "建议操作",
+    "description": "Recommended action label"
+  },
+  "recommendedActionValue": {
+    "message": "定期导出备份",
+    "description": "Recommended action value"
+  },
   "homepage": {
     "message": "项目主页",
     "description": "Homepage link"
@@ -142,6 +274,46 @@
   "saveAllSettings": {
     "message": "保存所有设置",
     "description": "Save all settings button"
+  },
+  "pluginVersionLabel": {
+    "message": "当前版本",
+    "description": "Plugin version label"
+  },
+  "installDateLabel": {
+    "message": "安装时间",
+    "description": "Install date label"
+  },
+  "coreFeaturesTitle": {
+    "message": "核心特性",
+    "description": "Core features title"
+  },
+  "coreFeaturesDescription": {
+    "message": "扩展聚焦在最常用的私有备注场景，保持轻量和直观。",
+    "description": "Core features description"
+  },
+  "featurePrivateNotes": {
+    "message": "私有备注",
+    "description": "Feature private notes"
+  },
+  "featureSearch": {
+    "message": "搜索",
+    "description": "Feature search"
+  },
+  "featureBackup": {
+    "message": "导入导出",
+    "description": "Feature backup"
+  },
+  "featureAvailable": {
+    "message": "可用",
+    "description": "Feature available"
+  },
+  "privacyTitle": {
+    "message": "隐私说明",
+    "description": "Privacy title"
+  },
+  "privacyDescription": {
+    "message": "扩展不依赖云端账户，所有内容默认保留在你的浏览器环境中。",
+    "description": "Privacy description"
   },
   "addNote": {
     "message": "添加备注",
@@ -207,6 +379,58 @@
     "message": "更新: $1",
     "description": "Updated time label"
   },
+  "lastUpdated": {
+    "message": "最近更新：$1",
+    "description": "Last updated label"
+  },
+  "lastBackupLabel": {
+    "message": "最近备份",
+    "description": "Last backup label"
+  },
+  "lastImportLabel": {
+    "message": "最近导入",
+    "description": "Last import label"
+  },
+  "notificationsEnabled": {
+    "message": "通知已开启",
+    "description": "Notifications enabled"
+  },
+  "notificationsDisabled": {
+    "message": "通知已关闭",
+    "description": "Notifications disabled"
+  },
+  "notBackedUpYet": {
+    "message": "尚未备份",
+    "description": "Not backed up yet"
+  },
+  "neverImported": {
+    "message": "尚未导入",
+    "description": "Never imported"
+  },
+  "neverUpdated": {
+    "message": "暂无更新",
+    "description": "Never updated"
+  },
+  "unknown": {
+    "message": "未知",
+    "description": "Unknown"
+  },
+  "backupStatusReady": {
+    "message": "已生成备份记录",
+    "description": "Backup status ready"
+  },
+  "backupStatusPending": {
+    "message": "建议尽快创建首次备份",
+    "description": "Backup status pending"
+  },
+  "openRepository": {
+    "message": "打开仓库",
+    "description": "Open repository title"
+  },
+  "clickToOpen": {
+    "message": "点击打开",
+    "description": "Click to open hint"
+  },
   "exportSuccess": {
     "message": "导出成功",
     "description": "Export success notification"
@@ -243,9 +467,29 @@
     "message": "点击编辑按钮添加备注...",
     "description": "Click to add note placeholder"
   },
+  "clickToEditHint": {
+    "message": "点击即可编辑",
+    "description": "Click to edit hint"
+  },
+  "emptyNoteHelper": {
+    "message": "把项目用途、风险点或待跟进事项记在这里。",
+    "description": "Empty note helper text"
+  },
   "editNoteTitle": {
     "message": "编辑备注 - $1",
     "description": "Edit note modal title"
+  },
+  "editorShortcutHint": {
+    "message": "Ctrl/Cmd+S 或 Ctrl/Cmd+Enter 快速保存",
+    "description": "Editor shortcut hint"
+  },
+  "characterCount": {
+    "message": "$1 个字符",
+    "description": "Character count"
+  },
+  "emptyNoteWarning": {
+    "message": "备注内容不能为空",
+    "description": "Empty note warning"
   },
   "confirmDeleteNote": {
     "message": "确定要删除这个备注吗？",

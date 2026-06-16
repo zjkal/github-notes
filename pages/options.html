@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-i18n="optionsTitle">GitHub备注插件 - 选项设置</title>
+  <title data-i18n="optionsTitle">GitHub Notes - Options</title>
   <style>
     * {
       margin: 0;
@@ -11,241 +11,227 @@
       box-sizing: border-box;
     }
 
+    :root {
+      color-scheme: light dark;
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
-      background-color: #f6f8fa;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+      background: #f6f8fa;
       color: #24292f;
       line-height: 1.5;
       min-height: 100vh;
     }
 
+    button,
+    input {
+      font: inherit;
+    }
+
     .container {
-      max-width: 1200px;
+      max-width: 860px;
       margin: 0 auto;
-      padding: 20px;
+      padding: 28px 20px 40px;
     }
 
-    .header {
-      background: white;
-      border: 1px solid #d0d7de;
-      border-radius: 6px;
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 18px;
       padding: 24px;
-      margin-bottom: 24px;
-      box-shadow: 0 1px 3px rgba(16, 22, 26, 0.1);
+      border: 1px solid #d0d7de;
+      border-radius: 16px;
+      background:
+        linear-gradient(180deg, rgba(9, 105, 218, 0.08), rgba(9, 105, 218, 0)),
+        #ffffff;
+      box-shadow: 0 12px 30px rgba(31, 35, 40, 0.06);
     }
 
-    .header h1 {
-      font-size: 24px;
-      font-weight: 600;
+    .hero-title {
+      font-size: 28px;
+      font-weight: 700;
       margin-bottom: 8px;
-      color: #24292f;
     }
 
-    .header p {
-      color: #656d76;
+    .hero-description {
+      max-width: 620px;
       font-size: 14px;
+      color: #656d76;
     }
 
-    .main-content {
+    .hero-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-end;
+    }
+
+    .version-pill,
+    .storage-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 10px;
+      border: 1px solid #d0d7de;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.86);
+      font-size: 12px;
+      color: #57606a;
+      white-space: nowrap;
+    }
+
+    .layout {
       display: grid;
-      grid-template-columns: 250px 1fr;
-      gap: 24px;
+      gap: 18px;
     }
 
-    .sidebar {
-      background: white;
+    .card {
+      padding: 18px;
       border: 1px solid #d0d7de;
-      border-radius: 6px;
-      padding: 16px;
-      height: fit-content;
-      box-shadow: 0 1px 3px rgba(16, 22, 26, 0.1);
+      border-radius: 16px;
+      background: #ffffff;
+      box-shadow: 0 8px 24px rgba(31, 35, 40, 0.04);
     }
 
-    .nav-item {
-      display: block;
-      padding: 8px 12px;
-      color: #24292f;
-      text-decoration: none;
-      border-radius: 4px;
-      margin-bottom: 4px;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-
-    .nav-item:hover {
-      background-color: #f3f4f6;
-    }
-
-    .nav-item.active {
-      background-color: #dbeafe;
-      color: #1e40af;
-      font-weight: 500;
-    }
-
-    .content {
-      background: white;
-      border: 1px solid #d0d7de;
-      border-radius: 6px;
-      padding: 24px;
-      box-shadow: 0 1px 3px rgba(16, 22, 26, 0.1);
-    }
-
-    .section {
-      display: none;
-    }
-
-    .section.active {
-      display: block;
-    }
-
-    .section-title {
-      font-size: 20px;
+    .card-title {
+      font-size: 18px;
       font-weight: 600;
-      margin-bottom: 16px;
-      color: #24292f;
-      border-bottom: 1px solid #d0d7de;
-      padding-bottom: 8px;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-label {
-      display: block;
-      font-weight: 500;
       margin-bottom: 6px;
-      color: #24292f;
     }
 
-    .form-description {
+    .card-description {
+      font-size: 13px;
+      color: #656d76;
+      margin-bottom: 16px;
+    }
+
+    .settings-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid #d0d7de;
+      background: #f6f8fa;
+    }
+
+    .settings-copy {
+      min-width: 0;
+    }
+
+    .settings-name {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .settings-help {
       font-size: 12px;
       color: #656d76;
-      margin-bottom: 8px;
     }
 
-    .form-control {
-      width: 100%;
-      padding: 8px 12px;
-      border: 1px solid #d0d7de;
-      border-radius: 6px;
-      font-size: 14px;
-      background-color: #ffffff;
-      transition: border-color 0.2s;
-    }
-
-    .form-control:focus {
-      outline: none;
-      border-color: #0969da;
-      box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.1);
-    }
-
-    .checkbox-group {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .checkbox {
-      width: 16px;
-      height: 16px;
+    .toggle {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
       accent-color: #0969da;
+      flex-shrink: 0;
+    }
+
+    .meta-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .meta-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid #d0d7de;
+      background: #f6f8fa;
+      font-size: 13px;
+    }
+
+    .meta-key {
+      color: #656d76;
+    }
+
+    .meta-value {
+      font-weight: 600;
+      text-align: right;
+      word-break: break-word;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
-      padding: 6px 16px;
+      min-height: 38px;
+      padding: 8px 14px;
       border: 1px solid #d0d7de;
-      border-radius: 6px;
-      background-color: #f6f8fa;
+      border-radius: 10px;
+      background: #ffffff;
       color: #24292f;
-      font-size: 14px;
-      font-weight: 500;
-      text-decoration: none;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: 0.2s ease;
     }
 
     .btn:hover {
-      background-color: #f3f4f6;
-      border-color: #d0d7de;
+      background: #f3f4f6;
+      border-color: #afb8c1;
     }
 
     .btn-primary {
-      background-color: #2da44e;
-      color: white;
-      border-color: #2da44e;
+      background: #0969da;
+      border-color: #0969da;
+      color: #ffffff;
     }
 
     .btn-primary:hover {
-      background-color: #2c974b;
-      border-color: #2c974b;
+      background: #0860ca;
+      border-color: #0860ca;
     }
 
-    .btn-danger {
-      background-color: #da3633;
-      color: white;
-      border-color: #da3633;
+    .btn-success {
+      background: #1f883d;
+      border-color: #1f883d;
+      color: #ffffff;
     }
 
-    .btn-danger:hover {
-      background-color: #c93c37;
-      border-color: #c93c37;
+    .btn-success:hover {
+      background: #1a7f37;
+      border-color: #1a7f37;
     }
 
-    .btn-group {
-      display: flex;
-      gap: 8px;
-      margin-top: 16px;
-    }
-
-    .stats-grid {
+    .action-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 16px;
-      margin-bottom: 24px;
-    }
-
-    .stat-card {
-      background: #f6f8fa;
-      border: 1px solid #d0d7de;
-      border-radius: 6px;
-      padding: 16px;
-      text-align: center;
-    }
-
-    .stat-number {
-      font-size: 24px;
-      font-weight: 600;
-      color: #0969da;
-      margin-bottom: 4px;
-    }
-
-    .stat-label {
-      font-size: 12px;
-      color: #656d76;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .data-actions {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 16px;
+      margin-bottom: 16px;
     }
 
     .action-card {
-      border: 1px solid #d0d7de;
-      border-radius: 6px;
       padding: 16px;
+      border: 1px solid #d0d7de;
+      border-radius: 14px;
+      background: #f6f8fa;
     }
 
     .action-title {
       font-weight: 600;
       margin-bottom: 8px;
-      color: #24292f;
     }
 
     .action-description {
@@ -262,13 +248,15 @@
       position: fixed;
       top: 20px;
       right: 20px;
+      max-width: 320px;
       padding: 12px 16px;
-      border-radius: 6px;
-      color: white;
+      border-radius: 10px;
+      color: #ffffff;
       font-weight: 500;
       z-index: 1000;
-      transform: translateX(100%);
-      transition: transform 0.3s ease;
+      transform: translateX(110%);
+      transition: transform 0.25s ease;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.16);
     }
 
     .notification.show {
@@ -276,205 +264,161 @@
     }
 
     .notification.success {
-      background-color: #2da44e;
+      background: #1f883d;
     }
 
     .notification.error {
-      background-color: #da3633;
+      background: #da3633;
     }
 
     .notification.info {
-      background-color: #0969da;
+      background: #0969da;
     }
 
-    .about-section {
-      text-align: center;
-      padding: 24px;
-    }
+    @media (max-width: 680px) {
+      .container {
+        padding: 20px 14px 28px;
+      }
 
-    .logo {
-      font-size: 48px;
-      margin-bottom: 16px;
-    }
+      .hero,
+      .settings-row,
+      .meta-item {
+        flex-direction: column;
+      }
 
-    .version {
-      font-size: 14px;
-      color: #656d76;
-      margin-bottom: 16px;
-    }
+      .hero-meta {
+        align-items: flex-start;
+      }
 
-    .links {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      margin-top: 16px;
-    }
-
-    .link {
-      color: #0969da;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .link:hover {
-      text-decoration: underline;
-    }
-
-    @media (max-width: 768px) {
-      .main-content {
+      .action-grid {
         grid-template-columns: 1fr;
       }
-      
-      .sidebar {
-        order: 2;
-      }
-      
-      .content {
-        order: 1;
+
+      .btn-row {
+        width: 100%;
       }
     }
 
-    /* 暗色主题 */
     @media (prefers-color-scheme: dark) {
       body {
-        background-color: #0d1117;
+        background: #0d1117;
         color: #f0f6fc;
       }
 
-      .header, .sidebar, .content {
-        background-color: #161b22;
+      .hero,
+      .card,
+      .btn {
+        background: #161b22;
         border-color: #30363d;
-      }
-
-      .header h1, .section-title, .form-label, .action-title {
         color: #f0f6fc;
       }
 
-      .header p, .form-description, .stat-label, .action-description {
+      .hero {
+        background:
+          linear-gradient(180deg, rgba(31, 111, 235, 0.18), rgba(31, 111, 235, 0)),
+          #161b22;
+      }
+
+      .version-pill,
+      .storage-pill,
+      .settings-row,
+      .meta-item,
+      .action-card {
+        background: #0d1117;
+        border-color: #30363d;
+        color: #f0f6fc;
+      }
+
+      .hero-description,
+      .card-description,
+      .settings-help,
+      .meta-key,
+      .action-description {
         color: #8b949e;
       }
 
-      .nav-item {
-        color: #f0f6fc;
-      }
-
-      .nav-item:hover {
-        background-color: #21262d;
-      }
-
-      .nav-item.active {
-        background-color: #1f2937;
-        color: #58a6ff;
-      }
-
-      .form-control {
-        background-color: #0d1117;
-        border-color: #30363d;
-        color: #f0f6fc;
-      }
-
-      .form-control:focus {
-        border-color: #58a6ff;
-        box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
-      }
-
-      .btn {
-        background-color: #21262d;
-        border-color: #30363d;
-        color: #f0f6fc;
-      }
-
       .btn:hover {
-        background-color: #30363d;
+        background: #21262d;
       }
 
-      .stat-card, .action-card {
-        background-color: #161b22;
-        border-color: #30363d;
+      .btn-primary {
+        background: #1f6feb;
+        border-color: #1f6feb;
       }
 
-      .stat-number {
-        color: #58a6ff;
+      .btn-success {
+        background: #238636;
+        border-color: #238636;
       }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="header">
-      <h1 data-i18n="optionsHeader">📝 GitHub备注插件</h1>
-      <p data-i18n="optionsDescription">管理您的GitHub仓库备注，自定义插件设置和数据管理</p>
+    <div class="hero">
+      <div>
+        <h1 class="hero-title" data-i18n="optionsHeader">GitHub Notes</h1>
+        <p class="hero-description" data-i18n="settingsDescription">只保留会影响日常使用体验的核心设置。</p>
+      </div>
+      <div class="hero-meta">
+        <div class="version-pill" id="pluginVersion">Version 1.0.0</div>
+        <div class="storage-pill" data-i18n="localOnlyStorage">仅本地存储</div>
+      </div>
     </div>
 
-    <div class="main-content">
-      <nav class="sidebar">
-        <a class="nav-item active" data-section="general" data-i18n="generalSettings">常规设置</a>
-        <a class="nav-item" data-section="data" data-i18n="dataBackup">数据备份</a>
-        <a class="nav-item" data-section="about" data-i18n="aboutPlugin">关于插件</a>
-      </nav>
+    <div class="layout">
+      <div class="card">
+        <div class="card-title" data-i18n="generalSettings">常规设置</div>
+        <div class="card-description" data-i18n="notificationDescription">在保存、删除备注时显示通知</div>
+        <div class="settings-row">
+          <div class="settings-copy">
+            <div class="settings-name" data-i18n="enableNotifications">启用通知</div>
+            <div class="settings-help" id="settingsStatus">-</div>
+          </div>
+          <input type="checkbox" id="enableNotifications" class="toggle" data-i18n-aria-label="enableNotifications" aria-label="Enable Notifications">
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary" id="saveSettingsBtn" data-i18n="saveSettings">保存设置</button>
+          <button class="btn" id="resetSettingsBtn" data-i18n="resetSettings">重置设置</button>
+        </div>
+      </div>
 
-      <div class="content">
-        <!-- 常规设置 -->
-        <div class="section active" id="general">
-          <h2 class="section-title" data-i18n="generalSettings">常规设置</h2>
-          
-          <div class="form-group">
-            <label class="form-label" data-i18n="notificationSettings">通知设置</label>
-            <div class="checkbox-group">
-              <input type="checkbox" id="enableNotifications" class="checkbox">
-              <label for="enableNotifications" data-i18n="enableNotifications">启用通知</label>
-            </div>
-            <div class="form-description" data-i18n="notificationDescription">在保存、删除备注时显示通知</div>
+      <div class="card">
+        <div class="card-title" data-i18n="dataBackup">数据备份</div>
+        <div class="card-description" data-i18n="backupTipsDescription">建议在重装浏览器或清理本地数据前先导出备份文件。</div>
+        <div class="action-grid">
+          <div class="action-card">
+            <div class="action-title" data-i18n="exportDataTitle">导出数据</div>
+            <div class="action-description" data-i18n="exportDataDescription">将所有备注和设置数据导出为 JSON 文件</div>
+            <button class="btn btn-success" id="exportAllBtn" data-i18n="exportData">导出数据</button>
+          </div>
+          <div class="action-card">
+            <div class="action-title" data-i18n="importDataTitle">导入数据</div>
+            <div class="action-description" data-i18n="importDataDescription">从 JSON 文件导入备注和设置数据</div>
+            <button class="btn btn-primary" id="importBtn" data-i18n="selectFileImport">选择文件导入</button>
+            <input type="file" id="importFile" class="file-input" accept=".json">
           </div>
         </div>
-
-
-
-        <!-- 数据备份 -->
-        <div class="section" id="data">
-          <h2 class="section-title" data-i18n="dataBackup">数据备份</h2>
-          
-
-
-          <div class="data-actions">
-            <div class="action-card">
-              <div class="action-title" data-i18n="exportDataTitle">导出数据</div>
-              <div class="action-description" data-i18n="exportDataDescription">将所有备注和设置数据导出为JSON文件</div>
-              <button class="btn btn-primary" id="exportAllBtn" data-i18n="exportData">导出数据</button>
-            </div>
-            
-            <div class="action-card">
-              <div class="action-title" data-i18n="importDataTitle">导入数据</div>
-              <div class="action-description" data-i18n="importDataDescription">从JSON文件导入备注和设置数据</div>
-              <button class="btn" id="importBtn" data-i18n="selectFileImport">选择文件导入</button>
-              <input type="file" id="importFile" class="file-input" accept=".json">
-            </div>
+        <div class="meta-list">
+          <div class="meta-item">
+            <span class="meta-key" data-i18n="notesCountLabel">备注数量</span>
+            <span class="meta-value" id="overviewNoteCount">0</span>
           </div>
-        </div>
-
-
-
-        <!-- 关于插件 -->
-        <div class="section" id="about">
-          <div class="about-section">
-            <div class="logo">📝</div>
-            <h2 data-i18n="extensionName">GitHub备注插件</h2>
-            <p data-i18n="extensionDescription">为GitHub仓库添加私有备注，提升您的代码管理体验</p>
-            <div class="version" id="pluginVersion">版本 1.0.0</div>
-            <div class="links">
-              <a href="#" class="link" id="homepageLink" data-i18n="homepage">项目主页</a>
-              <a href="#" class="link" id="issuesLink" data-i18n="issues">问题反馈</a>
-              <a href="#" class="link" id="changelogLink" data-i18n="changelog">更新日志</a>
-            </div>
+          <div class="meta-item">
+            <span class="meta-key" data-i18n="latestUpdateLabel">最近更新</span>
+            <span class="meta-value" id="overviewLatestUpdate">-</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-key" data-i18n="lastBackupLabel">最近备份</span>
+            <span class="meta-value" id="backupLastTime">-</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-key" data-i18n="lastImportLabel">最近导入</span>
+            <span class="meta-value" id="importLastTime">-</span>
           </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- 保存按钮 -->
-  <div style="position: fixed; bottom: 20px; right: 20px; z-index: 100;">
-    <button class="btn btn-primary" id="saveAllBtn" data-i18n="saveAllSettings">保存所有设置</button>
   </div>
 
   <script src="../src/i18n.js"></script>
