@@ -6,10 +6,10 @@
 
 **为 GitHub 仓库添加私人备注的浏览器扩展**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](<img src="https://poser.pugx.org/zjkal/github-notes/license" alt="License">)](https://github.com/zjkal/github-notes/blob/main/LICENSE)
 [![Chrome Web Store](https://img.shields.io/badge/Chrome-Web%20Store-blue)](https://chromewebstore.google.com/detail/github-notes/mejhlipglijbkcfcnljjdcdngafbbheo)
 [![Microsoft Edge](https://img.shields.io/badge/Edge-Add--ons-blue)](https://microsoftedge.microsoft.com/addons/detail/github-notes/kjecncpipakdbomdpagliljcaomojjbk)
-[![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](https://github.com/zjkal/github-notes/releases)
+[![Version](https://poser.pugx.org/zjkal/github-notes/v)](https://github.com/zjkal/github-notes/releases)
 
 [English](README_en.md) | 中文
 
