@@ -17,6 +17,8 @@
 
 ## 项目简介
 
+![GitHub Notes Hero1](assets/hero1.png)
+
 `GitHub Notes` 是一个基于 Manifest V3 的 Chromium 浏览器扩展，用来给 GitHub 仓库保存仅自己可见的本地备注。
 
 它当前围绕 3 个主要使用场景展开：

@@ -17,6 +17,8 @@ English | [中文](README.md)
 
 ## Overview
 
+![GitHub Notes Hero1](assets/hero1.png)
+
 `GitHub Notes` is a Manifest V3 browser extension for Chromium-based browsers that lets you keep private notes for GitHub repositories.
 
 The current codebase focuses on three practical workflows:
