@@ -32,16 +32,16 @@
       overflow: hidden;
     }
 
+    html[data-surface="sidebar"] {
+      width: 100%;
+      min-width: 0;
+    }
+
     body[data-surface="sidebar"] {
       width: 100%;
       min-width: 0;
       min-height: 100vh;
       height: 100vh;
-    }
-
-    html[data-surface="sidebar"] {
-      width: 100%;
-      min-width: 0;
     }
 
     button,
@@ -54,6 +54,7 @@
       display: flex;
       flex-direction: column;
       min-height: 540px;
+      background: #ffffff;
     }
 
     body[data-surface="sidebar"] .app {
@@ -62,49 +63,52 @@
     }
 
     .header {
-      padding: 18px 18px 12px;
-      border-bottom: 1px solid #d0d7de;
+      padding: 14px 16px 10px;
+      border-bottom: 1px solid #d8dee4;
       background:
-        linear-gradient(180deg, rgba(9, 105, 218, 0.08), rgba(9, 105, 218, 0)),
+        linear-gradient(180deg, rgba(9, 105, 218, 0.06), rgba(9, 105, 218, 0)),
         #ffffff;
     }
 
-    .header-top {
+    .brand-row {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
       gap: 12px;
     }
 
-    .header h1 {
-      font-size: 18px;
+    .title-group {
+      min-width: 0;
+    }
+
+    .title-group h1 {
+      font-size: 16px;
       font-weight: 600;
-      margin-bottom: 4px;
+      line-height: 1.3;
     }
 
     .subtitle {
+      margin-top: 3px;
       font-size: 12px;
       color: #656d76;
       line-height: 1.5;
     }
 
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-shrink: 0;
+    body[data-surface="popup"] .subtitle {
+      display: none;
     }
 
     .surface-toggle-btn {
+      flex-shrink: 0;
       border: 1px solid #d0d7de;
       border-radius: 999px;
-      padding: 4px 8px;
+      padding: 5px 10px;
       font-size: 11px;
       font-weight: 600;
       color: #0969da;
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.92);
       cursor: pointer;
-      transition: 0.2s ease;
+      transition: background 0.2s ease, border-color 0.2s ease;
     }
 
     .surface-toggle-btn:hover {
@@ -116,134 +120,47 @@
       display: none;
     }
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      padding: 12px 18px;
-      border-bottom: 1px solid #d0d7de;
-      background: #ffffff;
+    .quick-stats {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
     }
 
-    .stat-card {
-      padding: 12px;
+    .stat-pill {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 6px;
+      padding: 7px 10px;
       border: 1px solid #d0d7de;
-      border-radius: 10px;
+      border-radius: 999px;
       background: #f6f8fa;
     }
 
-    .stat-number {
-      font-size: 22px;
-      font-weight: 700;
-      color: #0969da;
-      line-height: 1.1;
-    }
-
     .stat-label {
-      margin-top: 4px;
       font-size: 12px;
       color: #656d76;
     }
 
-    .tabs {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
-      padding: 12px 18px 0;
-      background: #ffffff;
+    .stat-number {
+      font-size: 14px;
+      font-weight: 700;
+      color: #0969da;
+      line-height: 1;
     }
 
-    .tab {
-      border: 1px solid #d0d7de;
-      border-radius: 999px;
-      padding: 9px 10px;
-      background: #ffffff;
-      color: #57606a;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-
-    .tab:hover {
-      background: #f3f4f6;
-      border-color: #afb8c1;
-    }
-
-    .tab.active {
-      color: #ffffff;
-      background: #0969da;
-      border-color: #0969da;
-      box-shadow: 0 6px 18px rgba(9, 105, 218, 0.18);
-    }
-
-    .tab-content {
-      display: none;
+    .main {
+      display: flex;
       flex: 1;
       min-height: 0;
-      padding: 16px 18px 18px;
-      background: #ffffff;
-    }
-
-    .tab-content.active {
-      display: flex;
       flex-direction: column;
-    }
-
-    .action-buttons {
-      display: flex;
-      gap: 8px;
-    }
-
-    .btn {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      min-height: 34px;
-      padding: 8px 12px;
-      border: 1px solid #d0d7de;
-      border-radius: 8px;
+      padding: 12px 16px 10px;
+      gap: 10px;
       background: #ffffff;
-      color: #24292f;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-
-    .btn:hover {
-      background: #f3f4f6;
-      border-color: #afb8c1;
-    }
-
-    .btn:disabled {
-      cursor: not-allowed;
-      opacity: 0.55;
-      box-shadow: none;
-    }
-
-    .btn-primary {
-      background: #0969da;
-      color: #ffffff;
-      border-color: #0969da;
-    }
-
-    .btn-primary:hover {
-      background: #0860ca;
-      border-color: #0860ca;
-    }
-
-    .btn-success {
-      background: #1f883d;
-      color: #ffffff;
-      border-color: #1f883d;
-    }
-
-    .btn-success:hover {
-      background: #1a7f37;
-      border-color: #1a7f37;
     }
 
     .search-box {
       position: relative;
-      margin-bottom: 12px;
     }
 
     .search-input {
@@ -253,7 +170,7 @@
       border-radius: 10px;
       background: #ffffff;
       outline: none;
-      transition: 0.2s ease;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
     .search-input:focus {
@@ -287,92 +204,114 @@
       justify-content: center;
     }
 
+    .notes-panel {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+      flex-direction: column;
+      border: 1px solid #d0d7de;
+      border-radius: 14px;
+      background: #f6f8fa;
+      overflow: hidden;
+    }
+
     .notes-summary {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 10px;
-      margin-bottom: 10px;
+      padding: 10px 12px;
+      border-bottom: 1px solid #d8dee4;
       font-size: 12px;
       color: #656d76;
+      background: rgba(255, 255, 255, 0.72);
     }
 
     .notes-list {
-      max-height: 328px;
-      overflow-y: auto;
-      padding-right: 4px;
-    }
-
-    body[data-surface="sidebar"] .notes-list {
       flex: 1;
       min-height: 0;
-      max-height: none;
+      overflow-y: auto;
+      padding: 10px;
     }
 
     .note-item {
-      display: grid;
-      grid-template-columns: 36px minmax(0, 1fr);
-      gap: 12px;
       width: 100%;
       padding: 12px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       border: 1px solid #d0d7de;
       border-radius: 12px;
       background: #ffffff;
       text-align: left;
       cursor: pointer;
-      transition: 0.2s ease;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .note-item:last-child {
+      margin-bottom: 0;
     }
 
     .note-item:hover,
     .note-item:focus-visible {
       border-color: #0969da;
       box-shadow: 0 8px 24px rgba(9, 105, 218, 0.12);
+      transform: translateY(-1px);
       outline: none;
     }
 
-    .note-avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      background: #ddf4ff;
-      color: #0550ae;
-      font-size: 13px;
-      font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .note-header {
+    .note-topline {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 6px;
+      gap: 10px;
+      margin-bottom: 8px;
     }
 
-    .note-repo {
+    .note-repo-block {
+      min-width: 0;
+    }
+
+    .note-repo-name {
       font-size: 14px;
       font-weight: 600;
       color: #0969da;
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+
+    .note-owner {
+      margin-top: 2px;
+      font-size: 11px;
+      color: #656d76;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+    .note-open-hint {
+      flex-shrink: 0;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #ddf4ff;
+      color: #0550ae;
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1.2;
     }
 
     .note-content {
       font-size: 13px;
-      line-height: 1.5;
+      line-height: 1.55;
       color: #24292f;
       white-space: pre-wrap;
       display: -webkit-box;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
       margin-bottom: 8px;
       word-break: break-word;
+    }
+
+    body[data-surface="sidebar"] .note-content {
+      -webkit-line-clamp: 3;
     }
 
     .note-meta {
@@ -403,85 +342,54 @@
       line-height: 1.6;
     }
 
-    .file-input {
-      display: none;
-    }
-
-    .settings-checkbox {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      padding: 12px;
-      border-radius: 10px;
-      background: #ffffff;
-      border: 1px solid #d0d7de;
-    }
-
-    .settings-checkbox input {
-      margin-top: 2px;
-      accent-color: #0969da;
-    }
-
-    .settings-checkbox label {
-      font-size: 13px;
-      line-height: 1.5;
-      color: #24292f;
-      cursor: pointer;
-    }
-
-    .manage-card,
-    .settings-card {
-      border: 1px solid #d0d7de;
-      border-radius: 12px;
-      background: #f6f8fa;
-      padding: 14px;
-    }
-
-    .card-title {
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 6px;
-      color: #24292f;
-    }
-
-    .card-description {
-      font-size: 12px;
-      color: #656d76;
-      line-height: 1.5;
-      margin-bottom: 12px;
-    }
-
     .footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 10px;
-      padding: 12px 18px;
-      border-top: 1px solid #d0d7de;
-      background: #f6f8fa;
+      padding: 10px 16px 12px;
+      border-top: 1px solid #d8dee4;
+      background: #ffffff;
     }
 
     .footer-links {
       display: flex;
-      gap: 12px;
-      align-items: center;
       flex-wrap: wrap;
+      gap: 8px 12px;
+      align-items: center;
+      min-width: 0;
     }
 
+    .footer-link,
     .footer a {
+      border: none;
+      padding: 0;
+      background: transparent;
       color: #0969da;
       text-decoration: none;
       font-size: 12px;
+      line-height: 1.4;
+      cursor: pointer;
     }
 
+    .footer-link:hover,
     .footer a:hover {
       text-decoration: underline;
     }
 
-    .footer .version {
+    .footer-link[hidden] {
+      display: none;
+    }
+
+    .version {
+      flex-shrink: 0;
       font-size: 11px;
       color: #656d76;
       white-space: nowrap;
+    }
+
+    .file-input {
+      display: none;
     }
 
     .notification {
@@ -524,20 +432,16 @@
     }
 
     @media (max-width: 360px) {
-      .header-top,
+      .brand-row,
       .footer,
       .notes-summary,
-      .action-buttons {
+      .note-meta {
         flex-direction: column;
         align-items: stretch;
       }
 
-      .tabs {
-        grid-template-columns: 1fr;
-      }
-
-      .footer-links {
-        gap: 8px;
+      .note-topline {
+        flex-direction: column;
       }
     }
 
@@ -547,11 +451,16 @@
         color: #f0f6fc;
       }
 
+      .app,
       .header,
-      .stats,
-      .tabs,
-      .tab-content {
+      .main,
+      .footer {
         background: #161b22;
+      }
+
+      .header,
+      .footer,
+      .notes-summary {
         border-color: #30363d;
       }
 
@@ -561,66 +470,28 @@
           #161b22;
       }
 
-      .header h1,
-      .card-title,
-      .empty-title,
-      .settings-checkbox label,
-      .note-content {
-        color: #f0f6fc;
-      }
-
       .subtitle,
-      .card-description,
       .stat-label,
       .notes-summary,
+      .note-owner,
       .note-meta,
-      .footer .version {
+      .version {
         color: #8b949e;
       }
 
       .surface-toggle-btn,
-      .stat-card,
-      .tab,
-      .note-item,
-      .manage-card,
-      .settings-card,
-      .settings-checkbox,
       .search-input,
-      .btn {
+      .stat-pill,
+      .notes-panel,
+      .note-item {
         background: #0d1117;
         border-color: #30363d;
         color: #f0f6fc;
       }
 
-      .btn:hover,
-      .tab:hover,
       .surface-toggle-btn:hover,
       .clear-search-btn:hover {
         background: #21262d;
-      }
-
-      .tab.active,
-      .btn-primary {
-        background: #1f6feb;
-        border-color: #1f6feb;
-        color: #ffffff;
-      }
-
-      .btn-success {
-        background: #238636;
-        border-color: #238636;
-      }
-
-      .stat-number,
-      .current-repo-name,
-      .note-repo,
-      .footer a {
-        color: #58a6ff;
-      }
-
-      .note-avatar {
-        background: rgba(56, 139, 253, 0.16);
-        color: #58a6ff;
       }
 
       .search-input:focus {
@@ -628,9 +499,26 @@
         box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.16);
       }
 
-      .footer {
-        background: #0d1117;
-        border-color: #30363d;
+      .title-group h1,
+      .empty-title,
+      .note-content {
+        color: #f0f6fc;
+      }
+
+      .stat-number,
+      .note-repo-name,
+      .footer-link,
+      .footer a {
+        color: #58a6ff;
+      }
+
+      .note-open-hint {
+        background: rgba(56, 139, 253, 0.16);
+        color: #58a6ff;
+      }
+
+      .notes-summary {
+        background: rgba(13, 17, 23, 0.78);
       }
     }
   </style>
@@ -638,84 +526,54 @@
 <body>
   <div class="app">
     <div class="header">
-      <div class="header-top">
-        <div>
+      <div class="brand-row">
+        <div class="title-group">
           <h1 data-i18n="popupTitle">GitHub备注管理</h1>
           <div class="subtitle" data-i18n="popupSubtitle">管理您的GitHub仓库备注</div>
         </div>
-        <div class="header-actions">
-          <button class="surface-toggle-btn" type="button" id="openSidePanelBtn" data-i18n="openSidePanel" hidden>切换到侧边栏</button>
+        <button class="surface-toggle-btn" type="button" id="openSidePanelBtn" data-i18n="openSidePanel" hidden>切换到侧边栏</button>
+      </div>
+      <div class="quick-stats">
+        <div class="stat-pill">
+          <span class="stat-label" data-i18n="totalNotes">总备注</span>
+          <span class="stat-number" id="totalNotes">0</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-label" data-i18n="todayNotes">今日新增</span>
+          <span class="stat-number" id="todayNotes">0</span>
         </div>
       </div>
     </div>
 
-    <div class="stats">
-      <div class="stat-card">
-        <div class="stat-number" id="totalNotes">0</div>
-        <div class="stat-label" data-i18n="totalNotes">总备注</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number" id="todayNotes">0</div>
-        <div class="stat-label" data-i18n="todayNotes">今日新增</div>
-      </div>
-    </div>
-
-    <div class="tabs">
-      <button class="tab active" type="button" data-tab="notes" data-i18n="tabNotesList">备注列表</button>
-      <button class="tab" type="button" data-tab="manage" data-i18n="tabDataBackup">数据备份</button>
-      <button class="tab" type="button" data-tab="settings" data-i18n="tabSettings">设置</button>
-    </div>
-
-    <div class="tab-content active" id="notes-tab">
+    <div class="main">
       <div class="search-box">
         <input type="search" class="search-input" id="searchInput" data-i18n="searchPlaceholder" placeholder="搜索备注...">
         <button class="clear-search-btn" type="button" id="clearSearchBtn" data-i18n-title="clearSearch" aria-label="Clear search">×</button>
       </div>
 
-      <div class="notes-summary">
-        <span id="notesSummaryText" data-i18n="recentlyUpdated">最近更新</span>
-        <span id="resultsCount"></span>
-      </div>
-
-      <div class="notes-list" id="notesList">
-        <div class="loading" data-i18n="loading">加载中...</div>
-      </div>
-    </div>
-
-    <div class="tab-content" id="manage-tab">
-      <div class="manage-card">
-        <div class="card-title" data-i18n="backupTipsTitle">备份与恢复</div>
-        <div class="card-description" data-i18n="backupTipsDescription">建议在重装浏览器或清理本地数据前先导出备份文件。</div>
-        <div class="action-buttons">
-          <button class="btn btn-success" type="button" id="exportBtn" data-i18n="exportData">导出数据</button>
-          <button class="btn btn-primary" type="button" id="importBtn" data-i18n="importData">导入数据</button>
+      <div class="notes-panel">
+        <div class="notes-summary">
+          <span id="notesSummaryText" data-i18n="recentlyUpdated">最近更新</span>
+          <span id="resultsCount"></span>
         </div>
-        <input type="file" class="file-input" id="importFile" accept=".json">
-      </div>
-    </div>
 
-    <div class="tab-content" id="settings-tab">
-      <div class="settings-card">
-        <div class="card-title" data-i18n="notificationSettings">通知设置</div>
-        <div class="card-description" data-i18n="settingsDescription">仅保留日常会影响使用体验的基础设置。</div>
-        <div class="settings-checkbox">
-          <input type="checkbox" id="enableNotifications">
-          <label for="enableNotifications" data-i18n="notificationDescription">在保存、删除备注时显示通知</label>
-        </div>
-        <div class="action-buttons">
-          <button class="btn btn-primary" type="button" id="saveSettingsBtn" data-i18n="saveSettings">保存设置</button>
-          <button class="btn" type="button" id="resetSettingsBtn" data-i18n="resetSettings">重置设置</button>
+        <div class="notes-list" id="notesList">
+          <div class="loading" data-i18n="loading">加载中...</div>
         </div>
       </div>
     </div>
 
     <div class="footer">
       <div class="footer-links">
+        <button class="footer-link" type="button" id="exportBtn" data-i18n="exportData">导出数据</button>
+        <button class="footer-link" type="button" id="importBtn" data-i18n="importData">导入数据</button>
         <a href="#" id="optionsLink" data-i18n="options">选项</a>
         <a href="#" id="helpLink" data-i18n="help">帮助</a>
       </div>
       <div class="version" id="popupVersion">v1.0.0</div>
     </div>
+
+    <input type="file" class="file-input" id="importFile" accept=".json">
   </div>
 
   <script src="../src/i18n.js"></script>

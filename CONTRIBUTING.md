@@ -220,6 +220,5 @@ By contributing, you agree that your contributions will be licensed under the MI
 
 Feel free to contact us if you have any questions:
 - Open an issue for general questions
-- Email: zjkal@example.com
 
 Thank you for contributing to GitHub Notes! 🎉

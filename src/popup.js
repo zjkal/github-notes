@@ -10,10 +10,8 @@ if ('update_url' in chrome.runtime.getManifest()) {
 
 class GitHubNotesPopup {
   constructor() {
-    this.currentTab = 'notes';
     this.allNotes = {};
     this.filteredNotes = {};
-    this.settings = {};
     this.searchQuery = '';
     this.surfaceMode = 'popup';
     this.sidePanelSupported = false;
@@ -32,7 +30,6 @@ class GitHubNotesPopup {
       await this.loadData();
       await this.updateStats();
       this.displayNotes();
-      await this.loadSettings();
       this.displayVersion();
     } catch (error) {
       console.error('GitHub Notes Popup: 初始化失败', error);
@@ -43,12 +40,6 @@ class GitHubNotesPopup {
   // 绑定事件监听器
   bindEventListeners() {
     window.addEventListener('resize', this.handleWindowResize);
-
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.addEventListener('click', (e) => {
-        this.switchTab(e.target.dataset.tab);
-      });
-    });
 
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('input', (e) => {
@@ -84,9 +75,6 @@ class GitHubNotesPopup {
     document.getElementById('exportBtn').addEventListener('click', () => this.exportNotes());
     document.getElementById('importBtn').addEventListener('click', () => this.importNotes());
     document.getElementById('importFile').addEventListener('change', (e) => this.handleFileImport(e));
-
-    document.getElementById('saveSettingsBtn').addEventListener('click', () => this.saveSettings());
-    document.getElementById('resetSettingsBtn').addEventListener('click', () => this.resetSettings());
 
     const openSidePanelBtn = document.getElementById('openSidePanelBtn');
     if (openSidePanelBtn) {
@@ -134,31 +122,10 @@ class GitHubNotesPopup {
 
   updateSidePanelEntryVisibility() {
     const openSidePanelBtn = document.getElementById('openSidePanelBtn');
-    if (!openSidePanelBtn) {
-      return;
-    }
+    const shouldShow = this.sidePanelSupported && this.surfaceMode !== 'sidebar';
 
-    openSidePanelBtn.hidden = !this.sidePanelSupported || this.surfaceMode === 'sidebar';
-  }
-
-  // 切换标签页
-  switchTab(tabName) {
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.classList.remove('active');
-    });
-    document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
-
-    document.querySelectorAll('.tab-content').forEach(content => {
-      content.classList.remove('active');
-    });
-    document.getElementById(`${tabName}-tab`).classList.add('active');
-
-    this.currentTab = tabName;
-
-    if (tabName === 'notes') {
-      this.displayNotes();
-    } else if (tabName === 'settings') {
-      this.loadSettings();
+    if (openSidePanelBtn) {
+      openSidePanelBtn.hidden = !shouldShow;
     }
   }
 
@@ -233,20 +200,21 @@ class GitHubNotesPopup {
     const sortedNotes = filteredEntries.sort(([, a], [, b]) => new Date(b.updatedAt) - new Date(a.updatedAt));
 
     const notesHtml = sortedNotes.map(([repoKey, note]) => {
-      const ownerInitial = repoKey.charAt(0).toUpperCase();
+      const { owner, repoName } = this.parseRepoKey(repoKey);
 
       return `
         <button class="note-item" type="button" data-repo="${repoKey}" title="${t('openRepository')}">
-          <div class="note-avatar">${this.escapeHtml(ownerInitial)}</div>
-          <div>
-            <div class="note-header">
-              <div class="note-repo">${this.escapeHtml(repoKey)}</div>
+          <div class="note-topline">
+            <div class="note-repo-block">
+              <div class="note-repo-name">${this.escapeHtml(repoName)}</div>
+              <div class="note-owner">${this.escapeHtml(owner)}</div>
             </div>
-            <div class="note-content">${this.escapeHtml(note.content)}</div>
-            <div class="note-meta">
-              <span>${t('lastUpdated', this.formatDate(note.updatedAt))}</span>
-              <span>${t('clickToOpen')}</span>
-            </div>
+            <div class="note-open-hint">GitHub</div>
+          </div>
+          <div class="note-content">${this.escapeHtml(note.content)}</div>
+          <div class="note-meta">
+            <span>${t('lastUpdated', this.formatDate(note.updatedAt))}</span>
+            <span>${t('clickToOpen')}</span>
           </div>
         </button>
       `;
@@ -390,74 +358,6 @@ class GitHubNotesPopup {
     event.target.value = '';
   }
 
-  // 加载设置
-  async loadSettings() {
-    try {
-      const response = await chrome.runtime.sendMessage({
-        action: 'getSettings'
-      });
-
-      if (response.success) {
-        this.settings = response.settings;
-        document.getElementById('enableNotifications').checked = this.settings.enableNotifications !== false;
-      }
-    } catch (error) {
-      console.error('GitHub Notes Popup: 加载设置失败', error);
-    }
-  }
-
-  // 保存设置
-  async saveSettings() {
-    try {
-      const settings = {
-        enableNotifications: document.getElementById('enableNotifications').checked
-      };
-
-      const response = await chrome.runtime.sendMessage({
-        action: 'updateSettings',
-        settings: settings
-      });
-
-      if (response.success) {
-        this.settings = response.settings;
-        this.showNotification(t('settingsSaved'), 'success');
-      } else {
-        throw new Error(response.error);
-      }
-    } catch (error) {
-      console.error('GitHub Notes Popup: 保存设置失败', error);
-      this.showNotification(t('saveFailed'), 'error');
-    }
-  }
-
-  // 重置设置
-  async resetSettings() {
-    if (!confirm(t('confirmReset'))) {
-      return;
-    }
-
-    try {
-      const defaultSettings = {
-        enableNotifications: true
-      };
-
-      const response = await chrome.runtime.sendMessage({
-        action: 'updateSettings',
-        settings: defaultSettings
-      });
-
-      if (response.success) {
-        await this.loadSettings();
-        this.showNotification(t('settingsReset'), 'success');
-      } else {
-        throw new Error(response.error);
-      }
-    } catch (error) {
-      console.error('GitHub Notes Popup: 重置设置失败', error);
-      this.showNotification(t('resetFailed'), 'error');
-    }
-  }
-
   // 打开选项页面
   openOptions() {
     chrome.runtime.openOptionsPage();
@@ -511,6 +411,16 @@ class GitHubNotesPopup {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+  }
+
+  parseRepoKey(repoKey) {
+    const [owner, ...rest] = String(repoKey).split('/');
+    const repoName = rest.join('/') || owner || repoKey;
+
+    return {
+      owner: owner || repoKey,
+      repoName
+    };
   }
 
   formatDate(dateString) {
