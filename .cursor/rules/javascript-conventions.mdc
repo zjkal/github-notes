@@ -1,0 +1,48 @@
+---
+description: JavaScript 代码组织与命名约定
+globs: src/**/*.js
+alwaysApply: false
+---
+
+# JavaScript 约定
+
+## 文件组织
+
+每个脚本一个大 class,结构为:文件头注释 → 生产环境静默 console → class 定义 → 文件末尾实例化并挂到全局(便于调试):
+
+```javascript
+// 生产环境禁用调试信息输出
+if ('update_url' in chrome.runtime.getManifest()) {
+  console.log = () => {};
+  console.info = () => {};
+  console.debug = () => {};
+}
+
+class GitHubNotesXxx {
+  constructor() { this.init(); }
+  // ...方法用中文注释
+}
+
+const instance = new GitHubNotesXxx();
+window.xxx = instance; // background.js 用 self 而非 window
+```
+
+- 无模块系统(无 import/export),页面脚本靠 `<script>` 顺序加载(`i18n.js` 在前)
+- 缩进 2 空格;异步统一 async/await + try/catch,catch 中用 `console.error` 且不静默吞错
+
+## 命名
+
+- 类名:PascalCase,带 `GitHubNotes` 前缀(如 `GitHubNotesPopup`)
+- 方法/变量:camelCase;DOM id:camelCase;消息 action:camelCase 动词短语
+
+## 跨脚本消息协议
+
+- 请求:`{ action: 'getSettings', ... }`;响应:`{ success: true, ... }` 或 `{ success: false, error: '...' }`
+- `chrome.runtime.onMessage` 监听器如需异步 `sendResponse`,必须 `return true`
+- 备注读写在 content 中直接操作 storage;设置/导入导出走 background 消息
+
+## GitHub 页面适配(content.js)
+
+- GitHub 是 PJAX 导航:用 URL 轮询 + `popstate` + 防抖检测页面变化;动态内容用 `MutationObserver` + 防抖
+- DOM 选择器提供精确与降级两套,以兼容 GitHub 改版
+- 注入 HTML 时用户内容必须经过 `escapeHtml` 防 XSS

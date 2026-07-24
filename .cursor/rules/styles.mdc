@@ -1,0 +1,35 @@
+---
+description: CSS 样式与主题适配约定
+globs: styles/**/*.css,pages/**/*.html
+alwaysApply: false
+---
+
+# 样式约定
+
+## 位置约定
+
+- 注入 GitHub 页面的样式:只写在 `styles/content.css`
+- popup/options 页面样式:写在各自 HTML 的 `<style>` 内,不新建 CSS 文件
+
+## content.css(注入 GitHub)
+
+- 类名统一 `github-notes-` 前缀 + kebab-case(如 `.github-notes-modal`),避免污染 GitHub 页面
+- 贴合 GitHub Primer 设计:复用其结构类(`BorderGrid-row`、`btn-octicon`)与 octicon 图标
+- 颜色必须用 GitHub CSS 变量 + fallback,自动跟随 GitHub 主题:
+
+```css
+.github-notes-container .BorderGrid-row {
+  border-top: 1px solid var(--borderColor-default, #d0d7de);
+}
+```
+
+## popup / options 页面
+
+- 类名简短 kebab-case(如 `.note-item`)
+- 声明 `color-scheme: light dark`,并用 `prefers-color-scheme: dark` 适配深色模式
+- 侧边栏与弹窗共用页面,差异化样式通过 `[data-surface="sidebar"]` / `[data-surface="popup"]` 区分
+
+## 通用
+
+- 禁止引入 Tailwind、CSS Modules 等方案
+- 字体栈跟随 GitHub:`-apple-system, BlinkMacSystemFont, 'Segoe UI', ...`
