@@ -115,6 +115,18 @@
     "message": "启用通知",
     "description": "Enable notifications checkbox"
   },
+  "openInSidePanel": {
+    "message": "默认在侧边栏打开",
+    "description": "Open side panel by default checkbox"
+  },
+  "openInSidePanelHelp": {
+    "message": "开启并保存后，点击扩展图标将直接打开侧边栏",
+    "description": "Help text for open in side panel setting"
+  },
+  "openInSidePanelUnsupported": {
+    "message": "当前浏览器不支持侧边栏模式",
+    "description": "Side panel unsupported in options"
+  },
   "saveSettings": {
     "message": "保存设置",
     "description": "Save settings button"
@@ -140,8 +152,8 @@
     "description": "Side panel unsupported message"
   },
   "help": {
-    "message": "帮助",
-    "description": "Help link"
+    "message": "开源仓库",
+    "description": "Open source repository link"
   },
   "optionsTitle": {
     "message": "GitHub备注插件 - 选项设置",
