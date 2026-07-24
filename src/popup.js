@@ -176,18 +176,9 @@ class GitHubNotesPopup {
   // 显示备注列表
   displayNotes() {
     const notesList = document.getElementById('notesList');
-    const resultsCount = document.getElementById('resultsCount');
-    const notesSummaryText = document.getElementById('notesSummaryText');
     const filteredEntries = Object.entries(this.filteredNotes);
 
-    resultsCount.textContent = filteredEntries.length
-      ? t('searchResultsCount', filteredEntries.length.toString())
-      : '';
-    notesSummaryText.textContent = this.searchQuery
-      ? t('searchResults')
-      : t('recentlyUpdated');
-
-    if (Object.keys(this.filteredNotes).length === 0) {
+    if (filteredEntries.length === 0) {
       notesList.innerHTML = `
         <div class="empty-state">
           <div class="empty-title">${this.searchQuery ? t('searchNoResultsTitle') : t('noNotesFound')}</div>

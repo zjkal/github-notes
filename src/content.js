@@ -327,7 +327,7 @@ class GitHubNotesManager {
                 ${noteData.updatedAt ? `
                 <div class="github-notes-meta">
                   <span>${chrome.i18n.getMessage('lastUpdated', this.formatDate(noteData.updatedAt)) || '最后更新: ' + this.formatDate(noteData.updatedAt)}</span>
-                  <span>${chrome.i18n.getMessage('clickToEditHint') || '点击编辑'}</span>
+                  <span class="github-notes-edit-hint">${chrome.i18n.getMessage('clickToEditHint') || '点击编辑'}</span>
                 </div>` : ''}
               `;
               
@@ -403,6 +403,56 @@ class GitHubNotesManager {
     });
   }
 
+  // 查找仓库页侧边栏挂载点（兼容旧 BorderGrid 与新 SplitPageLayout）
+  findSidebarMount() {
+    // 新版 React 仓库页：SplitPageLayout.Pane + CSS Modules 侧边栏
+    const newBorderGrid = document.querySelector('[class*="CodeViewSidebar-module__borderGrid"]');
+    const newPane =
+      document.querySelector('[data-component="SplitPageLayout.Pane"]') ||
+      document.querySelector('[class*="prc-PageLayout-Pane-"]');
+
+    if (newBorderGrid || newPane) {
+      const sectionRoot = newBorderGrid || newPane;
+      const aboutSection = Array.from(
+        sectionRoot.querySelectorAll('[class*="SidebarSection-module__sidebarSection"]')
+      ).find((section) => {
+        const heading = section.querySelector('h2');
+        const text = heading ? heading.textContent.trim() : '';
+        return /^(About|关于)$/i.test(text);
+      }) || sectionRoot.firstElementChild;
+
+      return {
+        layout: 'split',
+        mountParent: newBorderGrid || newPane,
+        insertBefore: aboutSection || null
+      };
+    }
+
+    // 旧版布局：Layout-sidebar / rails-partial / aside
+    const sidebar =
+      document.querySelector('.Layout-sidebar') ||
+      document.querySelector('rails-partial[data-partial-name="codeViewRepoRoute.Sidebar"]') ||
+      document.querySelector('aside[aria-label="Repository sidebar"]');
+
+    if (!sidebar) {
+      return null;
+    }
+
+    const aboutSection =
+      sidebar.querySelector('.BorderGrid.about-margin') ||
+      sidebar.querySelector('.BorderGrid');
+
+    if (!aboutSection) {
+      return null;
+    }
+
+    return {
+      layout: 'border-grid',
+      mountParent: aboutSection,
+      insertBefore: aboutSection.firstElementChild
+    };
+  }
+
   // 创建备注容器
   createNoteContainer() {
     try {
@@ -419,56 +469,53 @@ class GitHubNotesManager {
         existingContainer.remove();
       }
 
-      // 查找GitHub侧边栏（兼容 Edge rails-partial 布局）
-      const sidebar =
-        document.querySelector('.Layout-sidebar') ||
-        document.querySelector('rails-partial[data-partial-name="codeViewRepoRoute.Sidebar"]') ||
-        document.querySelector('aside[aria-label="Repository sidebar"]');
-      if (!sidebar) {
+      const mount = this.findSidebarMount();
+      if (!mount || !mount.mountParent) {
         console.log('GitHub Notes: 未找到侧边栏容器，稍后重试');
         this.scheduleCreateRetry();
         return;
       }
 
-      // 查找About板块
-      let aboutSection =
-        sidebar.querySelector('.BorderGrid.about-margin') ||
-        sidebar.querySelector('.BorderGrid');
-      if (!aboutSection) {
-        console.log('GitHub Notes: 未找到About板块，稍后重试');
-        this.scheduleCreateRetry();
-        return;
-      }
-
-      // 创建备注容器，作为BorderGrid-row插入到About板块内部
-      this.noteContainer = document.createElement('div');
-      this.noteContainer.className = 'BorderGrid-row github-notes-container';
-      
-      // 添加唯一标识，防止重复创建
-      this.noteContainer.setAttribute('data-github-notes-id', Date.now().toString());
-      
-      this.noteContainer.innerHTML = `
-        <div class="BorderGrid-cell">
-          <div class="hide-sm hide-md">
-            <div class="github-notes-header">
-              <h2 class="mb-0 h4">${chrome.i18n.getMessage('myNotes')}</h2>
-              <button class="github-notes-edit-btn btn-octicon" type="button" title="${chrome.i18n.getMessage('editNote')}">
-                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-pencil">
-                  <path d="M11.013 1.427a1.75 1.75 0 012.474 0l1.086 1.086a1.75 1.75 0 010 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 01-.927-.928l.929-3.25a1.75 1.75 0 01.445-.758l8.61-8.61zm1.414 1.06a.25.25 0 00-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 000-.354l-1.086-1.086zM11.189 6.25L9.75 4.81l-6.286 6.287a.25.25 0 00-.064.108l-.558 1.953 1.953-.558a.25.25 0 00.108-.064l6.286-6.286z"></path>
-                </svg>
-              </button>
-            </div>
-            <div class="f4 my-3 github-notes-content"></div>
-          </div>
+      const notesTitle = chrome.i18n.getMessage('myNotes');
+      const editTitle = chrome.i18n.getMessage('editNote');
+      const headerHtml = `
+        <div class="github-notes-header">
+          <h2 class="mb-0 h4">${notesTitle}</h2>
+          <button class="github-notes-edit-btn btn-octicon" type="button" title="${editTitle}">
+            <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-pencil">
+              <path d="M11.013 1.427a1.75 1.75 0 012.474 0l1.086 1.086a1.75 1.75 0 010 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 01-.927-.928l.929-3.25a1.75 1.75 0 01.445-.758l8.61-8.61zm1.414 1.06a.25.25 0 00-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 000-.354l-1.086-1.086zM11.189 6.25L9.75 4.81l-6.286 6.287a.25.25 0 00-.064.108l-.558 1.953 1.953-.558a.25.25 0 00.108-.064l6.286-6.286z"></path>
+            </svg>
+          </button>
         </div>
+        <div class="f4 my-3 github-notes-content"></div>
       `;
 
-      // 插入到About板块内部的第一个位置
-      const firstChild = aboutSection.firstElementChild;
-      if (firstChild) {
-        aboutSection.insertBefore(this.noteContainer, firstChild);
+      this.noteContainer = document.createElement('div');
+      this.noteContainer.setAttribute('data-github-notes-id', Date.now().toString());
+
+      if (mount.layout === 'split') {
+        // 新版侧边栏：作为独立区块插入到 About 之前
+        this.noteContainer.className = 'github-notes-container github-notes-container--split hide-sm hide-md';
+        this.noteContainer.innerHTML = headerHtml;
       } else {
-        aboutSection.appendChild(this.noteContainer);
+        // 旧版 BorderGrid：保持原有行结构
+        this.noteContainer.className = 'BorderGrid-row github-notes-container';
+        this.noteContainer.innerHTML = `
+          <div class="BorderGrid-cell">
+            <div class="hide-sm hide-md">
+              ${headerHtml}
+            </div>
+          </div>
+        `;
+      }
+
+      if (mount.insertBefore && mount.insertBefore.parentNode === mount.mountParent) {
+        mount.mountParent.insertBefore(this.noteContainer, mount.insertBefore);
+      } else {
+        mount.mountParent.insertBefore(
+          this.noteContainer,
+          mount.mountParent.firstElementChild
+        );
       }
 
       this.retryCount = 0;
@@ -530,7 +577,7 @@ class GitHubNotesManager {
           <div class="github-notes-text">${this.escapeHtml(noteData.content)}</div>
           <div class="github-notes-meta">
             <span>${chrome.i18n.getMessage('lastUpdated', this.formatDate(noteData.updatedAt))}</span>
-            <span>${chrome.i18n.getMessage('clickToEditHint')}</span>
+            <span class="github-notes-edit-hint">${chrome.i18n.getMessage('clickToEditHint')}</span>
           </div>
         `;
       } else {

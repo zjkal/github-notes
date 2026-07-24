@@ -5,6 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-i18n="popupTitle">GitHub备注管理</title>
   <style>
+    /* GitHub Primer 语义色（与 github.com 当前主题对齐） */
+    :root {
+      color-scheme: light dark;
+      --bgColor-default: #ffffff;
+      --bgColor-muted: #f6f8fa;
+      --fgColor-default: #1f2328;
+      --fgColor-muted: #59636e;
+      --fgColor-accent: #0969da;
+      --fgColor-success: #1a7f37;
+      --fgColor-danger: #d1242f;
+      --borderColor-default: #d1d9e0;
+      --bgColor-accent-muted: #ddf4ff;
+      --bgColor-accent-emphasis: #0969da;
+      --bgColor-success-muted: #dafbe1;
+      --bgColor-success-emphasis: #1f883d;
+      --bgColor-danger-muted: #ffebe9;
+      --bgColor-danger-emphasis: #cf222e;
+      --button-default-bgColor-rest: #f6f8fa;
+      --button-default-bgColor-hover: #eff2f5;
+      --focus-outlineColor: #0969da;
+      --focus-shadow: 0 0 0 3px rgba(9, 105, 218, 0.12);
+      --shadow-floating-small: 0 0 0 1px rgba(209, 217, 224, 0.25), 0 6px 12px -3px rgba(37, 41, 46, 0.04), 0 6px 18px rgba(37, 41, 46, 0.12);
+      --scrollbar-thumb: #c1c7cf;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bgColor-default: #0d1117;
+        --bgColor-muted: #151b23;
+        --fgColor-default: #f0f6fc;
+        --fgColor-muted: #9198a1;
+        --fgColor-accent: #4493f8;
+        --fgColor-success: #3fb950;
+        --fgColor-danger: #f85149;
+        --borderColor-default: #3d444d;
+        --bgColor-accent-muted: rgba(56, 139, 253, 0.1);
+        --bgColor-accent-emphasis: #1f6feb;
+        --bgColor-success-muted: rgba(46, 160, 67, 0.15);
+        --bgColor-success-emphasis: #238636;
+        --bgColor-danger-muted: rgba(248, 81, 73, 0.1);
+        --bgColor-danger-emphasis: #da3633;
+        --button-default-bgColor-rest: #212830;
+        --button-default-bgColor-hover: #262c36;
+        --focus-outlineColor: #1f6feb;
+        --focus-shadow: 0 0 0 3px rgba(31, 111, 235, 0.2);
+        --shadow-floating-small: 0 0 0 1px #3d444d, 0 8px 24px rgba(1, 4, 9, 0.45);
+        --scrollbar-thumb: #3d444d;
+      }
+    }
+
     html {
       width: 400px;
       min-width: 400px;
@@ -17,18 +67,14 @@
       box-sizing: border-box;
     }
 
-    :root {
-      color-scheme: light dark;
-    }
-
     body {
       width: 400px;
       min-width: 400px;
       min-height: 540px;
       height: auto;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
-      background: #f6f8fa;
-      color: #24292f;
+      background: var(--bgColor-muted);
+      color: var(--fgColor-default);
       overflow: hidden;
     }
 
@@ -54,7 +100,7 @@
       display: flex;
       flex-direction: column;
       min-height: 540px;
-      background: #ffffff;
+      background: var(--bgColor-default);
     }
 
     body[data-surface="sidebar"] .app {
@@ -64,10 +110,8 @@
 
     .header {
       padding: 14px 16px 10px;
-      border-bottom: 1px solid #d8dee4;
-      background:
-        linear-gradient(180deg, rgba(9, 105, 218, 0.06), rgba(9, 105, 218, 0)),
-        #ffffff;
+      border-bottom: 1px solid var(--borderColor-default);
+      background: var(--bgColor-default);
     }
 
     .brand-row {
@@ -85,12 +129,13 @@
       font-size: 16px;
       font-weight: 600;
       line-height: 1.3;
+      color: var(--fgColor-default);
     }
 
     .subtitle {
       margin-top: 3px;
       font-size: 12px;
-      color: #656d76;
+      color: var(--fgColor-muted);
       line-height: 1.5;
     }
 
@@ -100,20 +145,19 @@
 
     .surface-toggle-btn {
       flex-shrink: 0;
-      border: 1px solid #d0d7de;
+      border: 1px solid var(--borderColor-default);
       border-radius: 999px;
       padding: 5px 10px;
       font-size: 11px;
       font-weight: 600;
-      color: #0969da;
-      background: rgba(255, 255, 255, 0.92);
+      color: var(--fgColor-accent);
+      background: var(--bgColor-default);
       cursor: pointer;
       transition: background 0.2s ease, border-color 0.2s ease;
     }
 
     .surface-toggle-btn:hover {
-      background: #f3f4f6;
-      border-color: #afb8c1;
+      background: var(--button-default-bgColor-hover);
     }
 
     .surface-toggle-btn[hidden] {
@@ -132,20 +176,20 @@
       align-items: baseline;
       gap: 6px;
       padding: 7px 10px;
-      border: 1px solid #d0d7de;
+      border: 1px solid var(--borderColor-default);
       border-radius: 999px;
-      background: #f6f8fa;
+      background: var(--bgColor-muted);
     }
 
     .stat-label {
       font-size: 12px;
-      color: #656d76;
+      color: var(--fgColor-muted);
     }
 
     .stat-number {
       font-size: 14px;
       font-weight: 700;
-      color: #0969da;
+      color: var(--fgColor-accent);
       line-height: 1;
     }
 
@@ -156,7 +200,7 @@
       flex-direction: column;
       padding: 12px 16px 10px;
       gap: 10px;
-      background: #ffffff;
+      background: var(--bgColor-default);
     }
 
     .search-box {
@@ -166,16 +210,21 @@
     .search-input {
       width: 100%;
       padding: 10px 36px 10px 12px;
-      border: 1px solid #d0d7de;
-      border-radius: 10px;
-      background: #ffffff;
+      border: 1px solid var(--borderColor-default);
+      border-radius: 6px;
+      background: var(--bgColor-default);
+      color: var(--fgColor-default);
       outline: none;
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
+    .search-input::placeholder {
+      color: var(--fgColor-muted);
+    }
+
     .search-input:focus {
-      border-color: #0969da;
-      box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.12);
+      border-color: var(--focus-outlineColor);
+      box-shadow: var(--focus-shadow);
     }
 
     .clear-search-btn {
@@ -188,14 +237,14 @@
       border: none;
       border-radius: 999px;
       background: transparent;
-      color: #656d76;
+      color: var(--fgColor-muted);
       cursor: pointer;
       display: none;
     }
 
     .clear-search-btn:hover {
-      background: #f3f4f6;
-      color: #24292f;
+      background: var(--button-default-bgColor-hover);
+      color: var(--fgColor-default);
     }
 
     .clear-search-btn.visible {
@@ -209,41 +258,27 @@
       flex: 1;
       min-height: 0;
       flex-direction: column;
-      border: 1px solid #d0d7de;
-      border-radius: 14px;
-      background: #f6f8fa;
       overflow: hidden;
-    }
-
-    .notes-summary {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-bottom: 1px solid #d8dee4;
-      font-size: 12px;
-      color: #656d76;
-      background: rgba(255, 255, 255, 0.72);
     }
 
     .notes-list {
       flex: 1;
       min-height: 0;
       overflow-y: auto;
-      padding: 10px;
+      padding: 0;
     }
 
     .note-item {
       width: 100%;
       padding: 12px;
       margin-bottom: 8px;
-      border: 1px solid #d0d7de;
-      border-radius: 12px;
-      background: #ffffff;
+      border: 1px solid var(--borderColor-default);
+      border-radius: 6px;
+      background: var(--bgColor-default);
+      color: var(--fgColor-default);
       text-align: left;
       cursor: pointer;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
     .note-item:last-child {
@@ -252,9 +287,8 @@
 
     .note-item:hover,
     .note-item:focus-visible {
-      border-color: #0969da;
-      box-shadow: 0 8px 24px rgba(9, 105, 218, 0.12);
-      transform: translateY(-1px);
+      border-color: var(--focus-outlineColor);
+      box-shadow: var(--focus-shadow);
       outline: none;
     }
 
@@ -273,7 +307,7 @@
     .note-repo-name {
       font-size: 14px;
       font-weight: 600;
-      color: #0969da;
+      color: var(--fgColor-accent);
       line-height: 1.35;
       word-break: break-word;
     }
@@ -281,7 +315,7 @@
     .note-owner {
       margin-top: 2px;
       font-size: 11px;
-      color: #656d76;
+      color: var(--fgColor-muted);
       line-height: 1.4;
       word-break: break-word;
     }
@@ -290,8 +324,8 @@
       flex-shrink: 0;
       padding: 3px 8px;
       border-radius: 999px;
-      background: #ddf4ff;
-      color: #0550ae;
+      background: var(--bgColor-accent-muted);
+      color: var(--fgColor-accent);
       font-size: 11px;
       font-weight: 600;
       line-height: 1.2;
@@ -300,7 +334,7 @@
     .note-content {
       font-size: 13px;
       line-height: 1.55;
-      color: #24292f;
+      color: var(--fgColor-default);
       white-space: pre-wrap;
       display: -webkit-box;
       -webkit-line-clamp: 2;
@@ -320,20 +354,20 @@
       align-items: center;
       gap: 8px;
       font-size: 11px;
-      color: #656d76;
+      color: var(--fgColor-muted);
     }
 
     .empty-state,
     .loading {
       padding: 36px 18px;
       text-align: center;
-      color: #656d76;
+      color: var(--fgColor-muted);
     }
 
     .empty-title {
       font-size: 14px;
       font-weight: 600;
-      color: #24292f;
+      color: var(--fgColor-default);
       margin-bottom: 6px;
     }
 
@@ -348,8 +382,8 @@
       align-items: center;
       gap: 10px;
       padding: 10px 16px 12px;
-      border-top: 1px solid #d8dee4;
-      background: #ffffff;
+      border-top: 1px solid var(--borderColor-default);
+      background: var(--bgColor-default);
     }
 
     .footer-links {
@@ -365,7 +399,7 @@
       border: none;
       padding: 0;
       background: transparent;
-      color: #0969da;
+      color: var(--fgColor-accent);
       text-decoration: none;
       font-size: 12px;
       line-height: 1.4;
@@ -384,7 +418,7 @@
     .version {
       flex-shrink: 0;
       font-size: 11px;
-      color: #656d76;
+      color: var(--fgColor-muted);
       white-space: nowrap;
     }
 
@@ -398,12 +432,12 @@
       right: 12px;
       max-width: 280px;
       padding: 10px 12px;
-      border-radius: 8px;
+      border-radius: 6px;
       font-size: 12px;
       z-index: 1000;
       transform: translateX(110%);
       transition: transform 0.25s ease;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      box-shadow: var(--shadow-floating-small);
     }
 
     .notification.show {
@@ -411,15 +445,15 @@
     }
 
     .notification.success {
-      background: #dafbe1;
-      color: #1a7f37;
-      border: 1px solid #1f883d;
+      background: var(--bgColor-success-muted);
+      color: var(--fgColor-success);
+      border: 1px solid var(--bgColor-success-emphasis);
     }
 
     .notification.error {
-      background: #ffebe9;
-      color: #b62324;
-      border: 1px solid #da3633;
+      background: var(--bgColor-danger-muted);
+      color: var(--fgColor-danger);
+      border: 1px solid var(--bgColor-danger-emphasis);
     }
 
     .notes-list::-webkit-scrollbar {
@@ -427,14 +461,13 @@
     }
 
     .notes-list::-webkit-scrollbar-thumb {
-      background: #c1c7cf;
+      background: var(--scrollbar-thumb);
       border-radius: 999px;
     }
 
     @media (max-width: 360px) {
       .brand-row,
       .footer,
-      .notes-summary,
       .note-meta {
         flex-direction: column;
         align-items: stretch;
@@ -442,83 +475,6 @@
 
       .note-topline {
         flex-direction: column;
-      }
-    }
-
-    @media (prefers-color-scheme: dark) {
-      body {
-        background: #0d1117;
-        color: #f0f6fc;
-      }
-
-      .app,
-      .header,
-      .main,
-      .footer {
-        background: #161b22;
-      }
-
-      .header,
-      .footer,
-      .notes-summary {
-        border-color: #30363d;
-      }
-
-      .header {
-        background:
-          linear-gradient(180deg, rgba(31, 111, 235, 0.18), rgba(31, 111, 235, 0)),
-          #161b22;
-      }
-
-      .subtitle,
-      .stat-label,
-      .notes-summary,
-      .note-owner,
-      .note-meta,
-      .version {
-        color: #8b949e;
-      }
-
-      .surface-toggle-btn,
-      .search-input,
-      .stat-pill,
-      .notes-panel,
-      .note-item {
-        background: #0d1117;
-        border-color: #30363d;
-        color: #f0f6fc;
-      }
-
-      .surface-toggle-btn:hover,
-      .clear-search-btn:hover {
-        background: #21262d;
-      }
-
-      .search-input:focus {
-        border-color: #58a6ff;
-        box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.16);
-      }
-
-      .title-group h1,
-      .empty-title,
-      .note-content {
-        color: #f0f6fc;
-      }
-
-      .stat-number,
-      .note-repo-name,
-      .footer-link,
-      .footer a {
-        color: #58a6ff;
-      }
-
-      .note-open-hint {
-        background: rgba(56, 139, 253, 0.16);
-        color: #58a6ff;
-      }
-
-      .notes-summary {
-        background: rgba(13, 17, 23, 0.78);
       }
     }
   </style>
@@ -552,11 +508,6 @@
       </div>
 
       <div class="notes-panel">
-        <div class="notes-summary">
-          <span id="notesSummaryText" data-i18n="recentlyUpdated">最近更新</span>
-          <span id="resultsCount"></span>
-        </div>
-
         <div class="notes-list" id="notesList">
           <div class="loading" data-i18n="loading">加载中...</div>
         </div>
@@ -568,7 +519,7 @@
         <button class="footer-link" type="button" id="exportBtn" data-i18n="exportData">导出数据</button>
         <button class="footer-link" type="button" id="importBtn" data-i18n="importData">导入数据</button>
         <a href="#" id="optionsLink" data-i18n="options">选项</a>
-        <a href="#" id="helpLink" data-i18n="help">帮助</a>
+        <a href="#" id="helpLink" data-i18n="help">开源仓库</a>
       </div>
       <div class="version" id="popupVersion">v1.0.0</div>
     </div>
