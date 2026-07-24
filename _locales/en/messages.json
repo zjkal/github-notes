@@ -115,18 +115,6 @@
     "message": "Enable Notifications",
     "description": "Enable notifications checkbox"
   },
-  "openInSidePanel": {
-    "message": "Open in side panel by default",
-    "description": "Open side panel by default checkbox"
-  },
-  "openInSidePanelHelp": {
-    "message": "When enabled and saved, clicking the extension icon opens the side panel",
-    "description": "Help text for open in side panel setting"
-  },
-  "openInSidePanelUnsupported": {
-    "message": "This browser does not support side panel mode",
-    "description": "Side panel unsupported in options"
-  },
   "saveSettings": {
     "message": "Save Settings",
     "description": "Save settings button"
@@ -152,8 +140,8 @@
     "description": "Side panel unsupported message"
   },
   "help": {
-    "message": "Open Source",
-    "description": "Open source repository link"
+    "message": "Help",
+    "description": "Help link"
   },
   "optionsTitle": {
     "message": "GitHub Notes - Options",

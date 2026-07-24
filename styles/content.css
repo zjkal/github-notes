@@ -10,24 +10,6 @@
   border-top: 1px solid var(--borderColor-default, #d0d7de);
 }
 
-/* 新版 SplitPageLayout 侧边栏：对齐 SidebarSection 间距与分隔线 */
-.github-notes-container--split {
-  padding-bottom: 16px;
-  margin-bottom: 16px;
-  border-bottom: 1px solid var(--borderColor-muted, var(--borderColor-default, #d0d7de));
-}
-
-.github-notes-container--split .github-notes-header h2 {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--fgColor-default, #24292f);
-}
-
-.github-notes-container--split .github-notes-content {
-  margin-top: 8px;
-  margin-bottom: 0;
-}
-
 /* 标题和编辑按钮的容器样式 */
 .github-notes-header {
   display: flex;
@@ -62,7 +44,6 @@
 }
 
 .github-notes-content {
-  position: relative;
   min-height: 20px;
   padding: 10px 12px;
   border: 1px solid var(--borderColor-default, #d0d7de);
@@ -97,33 +78,10 @@
   margin-top: 8px;
   font-size: 12px;
   color: var(--fgColor-muted, #656d76);
-}
-
-/* 默认不占位，悬停/聚焦时浮现，保持侧边栏清爽 */
-.github-notes-edit-hint {
-  position: absolute;
-  right: 12px;
-  bottom: 10px;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  white-space: nowrap;
-  font-size: 12px;
-  color: var(--fgColor-muted, #656d76);
-  transition: opacity 0.15s ease, visibility 0.15s ease;
-}
-
-.github-notes-content:hover .github-notes-edit-hint,
-.github-notes-content:focus-within .github-notes-edit-hint {
-  opacity: 1;
-  visibility: visible;
-}
-
-@media (hover: none) {
-  .github-notes-edit-hint {
-    opacity: 1;
-    visibility: visible;
-  }
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 /* 编辑器模态框样式 */
@@ -378,6 +336,7 @@
     margin-bottom: 8px;
   }
 
+  .github-notes-meta,
   .github-notes-editor-meta {
     flex-direction: column;
     align-items: flex-start;

@@ -82,13 +82,8 @@ class GitHubNotesOptions {
   // 获取默认设置
   getDefaultSettings() {
     return {
-      enableNotifications: true,
-      openInSidePanel: false
+      enableNotifications: true
     };
-  }
-
-  supportsSidePanel() {
-    return Boolean(chrome.sidePanel?.setPanelBehavior);
   }
 
   updateSettingsUI() {
@@ -97,33 +92,13 @@ class GitHubNotesOptions {
       enableNotifications.checked = this.settings.enableNotifications !== false;
       enableNotifications.setAttribute('aria-label', t('enableNotifications'));
     }
-
-    const openInSidePanel = document.getElementById('openInSidePanel');
-    const openInSidePanelHelp = document.getElementById('openInSidePanelHelp');
-    const sidePanelSupported = this.supportsSidePanel();
-
-    if (openInSidePanel) {
-      openInSidePanel.checked = sidePanelSupported && this.settings.openInSidePanel === true;
-      openInSidePanel.disabled = !sidePanelSupported;
-      openInSidePanel.setAttribute('aria-label', t('openInSidePanel'));
-    }
-
-    if (openInSidePanelHelp) {
-      openInSidePanelHelp.textContent = sidePanelSupported
-        ? t('openInSidePanelHelp')
-        : t('openInSidePanelUnsupported');
-    }
   }
 
   async saveAllSettings() {
     try {
       const enableNotifications = document.getElementById('enableNotifications');
-      const openInSidePanel = document.getElementById('openInSidePanel');
       const newSettings = {
-        enableNotifications: enableNotifications ? enableNotifications.checked : true,
-        openInSidePanel: this.supportsSidePanel() && openInSidePanel
-          ? openInSidePanel.checked
-          : false
+        enableNotifications: enableNotifications ? enableNotifications.checked : true
       };
 
       const response = await chrome.runtime.sendMessage({

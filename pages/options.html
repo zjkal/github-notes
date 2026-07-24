@@ -5,59 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-i18n="optionsTitle">GitHub Notes - Options</title>
   <style>
-    /* GitHub Primer 语义色（与 github.com 当前主题对齐） */
-    :root {
-      color-scheme: light dark;
-      --bgColor-default: #ffffff;
-      --bgColor-muted: #f6f8fa;
-      --fgColor-default: #1f2328;
-      --fgColor-muted: #59636e;
-      --fgColor-accent: #0969da;
-      --fgColor-onEmphasis: #ffffff;
-      --borderColor-default: #d1d9e0;
-      --bgColor-accent-emphasis: #0969da;
-      --bgColor-success-emphasis: #1f883d;
-      --bgColor-danger-emphasis: #cf222e;
-      --button-default-bgColor-rest: #f6f8fa;
-      --button-default-bgColor-hover: #eff2f5;
-      --button-primary-bgColor-rest: #1f883d;
-      --button-primary-bgColor-hover: #1c8139;
-      --control-checked-bgColor-rest: #0969da;
-      --shadow-resting-medium: 0 1px 1px rgba(37, 41, 46, 0.1), 0 3px 6px rgba(37, 41, 46, 0.12);
-      --shadow-floating-small: 0 0 0 1px rgba(209, 217, 224, 0.25), 0 6px 12px -3px rgba(37, 41, 46, 0.04), 0 6px 18px rgba(37, 41, 46, 0.12);
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bgColor-default: #0d1117;
-        --bgColor-muted: #151b23;
-        --fgColor-default: #f0f6fc;
-        --fgColor-muted: #9198a1;
-        --fgColor-accent: #4493f8;
-        --borderColor-default: #3d444d;
-        --bgColor-accent-emphasis: #1f6feb;
-        --bgColor-success-emphasis: #238636;
-        --bgColor-danger-emphasis: #da3633;
-        --button-default-bgColor-rest: #212830;
-        --button-default-bgColor-hover: #262c36;
-        --button-primary-bgColor-rest: #238636;
-        --button-primary-bgColor-hover: #29903b;
-        --control-checked-bgColor-rest: #1f6feb;
-        --shadow-resting-medium: 0 0 transparent, 0 0 transparent;
-        --shadow-floating-small: 0 0 0 1px #3d444d, 0 8px 24px rgba(1, 4, 9, 0.45);
-      }
-    }
-
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
+    :root {
+      color-scheme: light dark;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
-      background: var(--bgColor-muted);
-      color: var(--fgColor-default);
+      background: #f6f8fa;
+      color: #24292f;
       line-height: 1.5;
       min-height: 100vh;
     }
@@ -80,23 +41,24 @@
       gap: 16px;
       margin-bottom: 18px;
       padding: 24px;
-      border: 1px solid var(--borderColor-default);
-      border-radius: 6px;
-      background: var(--bgColor-default);
-      box-shadow: var(--shadow-resting-medium);
+      border: 1px solid #d0d7de;
+      border-radius: 16px;
+      background:
+        linear-gradient(180deg, rgba(9, 105, 218, 0.08), rgba(9, 105, 218, 0)),
+        #ffffff;
+      box-shadow: 0 12px 30px rgba(31, 35, 40, 0.06);
     }
 
     .hero-title {
       font-size: 28px;
-      font-weight: 600;
+      font-weight: 700;
       margin-bottom: 8px;
-      color: var(--fgColor-default);
     }
 
     .hero-description {
       max-width: 620px;
       font-size: 14px;
-      color: var(--fgColor-muted);
+      color: #656d76;
     }
 
     .hero-meta {
@@ -112,11 +74,11 @@
       align-items: center;
       justify-content: center;
       padding: 6px 10px;
-      border: 1px solid var(--borderColor-default);
+      border: 1px solid #d0d7de;
       border-radius: 999px;
-      background: var(--bgColor-muted);
+      background: rgba(255, 255, 255, 0.86);
       font-size: 12px;
-      color: var(--fgColor-muted);
+      color: #57606a;
       white-space: nowrap;
     }
 
@@ -127,22 +89,21 @@
 
     .card {
       padding: 18px;
-      border: 1px solid var(--borderColor-default);
-      border-radius: 6px;
-      background: var(--bgColor-default);
-      box-shadow: var(--shadow-resting-medium);
+      border: 1px solid #d0d7de;
+      border-radius: 16px;
+      background: #ffffff;
+      box-shadow: 0 8px 24px rgba(31, 35, 40, 0.04);
     }
 
     .card-title {
       font-size: 18px;
       font-weight: 600;
       margin-bottom: 6px;
-      color: var(--fgColor-default);
     }
 
     .card-description {
       font-size: 13px;
-      color: var(--fgColor-muted);
+      color: #656d76;
       margin-bottom: 16px;
     }
 
@@ -152,10 +113,9 @@
       justify-content: space-between;
       gap: 16px;
       padding: 14px;
-      margin-bottom: 10px;
-      border-radius: 6px;
-      border: 1px solid var(--borderColor-default);
-      background: var(--bgColor-muted);
+      border-radius: 12px;
+      border: 1px solid #d0d7de;
+      background: #f6f8fa;
     }
 
     .settings-copy {
@@ -165,19 +125,18 @@
     .settings-name {
       font-weight: 600;
       margin-bottom: 4px;
-      color: var(--fgColor-default);
     }
 
     .settings-help {
       font-size: 12px;
-      color: var(--fgColor-muted);
+      color: #656d76;
     }
 
     .toggle {
       width: 18px;
       height: 18px;
       margin-top: 2px;
-      accent-color: var(--control-checked-bgColor-rest);
+      accent-color: #0969da;
       flex-shrink: 0;
     }
 
@@ -191,21 +150,20 @@
       justify-content: space-between;
       gap: 12px;
       padding: 12px 14px;
-      border-radius: 6px;
-      border: 1px solid var(--borderColor-default);
-      background: var(--bgColor-muted);
+      border-radius: 12px;
+      border: 1px solid #d0d7de;
+      background: #f6f8fa;
       font-size: 13px;
     }
 
     .meta-key {
-      color: var(--fgColor-muted);
+      color: #656d76;
     }
 
     .meta-value {
       font-weight: 600;
       text-align: right;
       word-break: break-word;
-      color: var(--fgColor-default);
     }
 
     .btn-row {
@@ -220,47 +178,41 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      min-height: 32px;
-      padding: 5px 16px;
-      border: 1px solid var(--borderColor-default);
-      border-radius: 6px;
-      background: var(--button-default-bgColor-rest);
-      color: var(--fgColor-default);
+      min-height: 38px;
+      padding: 8px 14px;
+      border: 1px solid #d0d7de;
+      border-radius: 10px;
+      background: #ffffff;
+      color: #24292f;
       cursor: pointer;
-      transition: background 0.15s ease, border-color 0.15s ease;
-      font-size: 14px;
-      font-weight: 500;
+      transition: 0.2s ease;
     }
 
     .btn:hover {
-      background: var(--button-default-bgColor-hover);
+      background: #f3f4f6;
+      border-color: #afb8c1;
     }
 
     .btn-primary {
-      background: var(--bgColor-accent-emphasis);
-      border-color: rgba(31, 35, 40, 0.15);
-      color: var(--fgColor-onEmphasis);
+      background: #0969da;
+      border-color: #0969da;
+      color: #ffffff;
     }
 
     .btn-primary:hover {
       background: #0860ca;
-      border-color: rgba(31, 35, 40, 0.15);
+      border-color: #0860ca;
     }
 
     .btn-success {
-      background: var(--button-primary-bgColor-rest);
-      border-color: rgba(31, 35, 40, 0.15);
-      color: var(--fgColor-onEmphasis);
+      background: #1f883d;
+      border-color: #1f883d;
+      color: #ffffff;
     }
 
     .btn-success:hover {
-      background: var(--button-primary-bgColor-hover);
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .btn-primary:hover {
-        background: #3685f3;
-      }
+      background: #1a7f37;
+      border-color: #1a7f37;
     }
 
     .action-grid {
@@ -272,20 +224,19 @@
 
     .action-card {
       padding: 16px;
-      border: 1px solid var(--borderColor-default);
-      border-radius: 6px;
-      background: var(--bgColor-muted);
+      border: 1px solid #d0d7de;
+      border-radius: 14px;
+      background: #f6f8fa;
     }
 
     .action-title {
       font-weight: 600;
       margin-bottom: 8px;
-      color: var(--fgColor-default);
     }
 
     .action-description {
       font-size: 12px;
-      color: var(--fgColor-muted);
+      color: #656d76;
       margin-bottom: 12px;
     }
 
@@ -299,13 +250,13 @@
       right: 20px;
       max-width: 320px;
       padding: 12px 16px;
-      border-radius: 6px;
-      color: var(--fgColor-onEmphasis);
+      border-radius: 10px;
+      color: #ffffff;
       font-weight: 500;
       z-index: 1000;
       transform: translateX(110%);
       transition: transform 0.25s ease;
-      box-shadow: var(--shadow-floating-small);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.16);
     }
 
     .notification.show {
@@ -313,15 +264,15 @@
     }
 
     .notification.success {
-      background: var(--bgColor-success-emphasis);
+      background: #1f883d;
     }
 
     .notification.error {
-      background: var(--bgColor-danger-emphasis);
+      background: #da3633;
     }
 
     .notification.info {
-      background: var(--bgColor-accent-emphasis);
+      background: #0969da;
     }
 
     @media (max-width: 680px) {
@@ -345,6 +296,59 @@
 
       .btn-row {
         width: 100%;
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: #0d1117;
+        color: #f0f6fc;
+      }
+
+      .hero,
+      .card,
+      .btn {
+        background: #161b22;
+        border-color: #30363d;
+        color: #f0f6fc;
+      }
+
+      .hero {
+        background:
+          linear-gradient(180deg, rgba(31, 111, 235, 0.18), rgba(31, 111, 235, 0)),
+          #161b22;
+      }
+
+      .version-pill,
+      .storage-pill,
+      .settings-row,
+      .meta-item,
+      .action-card {
+        background: #0d1117;
+        border-color: #30363d;
+        color: #f0f6fc;
+      }
+
+      .hero-description,
+      .card-description,
+      .settings-help,
+      .meta-key,
+      .action-description {
+        color: #8b949e;
+      }
+
+      .btn:hover {
+        background: #21262d;
+      }
+
+      .btn-primary {
+        background: #1f6feb;
+        border-color: #1f6feb;
+      }
+
+      .btn-success {
+        background: #238636;
+        border-color: #238636;
       }
     }
   </style>
@@ -372,13 +376,6 @@
             <div class="settings-help" id="settingsStatus">-</div>
           </div>
           <input type="checkbox" id="enableNotifications" class="toggle" data-i18n-aria-label="enableNotifications" aria-label="Enable Notifications">
-        </div>
-        <div class="settings-row">
-          <div class="settings-copy">
-            <div class="settings-name" data-i18n="openInSidePanel">默认在侧边栏打开</div>
-            <div class="settings-help" id="openInSidePanelHelp" data-i18n="openInSidePanelHelp">开启并保存后，点击扩展图标将直接打开侧边栏</div>
-          </div>
-          <input type="checkbox" id="openInSidePanel" class="toggle" data-i18n-aria-label="openInSidePanel" aria-label="Open in side panel by default">
         </div>
         <div class="btn-row">
           <button class="btn btn-primary" id="saveSettingsBtn" data-i18n="saveSettings">保存设置</button>

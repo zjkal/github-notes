@@ -36,9 +36,6 @@ class GitHubNotesBackground {
     chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
       this.handleTabUpdated(tabId, changeInfo, tab);
     });
-
-    // Service Worker 每次唤醒时按设置同步图标点击行为
-    this.applyPanelBehaviorFromSettings();
   }
 
   // 处理插件安装事件
@@ -58,8 +55,7 @@ class GitHubNotesBackground {
     try {
       // 设置默认配置
       const defaultSettings = {
-        enableNotifications: true,
-        openInSidePanel: false
+        enableNotifications: true
       };
 
       // 设置插件元数据
@@ -245,7 +241,7 @@ class GitHubNotesBackground {
         
         // 只导入有效的设置项，过滤废弃的设置
         const validSettingsToImport = {};
-        const validKeys = ['enableNotifications', 'openInSidePanel'];
+        const validKeys = ['enableNotifications'];
         
         validKeys.forEach(key => {
           if (settings[key] !== undefined) {
@@ -255,7 +251,6 @@ class GitHubNotesBackground {
         
         const mergedSettings = { ...currentSettings, ...validSettingsToImport };
         await chrome.storage.local.set({ 'plugin_settings': mergedSettings });
-        await this.applySidePanelBehavior(mergedSettings.openInSidePanel === true);
       }
       
       // 更新元数据
@@ -296,7 +291,6 @@ class GitHubNotesBackground {
       const mergedSettings = { ...currentSettings, ...newSettings };
       
       await chrome.storage.local.set({ 'plugin_settings': mergedSettings });
-      await this.applySidePanelBehavior(mergedSettings.openInSidePanel === true);
       
       return {
         success: true,
@@ -309,36 +303,6 @@ class GitHubNotesBackground {
         success: false,
         error: error.message
       };
-    }
-  }
-
-  // 按存储设置同步「点击图标打开侧边栏」行为
-  async applyPanelBehaviorFromSettings() {
-    try {
-      const settings = await this.getSettings();
-      await this.applySidePanelBehavior(settings.openInSidePanel === true);
-    } catch (error) {
-      console.error('GitHub Notes: 同步侧边栏行为失败', error);
-    }
-  }
-
-  // 启用/关闭点击扩展图标时打开侧边栏
-  async applySidePanelBehavior(enabled) {
-    if (!chrome.sidePanel?.setPanelBehavior) {
-      return;
-    }
-
-    try {
-      await chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: enabled });
-
-      // 开启侧边栏直开时需清空 popup，否则仍会优先弹出气泡
-      if (chrome.action?.setPopup) {
-        await chrome.action.setPopup({
-          popup: enabled ? '' : 'pages/popup.html'
-        });
-      }
-    } catch (error) {
-      console.error('GitHub Notes: 应用侧边栏行为失败', error);
     }
   }
 
@@ -410,11 +374,6 @@ class GitHubNotesBackground {
       // 可以在这里处理存储变化事件
       // 例如：同步数据、更新统计信息等
       console.log('GitHub Notes: 存储数据已变化', Object.keys(changes));
-
-      if (changes.plugin_settings) {
-        const settings = changes.plugin_settings.newValue || {};
-        this.applySidePanelBehavior(settings.openInSidePanel === true);
-      }
     }
   }
 
