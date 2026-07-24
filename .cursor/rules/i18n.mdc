@@ -1,0 +1,32 @@
+---
+description: 国际化(i18n)双语文案约定
+globs: _locales/**/*.json,src/**/*.js,pages/**/*.html
+alwaysApply: false
+---
+
+# i18n 约定
+
+## 双语强制同步
+
+任何新增或修改的文案,必须**同时**更新 `_locales/en/messages.json` 和 `_locales/zh_CN/messages.json`,key 用 camelCase(如 `noteSaved`)。
+
+## 两种使用路径
+
+1. **content.js / background.js**:直接调用 `chrome.i18n.getMessage('key')`,并提供中文兜底:
+
+```javascript
+const text = chrome.i18n.getMessage('noteSaved') || '备注已保存';
+```
+
+2. **popup / options 页面**:HTML 静态文案用 `data-i18n` 属性,由 `I18n.initPageText()` 统一填充;JS 动态文案用全局 `t('key')`:
+
+```html
+<button data-i18n="saveBtn" data-i18n-title="saveBtnTooltip"></button>
+```
+
+支持的属性:`data-i18n`(文本)、`data-i18n-title`、`data-i18n-aria-label`、`data-i18n-placeholder`。
+
+## 禁止事项
+
+- 禁止在 HTML/JS 中硬编码面向用户的文案(代码注释除外,注释用中文)
+- manifest.json 中的文案用 `__MSG_key__` 形式引用
