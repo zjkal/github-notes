@@ -44,29 +44,30 @@ class GitHubNotesManager {
       });
     }
 
-    // 等待GitHub关键元素出现
     await this.waitForGitHubElements();
-    
-    // 额外等待确保页面完全稳定
-    await new Promise(resolve => setTimeout(resolve, 1000));
   }
 
-  // 等待GitHub关键元素加载完成
+  // 等待 GitHub 关键元素加载完成（新版 GlobalNav 等布局）
   async waitForGitHubElements() {
-    const maxWaitTime = 10000; // 最多等待10秒
-    const checkInterval = 200; // 每200ms检查一次
+    const maxWaitTime = 5000;
+    const checkInterval = 100;
     let waitTime = 0;
 
     return new Promise(resolve => {
       const checkElements = () => {
-        // 检查GitHub页面的关键元素是否存在
-        const hasHeader = document.querySelector('header[role="banner"]') || 
-                         document.querySelector('.Header') ||
-                         document.querySelector('[data-testid="header"]');
-        
-        const hasMainContent = document.querySelector('main') ||
-                              document.querySelector('#js-repo-pjax-container') ||
-                              document.querySelector('.application-main');
+        const hasHeader =
+          document.querySelector('header[role="banner"]') ||
+          document.querySelector('header.GlobalNav') ||
+          document.querySelector('header[class*="GlobalNav"]') ||
+          document.querySelector('header[class*="appHeader"]') ||
+          document.querySelector('.Header') ||
+          document.querySelector('[data-testid="header"]') ||
+          document.querySelector('header');
+
+        const hasMainContent =
+          document.querySelector('main') ||
+          document.querySelector('#js-repo-pjax-container') ||
+          document.querySelector('.application-main');
 
         if (hasHeader && hasMainContent) {
           resolve();
