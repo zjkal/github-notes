@@ -15,120 +15,128 @@ English | [中文](README.md)
 
 </div>
 
+---
+
+## Quick Start
+
+### Install from a store (recommended)
+
+> For most users, install from an official store to get automatic updates—no developer mode required.
+
+| Browser | Install |
+|---------|---------|
+| **Chrome** | [Chrome Web Store](https://chromewebstore.google.com/detail/github-notes/mejhlipglijbkcfcnljjdcdngafbbheo) |
+| **Edge** | [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/github-notes/kjecncpipakdbomdpagliljcaomojjbk) |
+
+After installation, open any GitHub repository and find the note card near the sidebar About area; use the toolbar icon to search and manage all notes. See [Usage](#usage) below for step-by-step guides.
+
+---
+
 ## Overview
 
 ![GitHub Notes Hero1](assets/hero1.png)
 
-`GitHub Notes` is a Manifest V3 browser extension for Chromium-based browsers that lets you keep private notes for GitHub repositories.
+`GitHub Notes` is a Manifest V3 extension for Chromium browsers. It keeps **private, local-only** notes for GitHub repositories—no cloud backend.
 
-The current codebase focuses on three practical workflows:
+Three main workflows:
 
-- add and edit notes directly in repository pages
-- review saved notes inside GitHub Stars pages
-- search, open, export, and import notes from the popup or side panel
+| Workflow | What you get |
+|----------|----------------|
+| Repository pages | Add, edit, and delete notes in the sidebar |
+| Stars pages | Surface saved notes while browsing stars |
+| Popup / side panel | Search, open repos, and back up all notes |
 
-All data stays in the browser's local storage.
+---
 
-## Current Features
+## Features
 
-### 1. Inline Notes On Repository Pages
+### Inline notes on repository pages
 
-- Injects a note card into GitHub repository pages
-- Opens an editor when you click the card or edit button
-- Supports saving and deleting notes
-- Shows the last updated time
+- Injects a note card on GitHub repository pages
+- Opens an editor from the card or edit button
+- Save, delete, and show last updated time
 - Handles GitHub PJAX and dynamic navigation
 
-### 2. Notes On Stars Pages
+### Notes on Stars pages
 
-- Displays saved notes on `/<username>?tab=stars`
-- Supports custom Stars lists at `/stars/<username>/lists/<list>`
-- Only injects content for repositories that already have local notes
-- Lets you click a note on the Stars page to edit it directly
+- Shows saved notes on `/<username>?tab=stars`
+- Supports custom lists at `/stars/<username>/lists/<list>`
+- Injects content only for repositories that already have local notes
+- Click a note on the Stars page to edit it
 
-### 3. Popup And Side Panel Management
+### Popup and side panel
 
-- Lists all saved notes
-- Searches by repository name or note content
-- Sorts entries by most recently updated
-- Opens the related GitHub repository when you click a note item
-- Can switch to side panel mode in browsers that support `sidePanel`
+- Lists all notes, sorted by most recently updated
+- Search by repository name or note content
+- Open the related repository from a list item
+- Side panel mode where `sidePanel` is supported
 
-### 4. Data Management
+### Data management and extras
 
-- Exports all notes and extension settings as JSON
-- Imports notes from a JSON backup file
-- Shows note count, latest update, last backup, and last import in the options page
+- Export notes and settings as JSON; import from backup files
+- Options page: note count, latest update, last backup, last import
+- English and Chinese UI; light and dark themes
+- Default local settings on first install
 
-### 5. Additional Details
+### Supported GitHub URLs
 
-- English and Chinese localization
-- Light and dark theme support
-- Initializes default local settings on first install
-
-## Supported Pages
-
-- Repository pages: `https://github.com/<owner>/<repo>`
-- Repository sub-pages such as `issues`, `pulls`, and `actions`
-- Stars page: `https://github.com/<user>?tab=stars`
+- Repositories: `https://github.com/<owner>/<repo>` and sub-pages (`issues`, `pulls`, `actions`, …)
+- Stars: `https://github.com/<user>?tab=stars`
 - Custom Stars lists: `https://github.com/stars/<user>/lists/<list>`
 
-## Installation
+---
 
-### Install From Extension Stores
+## Usage
 
-- Chrome: [Chrome Web Store](https://chromewebstore.google.com/detail/github-notes/mejhlipglijbkcfcnljjdcdngafbbheo)
-- Edge: [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/github-notes/kjecncpipakdbomdpagliljcaomojjbk)
+### Add notes on a repository page
 
-### Load In Developer Mode
+1. Open any GitHub repository
+2. Find the note card near the sidebar / About area
+3. Click the card or edit button, enter text, and save
 
-1. Clone the repository
+### Review notes on a Stars page
+
+1. Open your Stars page or a Stars list
+2. Repositories with saved notes show a note block
+3. Click the block to edit
+
+### Manage notes from the popup
+
+1. Click the extension icon in the toolbar
+2. Browse and search all notes in the list tab
+3. Export or import JSON from the backup tab
+4. Adjust preferences and view overview data in Settings or the options page
+
+---
+
+## Privacy and storage
+
+- Notes live in `chrome.storage.local`; nothing is uploaded automatically
+- Permissions: `storage`, `activeTab`, `sidePanel`, `https://github.com/*`
+- Keys use the full repository name, e.g. `owner/repo`
+
+---
+
+## For developers
+
+For contributing, debugging, or packaging your own build.
+
+### Load unpacked (developer mode)
+
+1. Clone the repo:
 
 ```bash
 git clone https://github.com/zjkal/github-notes.git
 cd github-notes
 ```
 
-2. Open the browser extension page
+2. Open the extensions page: Chrome `chrome://extensions/` · Edge `edge://extensions/`
+3. Enable **Developer mode**
+4. **Load unpacked** and select the project root
 
-- Chrome: `chrome://extensions/`
-- Edge: `edge://extensions/`
+After editing files under `src`, `pages`, `styles`, or `_locales`, click **Reload** on the extension card and refresh the GitHub tab.
 
-3. Enable Developer Mode
-
-4. Click `Load unpacked` and select this project folder
-
-## Usage
-
-### Add Notes On A Repository Page
-
-1. Open any GitHub repository
-2. Find the note card near the repository sidebar / About area
-3. Click the card or edit button
-4. Enter your note and save it
-
-### Review Notes On A Stars Page
-
-1. Open your Stars page or a Stars list
-2. The extension renders notes for repositories that already have saved entries
-3. Click a note block to edit it
-
-### Manage Notes From The Popup
-
-1. Click the extension icon in the browser toolbar
-2. Browse all saved notes in the notes list
-3. Use search to filter by repository name or keywords
-4. Use the data backup tab to export or import JSON files
-5. Use the settings tab or options page for basic preferences and overview data
-
-## Privacy And Storage
-
-- Notes are stored in `chrome.storage.local`
-- No automatic uploads to external services
-- Current permissions are limited to `storage`, `activeTab`, `sidePanel`, and `https://github.com/*`
-- Notes are stored by full repository key, for example `owner/repo`
-
-## Project Structure
+### Project layout
 
 ```text
 github-notes/
@@ -151,44 +159,24 @@ github-notes/
 └── build.ps1
 ```
 
-## Local Development
-
-This project currently does not use a bundler. After changing source files, reload the extension in your browser to test the update.
-
-### Development Flow
-
-1. Edit files under `src`, `pages`, `styles`, or `_locales`
-2. Go back to the browser extension manager
-3. Click `Reload`
-4. Refresh the relevant GitHub page and verify the behavior
-
-### Build Release Package
-
-A PowerShell script is included for packaging:
+### Build a release zip
 
 ```powershell
 .\build.ps1
 ```
 
-It will:
+Recreates `release/`, copies required files, and outputs `github-notes-v<version>.zip`.
 
-- recreate the `release/` directory
-- copy the required extension files
-- generate a `github-notes-v<version>.zip` archive
+### Technical notes
 
-## Technical Notes
+Manifest V3 · vanilla JavaScript · Chrome Extension / Storage / i18n APIs · `MutationObserver` with debouncing for GitHub’s dynamic DOM
 
-- Manifest V3
-- Vanilla JavaScript
-- Chrome Extension APIs
-- Chrome Storage API
-- Chrome i18n API
-- `MutationObserver` with debounced updates for GitHub's dynamic page changes
+---
 
 ## Contributing
 
-Issues and pull requests are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before contributing.
+Issues and pull requests are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) first.
 
 ## License
 
-This project is released under the [MIT License](LICENSE).
+Released under the [MIT License](LICENSE).
