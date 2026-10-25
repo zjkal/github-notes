@@ -44,5 +44,6 @@ window.xxx = instance; // background.js 用 self 而非 window
 ## GitHub 页面适配(content.js)
 
 - GitHub 是 PJAX 导航:用 URL 轮询 + `popstate` + 防抖检测页面变化;动态内容用 `MutationObserver` + 防抖
-- DOM 选择器提供精确与降级两套,以兼容 GitHub 改版
+- Stars 页需同时支持 `?tab=stars` 与 `/stars/:user`;列表项容器可能是 `div.col-12` 或 `li.border-bottom`
+- DOM 选择器提供精确与降级两套,以兼容 GitHub 改版;CSS Modules 用双 `class*=` 查询,避免写死 `module__token`
 - 注入 HTML 时用户内容必须经过 `escapeHtml` 防 XSS
