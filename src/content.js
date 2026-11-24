@@ -25,6 +25,7 @@ class GitHubNotesManager {
     this.starsObserver = null;
     this.starsObserverDebounce = null;
     this.starsTurboFrameHandler = null;
+    this.starsNotesRendering = false;
     this.init();
   }
 
@@ -333,15 +334,22 @@ class GitHubNotesManager {
   }
 
   findStarsInsertAnchor(listItem, link) {
-    const descDiv = listItem.querySelector('[itemprop="description"]') || listItem.querySelector('p');
+    // 无真实简介时不要用 row 内任意 <p>，否则 blankslate 会命中 listItem（tmp-py-4）导致插到行外
+    const descDiv = listItem.querySelector('[itemprop="description"]');
     if (descDiv) {
+      const pyDiv = descDiv.closest('div[class*="py-"]');
+      const mtDiv = descDiv.closest('div[class*="mt-"]');
       const wrapperDiv =
-        descDiv.closest('div[class*="py-"]') ||
-        descDiv.closest('div[class*="mt-"]') ||
-        descDiv.closest('div') ||
-        descDiv;
-      if (wrapperDiv.parentNode) {
+        (pyDiv && pyDiv !== listItem && listItem.contains(pyDiv) && pyDiv) ||
+        (mtDiv && mtDiv !== listItem && listItem.contains(mtDiv) && mtDiv) ||
+        null;
+
+      if (wrapperDiv && wrapperDiv.parentNode) {
         return { parent: wrapperDiv.parentNode, before: wrapperDiv.nextSibling };
+      }
+
+      if (descDiv.parentNode && listItem.contains(descDiv.parentNode)) {
+        return { parent: descDiv.parentNode, before: descDiv.nextSibling };
       }
     }
 
@@ -353,8 +361,29 @@ class GitHubNotesManager {
     return { parent: listItem, append: true };
   }
 
+  removeOrphanedStarsNoteBadges(root) {
+    const scope = root || this.findStarsListRoot();
+    if (!scope) {
+      return;
+    }
+
+    scope.querySelectorAll(':scope > .github-notes-star-badge').forEach((badge) => {
+      badge.remove();
+    });
+  }
+
+  hasStarsNoteBadge(listItem, mountParent, repo) {
+    const badgeSelector = `.github-notes-star-badge[data-repo="${repo}"]`;
+    if (listItem.querySelector(badgeSelector)) {
+      return true;
+    }
+    return !!(mountParent && mountParent.querySelector(`:scope > ${badgeSelector}`));
+  }
+
   mountStarsNoteBadge(listItem, link, repo, noteData) {
-    if (listItem.querySelector('.github-notes-star-badge')) {
+    const anchor = this.findStarsInsertAnchor(listItem, link);
+    const mountParent = anchor.parent;
+    if (!mountParent || this.hasStarsNoteBadge(listItem, mountParent, repo)) {
       return;
     }
 
@@ -399,7 +428,6 @@ class GitHubNotesManager {
 
     noteDiv.appendChild(noteContentDiv);
 
-    const anchor = this.findStarsInsertAnchor(listItem, link);
     if (anchor.append) {
       anchor.parent.appendChild(noteDiv);
     } else {
@@ -469,6 +497,9 @@ class GitHubNotesManager {
       console.log('GitHub Notes: Stars 页面监听容器:', container);
       if (container) {
         this.starsObserver = new MutationObserver(() => {
+          if (this.starsNotesRendering) {
+            return;
+          }
           this.scheduleStarsNotesRender();
         });
         this.starsObserver.observe(container, { childList: true, subtree: true });
@@ -489,9 +520,15 @@ class GitHubNotesManager {
 
   // 渲染Stars页面备注
   async renderStarsNotes() {
+    if (this.starsNotesRendering) {
+      return;
+    }
+
+    this.starsNotesRendering = true;
     try {
       console.log('GitHub Notes: 开始执行 renderStarsNotes');
       const root = this.findStarsListRoot();
+      this.removeOrphanedStarsNoteBadges(root);
       const { reposToFetch, linkMap } = this.collectStarsRepoLinks(root);
       console.log(`GitHub Notes: 找到 ${reposToFetch.length} 个仓库链接`);
 
@@ -518,6 +555,8 @@ class GitHubNotesManager {
       }
     } catch (error) {
       console.error('GitHub Notes: 渲染 Stars 页面备注失败', error);
+    } finally {
+      this.starsNotesRendering = false;
     }
   }
 
